@@ -1,0 +1,142 @@
+
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+	background-color: #F5F5F5;
+}
+
+
+
+
+
+.slide-image {
+    width: 100%;
+}
+
+.carousel-holder {
+    margin-bottom: 30px;
+}
+
+.carousel-control,
+.item {
+    border-radius: 4px;
+}
+
+.caption {
+    height: 130px;
+    overflow: hidden;
+}
+
+.caption h4 {
+    white-space: nowrap;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.ratings {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #d17581;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+    color: #333;
+}
+.card-block {
+  margin: auto;
+}
+
+  
+@media (max-width: 543px) { 
+.card-columns {
+    -webkit-column-count: 1;
+       -moz-column-count: 1;
+            column-count: 1;
+    -webkit-column-gap: 1.25rem;
+       -moz-column-gap: 1.25rem;
+            column-gap: 1.25rem;
+  }
+}
+
+@media (min-width: 544px) and (max-width: 767px) { 
+.card-columns {
+    -webkit-column-count: 1;
+       -moz-column-count: 1;
+            column-count: 1;
+    -webkit-column-gap: 1.25rem;
+       -moz-column-gap: 1.25rem;
+            column-gap: 1.25rem;
+  } }
+
+@media (min-width: 768px) and (max-width: 991px) { 
+.card-columns {
+    -webkit-column-count: 3;
+       -moz-column-count: 3;
+            column-count: 3;
+    -webkit-column-gap: 1.25rem;
+       -moz-column-gap: 1.25rem;
+            column-gap: 1.25rem;
+  } }
+
+@media (min-width: 992px) and (max-width: 1199px) { 
+
+.card-columns {
+    -webkit-column-count: 4;
+       -moz-column-count: 4;
+            column-count: 4;
+    -webkit-column-gap: 1.25rem;
+       -moz-column-gap: 1.25rem;
+            column-gap: 1.25rem;
+  }}
+
+@media (min-width: 1200px) { 
+
+.card-columns {
+    -webkit-column-count: 4;
+       -moz-column-count: 4;
+            column-count: 4;
+    -webkit-column-gap: 1.25rem;
+       -moz-column-gap: 1.25rem;
+            column-gap: 1.25rem;
+  } }
+  
+  
+  
+.btn-primary-unicorn {
+  color: #fff;
+  background-color: #1980FC;
+  border-color: #fff;
+}  
+.btn-primary-unicorn:hover {
+  color: #1980FC;
+  background-color: #fff;
+  border-color: #1980FC;
+} 
+
+.img-thumbnail:hover {
+  opacity: 0.6;
+
+}
+.list-group-item:hover {
+  background-color: #7EB3F3;
+  color: #fff;
+} 
+.list-group-item:focus {
+  background-color: #1980FC;
+color: #fff;
+} 
+
+.maincolor{
+	color: #1980FC;
+}
+  
+footer {
+    margin: 50px 0;
+}
