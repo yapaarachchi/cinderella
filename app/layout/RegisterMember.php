@@ -374,7 +374,16 @@ $('#registerAsMember').validate({ // initialize the plugin
         rules: {
             email: {
                 required: true,
-                email: true
+                email: true,
+				remote: {
+					url: "../controller/Validate.php",
+					type: "post",
+					data: {
+						  action: function() {
+							return $( "#action" ).val();
+						  }
+						}
+				}				
             },
             password: {
                 required: true,
