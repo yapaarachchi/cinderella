@@ -1,16 +1,10 @@
 <?php
-require "../LoginController.php";
+require "../Config.php";
+require '../../vendor/autoload.php';
 
-$login = new LoginControl;
 $db = Config::initDb();
-$auth = $login->initAuth($db);
-$isLoggedIn = $login->isLoggedIn($auth);
-if($isLoggedIn){
-	header('Location: ../../index.php');
-}
-if (!isset($_POST['action'])) {
-	header('Location: ../../index.php');
-}
+$auth = new \Delight\Auth\Auth($db);
+//redirect to index page if not logged in
 
 if (isset($_POST)) {
 	if (isset($_POST['action'])) {
@@ -26,6 +20,54 @@ if (isset($_POST)) {
 				  return;
 				} 
 				echo 'true';
+				return;
+			}
+			catch(Exception $e){
+				echo 'false';
+				return;
+			}
+			
+		}
+	}
+	
+	if (isset($_POST['action'])) {
+		if (isset($_POST['resendemail'])) {
+			try{
+				if (filter_var($_POST['resendemail'], FILTER_VALIDATE_EMAIL) === false) {
+				  echo 'false';
+				  return;
+				} 
+				if($auth->isUserExist($_POST['resendemail']))
+				{
+					echo 'true';
+					return;
+				}
+				
+				echo 'false';
+				return;
+			}
+			catch(Exception $e){
+				echo 'false';
+				return;
+			}
+			
+		}
+	}
+	
+	if (isset($_POST['action'])) {
+		if (isset($_POST['loginUsername'])) {
+			try{
+				if (filter_var($_POST['loginUsername'], FILTER_VALIDATE_EMAIL) === false) {
+				  echo 'false';
+				  return;
+				} 
+				if($auth->isUserExist($_POST['loginUsername']))
+				{
+					echo 'true';
+					return;
+				}
+				
+				echo 'false';
 				return;
 			}
 			catch(Exception $e){

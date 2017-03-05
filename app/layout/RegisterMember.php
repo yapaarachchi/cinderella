@@ -1,10 +1,15 @@
 <?php
+require "../Config.php";
+require "../ErrorCode.php";
 require '../../vendor/autoload.php';
 
+$db = Config::initDb();
+$auth = new \Delight\Auth\Auth($db);
+if($auth->isLoggedIn()){
+	header('Location: ../../index.php');
+}
+
 if (isset($_POST)) {
-	
-	
-	
 	if(isset($_POST['g-recaptcha-response'])){
 			$recaptcha = new \ReCaptcha\ReCaptcha('6LfSRhUUAAAAAFEdLWxrneyWgpLgtg8JaP6d74r0');
 			 $resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
@@ -12,70 +17,95 @@ if (isset($_POST)) {
 				
 			
 				if (isset($_POST['action'])) {
-
 							
 					if ($_POST['action'] === 'register') {
 
 						if (isset($_POST['email']) and $_POST['email'] == '') {
-							echo '<div class="alert alert-danger" role="alert" >Email is required</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_EMAIL);
 							return;
 						}
 						if (isset($_POST['password']) and $_POST['password'] == '') {
-							echo '<div class="alert alert-danger" role="alert">Password is required</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_PASSWORD);
 							return;
 						}
 						if (isset($_POST['repassword']) and $_POST['repassword'] == '') {
-							echo '<div class="alert alert-danger" role="alert" >Re-Enter Password is required</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_RE_PASSWORD);
 							return;
 						}
 						if($_POST['password'] !== $_POST['repassword']){
-							echo '<div class="alert alert-danger" role="alert" >Passwords mismatch with each other</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_PASSWORD_MISMATCH);
 							return;
 						}
 						if (isset($_POST['fname']) and $_POST['fname'] == '') {
-							echo '<div class="alert alert-danger" role="alert" >First Name is required</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_FIRST_NAME);
 							return;
 						}
 						if (isset($_POST['lname']) and $_POST['lname'] == '') {
-							echo '<div class="alert alert-danger" role="alert" >Last Name is required</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_LAST_NAME);
 							return;
 						}
 						if (isset($_POST['radio']) and $_POST['radio'] == '') {
-							echo '<div class="alert alert-danger" role="alert" >Are you Grrom or Bride ?</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_MEMBER_TYPE);
 							return;
 						}
 						if (isset($_POST['district']) and $_POST['district'] == '') {
-							echo '<div class="alert alert-danger" role="alert" >Distict is required</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_DISTRICT);
 							return;
 						}
 						
 						if (isset($_POST['mobile']) and $_POST['mobile'] == '') {
-							echo '<div class="alert alert-danger" role="alert" >Mobile Number is required</div>';
+							ErrorCode::SetError(ErrorCode::REQUIRED_MOBILE);
 							return;
 						}
 					}
 					
-					
-					
-					
-					
-				}
-				
-				
+					try{
+						$other['first_name'] = $_POST['fname'];
+						$other['last_name'] = $_POST['lname'];
+						$other['member_type'] = $_POST['radio'];
+						$other['district'] = $_POST['district'];
+						$other['mobile'] = $_POST['mobile'];
+						if (isset($_POST['address1']) and $_POST['address1'] == '') {
+							$other['address1'] = $_POST['address1'];
+						}
+						
+						if (isset($_POST['address2']) and $_POST['address2'] == '') {
+							$other['address2'] = $_POST['address2'];
+						}
+						if (isset($_POST['address3']) and $_POST['address3'] == '') {
+							$other['address3'] = $_POST['address3'];
+						}
+						$check = $auth->registerWithUniqueUsername($_POST['email'], $_POST['password'], $_POST['email'], '2', $other);
+						if($check == '500'){
+							ErrorCode::SetError(ErrorCode::CODE_500);
+							return ;
+						}
+						if($check == '501'){
+							ErrorCode::SetError(ErrorCode::CODE_501);
+							return ;
+						}
+						
+					}
+					catch (\Delight\Auth\UserAlreadyExistsException $e) {
+						ErrorCode::SetError(ErrorCode::USER_EXIST);
+						return;
+					}
+					catch (\Delight\Auth\DuplicateUsernameException $e) {
+						ErrorCode::SetError(ErrorCode::USER_EXIST);
+						return;
+					}
+					catch (Exception $e) {
+						ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+						return;
+					}
+				}				
 			}
-			else{
-				
-				echo '<div class="alert alert-danger" role="alert" >Are you Human ?</div>';
+			else{				
+				ErrorCode::SetError(ErrorCode::REQUIRED_RECAPTCHA);
 				return;
 			}
-			echo 'UNICORN_OK';
-				return;
 			
-	}
-	
-	
-	
-	
+	}	
 }
 ?>
 
@@ -112,33 +142,28 @@ if (isset($_POST)) {
 		<div class="collapse navbar-toggleable-md" id="navbarNavDropdown">
 			<ul class="nav navbar-nav hidden-lg-up">
 			  <li class="nav-item">
-				<a class="nav-link" href="#">Photography & Videography <span class="sr-only">(current)</span></a>
+				<a class="nav-link" href="#">About Us<span class="sr-only">(current)</span></a>
 			  </li>
 			  <li class="nav-item">
-				<a class="nav-link" href="#">Bridal Dressing</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Bridal Wear and Designing</a>
+				<a class="nav-link" href="#">Contact Us</a>
 			  </li>
 			</ul>
 		</div>
 	</nav>
 
-	
-	<div class="modal fade" id="waitModal" role="dialog" data-animation="false">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" style="color: #1980FC;">Please Wait !</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			<p>Your request is beign processing... This migh take few seconds</p>
-		  </div>
+	<div class="modal fade" id="waitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" style="color: #1980FC;">Please Wait !</h5>
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			  <div class="modal-body">
+				<p>Your request is beign processing... This migh take few seconds</p>
+			  </div>
+			</div>
 		</div>
-	  </div>
 	</div>
 	
 	
@@ -205,7 +230,7 @@ if (isset($_POST)) {
 						
 						<div class="form-group">
 							<label class="form-control-label float-xs-left">Re-Enter Password</label>
-						<input class="form-control" name="repassword" id="repassword"  type="password" />
+							<input class="form-control" name="repassword" id="repassword"  type="password" />
 							<div id="repassword_validate" class="form-control-feedback"></div>
 						</div>
 						
@@ -309,7 +334,7 @@ if (isset($_POST)) {
 							By clicking Register, I agree to the Terms and Conditions of Cinderella
 						</p>
 						<div class="text-center">
-							<a class="btn btn-secondary" data-dismiss="alert" href="../../index.php">Cancel</a>
+							<a href="../../index.php" class="btn btn-secondary " role="button" aria-disabled="true">Cancel</a>
 							<button type="submit" class="btn btn-primary">Register</button>
 						</div>
 					</form>
@@ -349,19 +374,7 @@ $('#registerAsMember').validate({ // initialize the plugin
         rules: {
             email: {
                 required: true,
-                email: true,
-				/*
-				remote: {
-					url: "validate.php",
-					type: "post",
-					data: {
-						  action: function() {
-							return $( "#action" ).val();
-						  }
-						}
-				}
-				*/
-				
+                email: true
             },
             password: {
                 required: true,
@@ -461,7 +474,7 @@ grecaptcha.reset();
     // Disabled form elements will not be serialized.
     $inputs.prop("disabled", true);
 
-	//$('#waitModal').modal('show');
+	$('#waitModal').modal('show');
     // Fire off the request to /form.php
     request = $.ajax({
         url: "RegisterMember.php",
@@ -473,10 +486,10 @@ grecaptcha.reset();
     request.done(function (response, textStatus, jqXHR){
         // Log a message to the console
         console.log("Logged in "+ response);
-		//$('#waitModal').modal('hide');
+		$('#waitModal').modal('hide');
 		if(response.indexOf('UNICORN_OK') > -1)
 		{
-			window.location = "registerDone.php";
+			window.location = "RegisterDone.php";
 		}
 		else{
 			$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
@@ -495,9 +508,9 @@ grecaptcha.reset();
             "The following error occurred: "+
             textStatus, errorThrown
         );
-		//$('#waitModal').modal('hide');
+		$('#waitModal').modal('hide');
 		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
-		$("#RegisterError").html(response);
+		$("#RegisterError").html(errorThrown);
 		grecaptcha.reset()
     });
 
@@ -505,7 +518,6 @@ grecaptcha.reset();
     // if the request failed or succeeded
     request.always(function () {
         // Reenable the inputs
-		//$('#waitModal').modal('hide');
         $inputs.prop("disabled", false);
     });
 

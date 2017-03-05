@@ -95,7 +95,15 @@ abstract class UserManager {
 	 * @throws DuplicateUsernameException if it was specified that the username must be unique while it was *not*
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	protected function createUserInternal($requireUniqueUsername, $email, $password, $username = null, callable $callback = null) {
+	 
+	 
+	 //500 - Mail Not Sent
+	 //501 - Confirmation is not created
+	protected function createUserInternal($requireUniqueUsername, $email, $password, $username = null, $userole, $other) {
+		
+		$return = array();
+		$newUserId;
+		$name;
 		$this->throttle(self::THROTTLE_ACTION_REGISTER);
 
 		ignore_user_abort(true);
@@ -130,32 +138,112 @@ abstract class UserManager {
 		}
 
 		$password = password_hash($password, PASSWORD_DEFAULT);
-		$verified = isset($callback) && is_callable($callback) ? 0 : 1;
-
+		$verified = 0;
+		
 		try {
-			$this->db->insert(
+			$this->db->startTransaction();
+			if($userole == UserRole::MEMBER){
+				
+				//add user
+				$this->db->insert(
 				'users',
 				[
 					'email' => $email,
 					'password' => $password,
 					'username' => $username,
 					'verified' => $verified,
-					'registered' => time()
+					'registered' => time(),
+					'user_role' => UserRole::MEMBER
 				]
 			);
+			
+			$newUserId = (int) $this->db->getLastInsertId();
+			if(array_key_exists('address1',$other)){
+				$address1 = $other['address1'];
+			}
+			else{
+				$address1 = null;
+			}
+			if(array_key_exists('address2',$other)){
+				$address2 = $other['address2'];
+			}
+			else{
+				$address2 = null;
+			}
+			if(array_key_exists('address3',$other)){
+				$address3 = $other['address3'];
+			}
+			else{
+				$address3 = null;
+			}
+			//add user as member
+			$this->db->insert(
+				'member',
+				[
+					'user_id' => $newUserId,
+					'email' => $email,
+					'first_name' => $other['first_name'],
+					'last_name' => $other['last_name'],
+					'member_type' => $other['member_type'],
+					'mobile' => $other['mobile'],
+					'district' => $other['district'],
+					'address1' => $address1,
+					'address2' => $address2,
+					'address3' => $address3					
+				]
+			);
+			$name = $other['first_name'].' '.$other['last_name'];
+			}
+			else if($userole == UserRole::MERCHANT){
+				$this->db->insert(
+				'users',
+				[
+					'email' => $email,
+					'password' => $password,
+					'username' => $username,
+					'verified' => $verified,
+					'registered' => time(),
+					'user_role' => UserRole::MERCHANT
+				]
+			);
+			$newUserId = (int) $this->db->getLastInsertId();
+			//$name = $other['first_name'].' '.$other['last_name'];
+			}
+			
+			
+			
+			if ($verified === 0) {
+				$return = $this->createConfirmationRequest($email);
+				if(array_key_exists('selector',$return) === false and array_key_exists('token',$return) === false){
+					$this->db->rollBack();
+					return '501';
+				}
+				else{
+					
+					$mail = new MailHandler();
+					$check = $mail->SendMail($email, $name, $return['token'], $return['selector'], 'register');	
+					if($check === false){
+						$this->db->rollBack();
+						return '500';
+					}
+					else{
+						$this->db->commit();
+					}
+				}
+			}
 		}
 		// if we have a duplicate entry
 		catch (IntegrityConstraintViolationException $e) {
 			throw new UserAlreadyExistsException();
+			$this->db->rollBack();
 		}
 		catch (Error $e) {
 			throw new DatabaseError();
+			$this->db->rollBack();
 		}
-
-		$newUserId = (int) $this->db->getLastInsertId();
-
-		if ($verified === 0) {
-			$this->createConfirmationRequest($email, $callback);
+		catch (Exception $e) {
+			$this->db->rollBack();
+			return $e;
 		}
 
 		return $newUserId;
@@ -266,7 +354,10 @@ abstract class UserManager {
 	 * @param callable $callback the function that sends the confirmation email to the user
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	private function createConfirmationRequest($email, callable $callback) {
+	private function createConfirmationRequest($email) {
+		
+		$return = array();
+		
 		$selector = self::createRandomString(16);
 		$token = self::createRandomString(16);
 		$tokenHashed = password_hash($token, PASSWORD_DEFAULT);
@@ -289,11 +380,51 @@ abstract class UserManager {
 			throw new DatabaseError();
 		}
 
-		if (isset($callback) && is_callable($callback)) {
-			$callback($selector, $token);
+		$return['selector'] = $selector;
+		$return['token'] = $token;
+		
+		return $return;
+	}
+	
+	public function resendConfirmationRequest($email) {
+		$selector = self::createRandomString(16);
+		$token = self::createRandomString(16);
+		$tokenHashed = password_hash($token, PASSWORD_DEFAULT);
+
+		// the request shall be valid for one day
+		$expires = time() + 60 * 60 * 24;
+		
+
+		try {
+			$this->db->startTransaction();
+			$this->db->delete(
+				'users_confirmations',
+				[ 'email' => $email ]
+			);
+			$this->db->insert(
+				'users_confirmations',
+				[
+					'email' => $email,
+					'selector' => $selector,
+					'token' => $tokenHashed,
+					'expires' => $expires
+				]
+			);
+			
+			$mail = new MailHandler();
+			$check = $mail->SendMail($email, $name, $return['token'], $return['selector'], 'register');	
+			if($check === false){
+				$this->db->rollBack();
+				return '500';
+			}
+			else{
+				$this->db->commit();
+				return true;
+			}
 		}
-		else {
-			throw new MissingCallbackError();
+		catch (Error $e) {
+			$this->db->rollBack();
+			throw new DatabaseError();
 		}
 	}
 

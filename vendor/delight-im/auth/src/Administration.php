@@ -37,8 +37,8 @@ final class Administration extends UserManager {
 	 * @throws UserAlreadyExistsException if a user with the specified email address already exists
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	public function createUser($email, $password, $username = null) {
-		return $this->createUserInternal(false, $email, $password, $username, null);
+	public function createUser($email, $password, $username = null, $userole, $other = array()) {
+		return $this->createUserInternal(false, $email, $password, $username, $userole, $other = array());
 	}
 
 	/**
@@ -54,8 +54,8 @@ final class Administration extends UserManager {
 	 * @throws DuplicateUsernameException if the specified username wasn't unique
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	public function createUserWithUniqueUsername($email, $password, $username = null) {
-		return $this->createUserInternal(true, $email, $password, $username, null);
+	public function createUserWithUniqueUsername($email, $password, $username = null, $userole, $other = array()) {
+		return $this->createUserInternal(true, $email, $password, $username, $userole, $other = array());
 	}
 
 	/**

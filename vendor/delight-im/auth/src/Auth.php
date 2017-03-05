@@ -157,8 +157,8 @@ final class Auth extends UserManager {
 	 * @throws UserAlreadyExistsException if a user with the specified email address already exists
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	public function register($email, $password, $username = null, callable $callback = null) {
-		return $this->createUserInternal(false, $email, $password, $username, $callback);
+	public function register($email, $password, $username = null, $userole, $other) {
+		return $this->createUserInternal(false, $email, $password, $username, $userole, $other);
 	}
 
 	/**
@@ -187,8 +187,8 @@ final class Auth extends UserManager {
 	 * @throws DuplicateUsernameException if the specified username wasn't unique
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	public function registerWithUniqueUsername($email, $password, $username = null, callable $callback = null) {
-		return $this->createUserInternal(true, $email, $password, $username, $callback);
+	public function registerWithUniqueUsername($email, $password, $username = null, $userole, $other) {
+		return $this->createUserInternal(true, $email, $password, $username, $userole, $other);
 	}
 
 	/**
@@ -559,7 +559,7 @@ final class Auth extends UserManager {
 	 * @throws TooManyRequestsException if the number of allowed attempts/requests has been exceeded
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	public function forgotPassword($email, callable $callback, $requestExpiresAfter = null, $maxOpenRequests = null) {
+	public function forgotPassword($email, $requestExpiresAfter = null, $maxOpenRequests = null) {
 		$email = self::validateEmailAddress($email);
 
 		if ($requestExpiresAfter === null) {
@@ -587,13 +587,35 @@ final class Auth extends UserManager {
 		if ($userData['verified'] !== 1) {
 			throw new EmailNotVerifiedException();
 		}
-
+		
 		$openRequests = (int) $this->getOpenPasswordResetRequests($userData['id']);
 
 		if ($openRequests < $maxOpenRequests) {
-			$this->createPasswordResetRequest($userData['id'], $requestExpiresAfter, $callback);
+			$this->db->startTransaction();
+			
+			$return = $this->createPasswordResetRequest($userData['id'], $requestExpiresAfter);
+			
+			if(array_key_exists('selector',$return) === false and array_key_exists('token',$return) === false){
+					$this->db->rollBack();
+					return '501';
+				}
+				else{
+					
+					$mail = new MailHandler();
+					//$name
+					$check = $mail->SendMail($email, '', $return['token'], $return['selector'], 'forgotpwd');	
+					if($check === false){
+						$this->db->rollBack();
+						return '500';
+					}
+					else{
+						$this->db->commit();
+						return '200';
+					}
+				}
 		}
 		else {
+			$this->db->rollBack();
 			self::onTooManyRequests($requestExpiresAfter);
 		}
 	}
@@ -726,7 +748,7 @@ final class Auth extends UserManager {
 	 * @throws InvalidEmailException if the email address could not be found
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	private function getUserDataByEmailAddress($email, array $requestedColumns) {
+	public function getUserDataByEmailAddress($email, array $requestedColumns) {
 		try {
 			$projection = implode(', ', $requestedColumns);
 			$userData = $this->db->selectRow(
@@ -791,7 +813,10 @@ final class Auth extends UserManager {
 	 * @param callable $callback the function that sends the password reset information to the user
 	 * @throws AuthError if an internal problem occurred (do *not* catch)
 	 */
-	private function createPasswordResetRequest($userId, $expiresAfter, callable $callback) {
+	private function createPasswordResetRequest($userId, $expiresAfter) {
+		
+		$return = array();
+		
 		$selector = self::createRandomString(20);
 		$token = self::createRandomString(20);
 		$tokenHashed = password_hash($token, PASSWORD_DEFAULT);
@@ -812,12 +837,10 @@ final class Auth extends UserManager {
 			throw new DatabaseError();
 		}
 
-		if (isset($callback) && is_callable($callback)) {
-			$callback($selector, $token);
-		}
-		else {
-			throw new MissingCallbackError();
-		}
+		$return['selector'] = $selector;
+		$return['token'] = $token;
+		
+		return $return;
 	}
 
 	/**
@@ -852,7 +875,9 @@ final class Auth extends UserManager {
 			if (password_verify($token, $resetData['token'])) {
 				if ($resetData['expires'] >= time()) {
 					$newPassword = self::validatePassword($newPassword);
-
+					
+					$this->db->startTransaction();
+					
 					// update the password in the database
 					$this->updatePassword($resetData['user'], $newPassword);
 
@@ -864,8 +889,11 @@ final class Auth extends UserManager {
 							'users_resets',
 							[ 'id' => $resetData['id'] ]
 						);
+						$this->db->commit();
+						return '200';
 					}
 					catch (Error $e) {
+						$this->db->rollBack();
 						throw new DatabaseError();
 					}
 				}
@@ -1314,5 +1342,35 @@ final class Auth extends UserManager {
 
 		return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 	}
+	
+	public function isUserExist($email) {
+		try {
+			$email = self::validateEmailAddress($email);
+			$userData = $this->db->selectRow(
+				'SELECT email FROM users WHERE email = ?',
+				[ $email ]
+			);
+			if(empty($userData['email'])){
+				return false;
+			}
+			else{
+				if($userData['email'] === $email){
+					return true;
+				}
+				else{
+					return false;
+				}
+				
+			}
+			
+		}
+		catch (Exception $e) {
+			return true;
+		}
+		catch(InvalidEmailException $e){
+			return true;
+		}
+	}
+	
 
 }

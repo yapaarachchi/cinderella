@@ -17,9 +17,9 @@ ini_set('assert.exception', 1);
 
 header('Content-type: text/html; charset=utf-8');
 
-require __DIR__.'/../vendor/autoload.php';
+require '../../../../vendor/autoload.php';
 
-$db = new PDO('mysql:dbname=php_auth;host=127.0.0.1;charset=utf8mb4', 'root', 'monkey');
+$db = new PDO('mysql:dbname=cinderella;host=127.0.0.1;charset=utf8mb4', 'root', '');
 
 $auth = new \Delight\Auth\Auth($db);
 
@@ -105,10 +105,18 @@ function processRequestData(\Delight\Auth\Auth $auth) {
 					}
 
 					if ($_POST['require_unique_username'] == 0) {
-						return $auth->register($_POST['email'], $_POST['password'], $_POST['username'], $callback);
+						$other['first_name'] = 'sunil';
+						$other['last_name'] = 'mendis';
+						$other['member_type'] = 'GROOM';
+						$other['mobile'] = 0715105657;
+						$other['district'] = 'Gampaha';
+						$other['address1'] = 'aaaaa';
+						$other['address2'] = 'bbbbb';
+						$other['address3'] = 'cccccc';
+						return $auth->register($_POST['email'], $_POST['password'], $_POST['username'], '2', $other);
 					}
 					else {
-						return $auth->registerWithUniqueUsername($_POST['email'], $_POST['password'], $_POST['username'], $callback);
+						return $auth->registerWithUniqueUsername($_POST['email'], $_POST['password'], $_POST['username'], '3', $other = array());
 					}
 				}
 				catch (\Delight\Auth\InvalidEmailException $e) {
