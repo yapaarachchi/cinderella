@@ -207,10 +207,81 @@ abstract class UserManager {
 				]
 			);
 			$newUserId = (int) $this->db->getLastInsertId();
-			//$name = $other['first_name'].' '.$other['last_name'];
+			if(array_key_exists('business_mobile',$other)){
+				$mobile = $other['business_mobile'];
 			}
+			else{
+				$mobile = null;
+			}
+			if(array_key_exists('business_phone',$other)){
+				$phone = $other['business_phone'];
+			}
+			else{
+				$phone = null;
+			}
+			if(array_key_exists('description',$other)){
+				$description = $other['description'];
+			}
+			else{
+				$description = null;
+			}
+			//add business
+			$this->db->insert(
+				'business',
+				[
+					'user_id' => $newUserId,
+					'email' => $email,
+					'category1' => $other['category1'],
+					'category2' => $other['category2'],
+					'contact_person' => $other['contact_person'],
+					'business_mobile' => $mobile,
+					'business_phone' => $phone,
+					'business_name' => $other['business_name'],
+					'business_email' => $email,
+					'description' => $description
+				]
+			);
+			$name = $other['business_name'];
+			$business_id = (int) $this->db->getLastInsertId();
 			
+			if(array_key_exists('address1',$other)){
+				$address1 = $other['address1'];
+			}
+			else{
+				$address1 = null;
+			}
+			if(array_key_exists('address2',$other)){
+				$address2 = $other['address2'];
+			}
+			else{
+				$address2 = null;
+			}
+			if(array_key_exists('address3',$other)){
+				$address3 = $other['address3'];
+			}
+			else{
+				$address3 = null;
+			}
+			//add branch - default this will take as main branch
 			
+			$this->db->insert(
+				'branch',
+				[
+					'business_id' => $business_id,
+					'branch_address1' => $address1,
+					'branch_address2' => $address2,
+					'branch_address3' => $address3,
+					'contact_person' => $other['contact_person'],
+					'branch_mobile' => $mobile,
+					'branch_phone' => $phone,
+					'main_branch' => 'YES',
+					'branch_email' => $email,
+					'description' => $description,
+					'district' => $other['district']					
+				]
+			);
+			
+			}
 			
 			if ($verified === 0) {
 				$return = $this->createConfirmationRequest($email);

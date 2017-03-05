@@ -26,9 +26,8 @@ class MailHandler {
 	const PORT = 465;
 	const FROM = "yapaarachchi@gmail.com";
 	const FROMNAME = "Cinderella";
-	
-	
-	
+
+
 	public function SendMail($email, $name, $token, $selector, $type){
 						$mail = new PHPMailer; 
 						$mail->SMTPDebug = 3;

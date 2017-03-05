@@ -18,6 +18,10 @@ final class ErrorCode {
 	const REQUIRED_MEMBER_TYPE = 'Are you Grrom or Bride ?';
 	const REQUIRED_DISTRICT = 'Distict is required';
 	const REQUIRED_RECAPTCHA = 'Are you Human ?';
+	const REQUIRED_CONTACT_PERSON = 'Contact Person for your business is required';
+	const REQUIRED_BUSINESS_NAME = 'Your Business Name is required';
+	const REQUIRED_MERCHANT_ADDRESS = 'Address of Your Business is required';
+	const REQUIRED_CATEGORY = 'Categories are required';
 	
 	/*
 	const REQUIRED_EMAIL = 'Email is required';

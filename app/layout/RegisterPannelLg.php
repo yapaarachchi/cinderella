@@ -21,7 +21,7 @@
 		</div>
 		
 		<div class="col-lg-4">
-		<a id="merchant-button" href="app/layout/registerMerchant.php" class="btn btn-primary-unicorn btn-lg btn-block">
+		<a id="merchant-button" href="app/layout/RegisterMerchant.php" class="btn btn-primary-unicorn btn-lg btn-block">
 		
 		<h3>Become a Merchant</h3>
 		<p><small >Have a Business? Promote it</small></p>

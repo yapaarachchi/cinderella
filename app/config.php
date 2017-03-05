@@ -8,6 +8,7 @@ Class Config{
 	public static $pwd = '';
 	public static $port = 3306;
 	public static $domain = 'localhost/cinderella/';
+	public static $recaptcha = '6LfSRhUUAAAAAFEdLWxrneyWgpLgtg8JaP6d74r0';
 	
 	public static function initDb(){
 		$db = new PDO('mysql:dbname='.Config::$db.';host='.Config::$host.';port='.Config::$port.';charset=utf8mb4', Config::$username,Config::$pwd);

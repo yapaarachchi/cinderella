@@ -5,6 +5,7 @@ require '../../vendor/autoload.php';
 
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
+
 if($auth->isLoggedIn()){
 	header('Location: ../../index.php');
 }
@@ -36,16 +37,12 @@ if (isset($_POST)) {
 							ErrorCode::SetError(ErrorCode::REQUIRED_PASSWORD_MISMATCH);
 							return;
 						}
-						if (isset($_POST['fname']) and $_POST['fname'] == '') {
-							ErrorCode::SetError(ErrorCode::REQUIRED_FIRST_NAME);
+						if (isset($_POST['contactPerson']) and $_POST['contactPerson'] == '') {
+							ErrorCode::SetError(ErrorCode::REQUIRED_CONTACT_PERSON);
 							return;
 						}
-						if (isset($_POST['lname']) and $_POST['lname'] == '') {
-							ErrorCode::SetError(ErrorCode::REQUIRED_LAST_NAME);
-							return;
-						}
-						if (isset($_POST['radio']) and $_POST['radio'] == '') {
-							ErrorCode::SetError(ErrorCode::REQUIRED_MEMBER_TYPE);
+						if (isset($_POST['businessName']) and $_POST['businessName'] == '') {
+							ErrorCode::SetError(ErrorCode::REQUIRED_BUSINESS_NAME);
 							return;
 						}
 						if (isset($_POST['district']) and $_POST['district'] == '') {
@@ -57,14 +54,42 @@ if (isset($_POST)) {
 							ErrorCode::SetError(ErrorCode::REQUIRED_MOBILE);
 							return;
 						}
+						if (isset($_POST['address1']) and $_POST['address1'] == '') {
+							ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_ADDRESS);
+							return;
+						}
+						if (isset($_POST['address2']) and $_POST['address2'] == '') {
+							ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_ADDRESS);
+							return;
+						}
+						if (isset($_POST['address3']) and $_POST['address3'] == '') {
+							ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_ADDRESS);
+							return;
+						}
+						if (isset($_POST['category1']) and $_POST['category1'] == '') {
+							ErrorCode::SetError(ErrorCode::REQUIRED_CATEGORY);
+							return;
+						}
+						if (isset($_POST['category2']) and $_POST['category2'] == '') {
+							ErrorCode::SetError(ErrorCode::REQUIRED_CATEGORY);
+							return;
+						}
 					}
 					
 					try{
-						$other['first_name'] = $_POST['fname'];
-						$other['last_name'] = $_POST['lname'];
-						$other['member_type'] = $_POST['radio'];
+						$other['contact_person'] = $_POST['contactPerson'];
+						$other['business_name'] = $_POST['businessName'];
 						$other['district'] = $_POST['district'];
-						$other['mobile'] = $_POST['mobile'];
+						$other['business_mobile'] = $_POST['mobile'];
+						$other['category1'] = $_POST['category1'];
+						$other['category2'] = $_POST['category2'];
+						if (isset($_POST['phone']) and $_POST['phone'] !== '') {
+							$other['business_phone'] = $_POST['phone'];
+						}
+						if (isset($_POST['description']) and $_POST['description'] !== '') {
+							$other['description'] = $_POST['description'];
+						}
+						
 						if (isset($_POST['address1']) and $_POST['address1'] !== '') {
 							$other['address1'] = $_POST['address1'];
 						}
@@ -75,7 +100,8 @@ if (isset($_POST)) {
 						if (isset($_POST['address3']) and $_POST['address3'] !== '') {
 							$other['address3'] = $_POST['address3'];
 						}
-						$check = $auth->registerWithUniqueUsername($_POST['email'], $_POST['password'], $_POST['email'], '2', $other);
+						
+						$check = $auth->registerWithUniqueUsername($_POST['email'], $_POST['password'], $_POST['email'], '3', $other);
 						if($check == '500'){
 							ErrorCode::SetError(ErrorCode::CODE_500);
 							return ;
@@ -95,7 +121,7 @@ if (isset($_POST)) {
 						return;
 					}
 					catch (Exception $e) {
-						ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+						ErrorCode::SetError(ErrorCode::ERROR_GENERAL.$e);
 						return;
 					}
 				}				
@@ -207,7 +233,7 @@ if (isset($_POST)) {
 	<div id="topDiv" name="topDiv" class="col-lg-6">
 		<div class="card ">
 			<div class="card-header text-center">
-				<h4 style="color: #1980FC;">Register as a Member</h4>
+				<h4 style="color: #1980FC;">Register as a Merchant</h4>
 			</div>
 			<div class="card-block">
 				<div class="row">
@@ -235,61 +261,67 @@ if (isset($_POST)) {
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">First Name</label>
-						<input class="form-control" name="fname" type="text"/>
-						<div id="fname_validate" class="form-control-feedback"></div>
+						<label class="form-control-label float-xs-left">Contact Person</label>
+						<input class="form-control" name="contactPerson" type="text"/>
+						<div id="contactPerson_validate" class="form-control-feedback"></div>
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">Last Name</label>
-						<input class="form-control" name="lname" type="text"/>
-						<div id="lname_validate" class="form-control-feedback"></div>
+						<label class="form-control-label float-xs-left">Business Name</label>
+						<input class="form-control" name="businessName" type="text"/>
+						<small class="form-text text-muted float-right">Ex: ABC Studio</small>
+						<div id="businessName_validate" class="form-control-feedback"></div>
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">I'm</label><br/>
-						<label class="custom-control custom-radio">
-						  <input id="radio1" name="radio" value="Groom" type="radio" class="custom-control-input">
-						  <span class="custom-control-indicator"></span>
-						  <span class="custom-control-description">Groom</span>
-						</label>
-						<label class="custom-control custom-radio">
-						  <input id="radio" value="Bride" name="radio" type="radio" class="custom-control-input">
-						  <span class="custom-control-indicator"></span>
-						  <span class="custom-control-description">Bride</span>
-						</label>
-						<div id="radio_validate" class="form-control-feedback"></div>
+						<label class="form-control-label float-left">Main Category</label>
+						<select class="form-control" id="category1" name="category1">
+						</select>
+						<div id="category1_validate" class="form-control-feedback"></div>
 						</div>
 						
-						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">Mobile</label>
+						<label class="form-control-label float-left">Sub Category</label>
+						<select class="form-control" id="category2" name="category2">
+						</select>
+						<div id="category2_validate" class="form-control-feedback"></div>
+						</div>
+			
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Business Mobile</label>
 						<input class="form-control" name="mobile" type="tel"/>
-						<small class="form-text text-muted float-xs-right">Ex: 0712345678</small>
+						<small class="form-text text-muted float-right">Ex: 0712345678</small>
 						<div id="mobile_validate" class="form-control-feedback"></div>
 						</div>
-						<!-- 
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Business Phone</label>
+						<input class="form-control" name="phone" type="tel"/>
+						<small class="form-text text-muted float-right">Ex: 0112345678</small>
+						<div id="phone_validate" class="form-control-feedback"></div>
+						</div>
+						
 						<div class="form-group">
 						<label class="form-control-label float-xs-left">Address1</label>
 						<input class="form-control" name="address1" type="text"/>
 						<div id="address1_validate" class="form-control-feedback"></div>
-						<small class="form-text text-muted float-xs-right">Ex: No: 49/6/A</small>
+						<small class="form-text text-muted float-right">Ex: No: 49/6/A</small>
 						</div>
 						
 						<div class="form-group">
 						<label class="form-control-label float-xs-left">Address2</label>
 						<input class="form-control" name="address2" type="text"/>
 						<div id="address2_validate" class="form-control-feedback"></div>
-						<small class="form-text text-muted float-xs-right">Ex: Temple Road</small>
+						<small class="form-text text-muted float-right">Ex: Temple Road</small>
 						</div>
 						
 						<div class="form-group">
 						<label class="form-control-label float-xs-left">City</label>
 						<input class="form-control" name="address3" type="text"/>
 						<div id="address3_validate" class="form-control-feedback"></div>
-						<small class="form-text text-muted float-xs-right">Ex: Maharagama</small>
+						<small class="form-text text-muted float-right">Ex: Maharagama</small>
 						</div>
-						-->
+						
 						<div class="form-group">
 						<label class="form-control-label float-xs-left">District</label>
 						<select class="form-control" name="district">
@@ -322,7 +354,14 @@ if (isset($_POST)) {
 						</select>
 						<div id="district_validate" class="form-control-feedback"></div>
 						</div>
-
+						
+						<div class="form-group">
+						<label class="form-control-label float-left">Description</label>
+						<textarea class="form-control" rows="3" name="description" > </textarea>
+						<small class="form-text text-muted float-right">Small description about your business</small>
+						<div id="description_validate" class="form-control-feedback"></div>
+						</div>
+						</br>
 						<div align="center" class="form-group">
 							<div class="g-recaptcha" data-sitekey="6LfSRhUUAAAAAC9_QF8XXJb2pekVh9Kphs4fk0JO" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div><br/><br/>
 							
@@ -370,6 +409,34 @@ if (isset($_POST)) {
 
 $(document).ready(function() {	
 
+$.ajax({
+    type: "POST",
+    url: '../controller/GetData.php',
+    data: {'action': 'Category1'},
+    dataType:'html',
+    success: function(data) {
+		$("#category1").empty();
+		$("#category1").html(data);
+    }
+});
+
+$('#category1').change(function () {
+	
+	$.ajax({
+    type: "POST",
+    url: '../controller/GetData.php',
+    data: {'action': 'Category2', 'Category1': $(this).find('option:selected').attr('id')},
+    dataType:'html',
+    success: function(data) {
+		$("#category2").empty();
+		$("#category2").html(data);
+
+    }
+});
+	
+});
+
+
 $('#registerAsMember').validate({ // initialize the plugin
         rules: {
             email: {
@@ -393,10 +460,10 @@ $('#registerAsMember').validate({ // initialize the plugin
 				required: true,
 		  equalTo: "#password"
 		  },
-		  fname: {
+		  contactPerson: {
                 required: true
             },
-			lname: {
+			businessName: {
                 required: true
             },
 			mobile: {
@@ -405,12 +472,24 @@ $('#registerAsMember').validate({ // initialize the plugin
 				minlength: 10,
 				maxlength: 10
             },
-			district: {
+			address1: {
                 required: true
             },
-			radio: {
-            required: true
-        }
+			address2: {
+                required: true
+            },
+			category1: {
+                required: true
+            },
+			category2: {
+                required: true
+            },
+			address3: {
+                required: true
+            },
+			district: {
+                required: true
+            }
 		
         },
 		 messages: {
@@ -419,9 +498,6 @@ $('#registerAsMember').validate({ // initialize the plugin
                     email: "This is not a valid email!",
                     remote: "Email already exists or This is not a valid email address"
                 },
-				radio: {
-					required: "Select either one"
-				},
 				mobile:{
 					minlength: "Enter valid phone number",
 					maxlength: "Enter valid phone number"
@@ -486,7 +562,7 @@ grecaptcha.reset();
 	$('#waitModal').modal('show');
     // Fire off the request to /form.php
     request = $.ajax({
-        url: "RegisterMember.php",
+        url: "RegisterMerchant.php",
         type: "post",
         data: serializedData
     });
