@@ -112,7 +112,7 @@ if (isset($_POST)) {
 		  </div>
 		  <div class="card-block">
 		  <div id="Error"></div>
-		  <p style="color: #1980FC;"> Enter your email address to reset your password.</p>
+		  <p style="color: #1980FC;"> Enter your email address to reset your account password.</p>
 				<form id="fgtPassword">
 				 <div class="form-group">
 					<label class="form-control-label float-left" >Email</label><br/>
@@ -121,7 +121,7 @@ if (isset($_POST)) {
 				</div>
 				<input type="hidden" name="action" value="forgotPassword"/>
 				<div class="float-right">
-				<a href="../../index.php" class="btn btn-secondary " role="button" aria-disabled="true">Cancel</a>
+				<a href="../../index.php" style="margin-right:5px;" class="btn btn-secondary " role="button" aria-disabled="true">Cancel</a>
 				<button type="submit" class="btn btn-primary float-right">Reset Password</button>
 				</div>
 				</form>
