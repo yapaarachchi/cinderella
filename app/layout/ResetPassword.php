@@ -16,6 +16,9 @@ if (isset($_GET)) {
 			$token = htmlspecialchars($_GET['token']);
 		}	
 		}
+		else{
+			header('Location: ../../index.php');
+		}
 }
 if (isset($_POST)) {
 		if (isset($_POST['action'])) {
@@ -312,7 +315,7 @@ if (isset($_POST)) {
     },
 	
     });
-
+var request;
 
 	$("#login").submit(function(event){
 
@@ -382,7 +385,7 @@ if (isset($_POST)) {
 
 
 	
-	var request;
+	
 
 // Bind to the submit event of our form
 $("#resetPassword").submit(function(event){
