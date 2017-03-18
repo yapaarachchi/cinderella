@@ -24,8 +24,8 @@ class MailHandler {
 	const PASSWORD = "aDloMnB0cHQ2MWxx";
 	const SMTPSECURE = "ssl";
 	const PORT = 465;
-	const FROM = "yapaarachchi@gmail.com";
-	const FROMNAME = "Cinderella";
+	const FROM = "cinderellalkinfo@gmail.com";
+	const FROMNAME = "Cinderella Wedding Directory";
 
 
 	public function SendMail($email, $name, $token, $selector, $type){

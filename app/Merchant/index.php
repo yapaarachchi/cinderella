@@ -7,7 +7,7 @@ $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
 $isLoggedIn = $auth->isLoggedIn();
 if(!$isLoggedIn){
-	//header('Location: ../../index.php');
+	header('Location: ../../index.php');
 }
 
 ?>
