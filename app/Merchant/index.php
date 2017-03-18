@@ -9,6 +9,7 @@ $isLoggedIn = $auth->isLoggedIn();
 if(!$isLoggedIn){
 	//header('Location: ../../index.php');
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -71,24 +72,15 @@ if(!$isLoggedIn){
 		</ul>
 		
 		<?php
-			if($isLoggedIn === false){				
-		?>
-			<ul class="nav navbar-nav">
-			  <li class="nav-item">
-				<a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><u>Sign In</u></a>
-			  </li>
-			</ul>
-		<?php
-			}
-			else{
+			if($isLoggedIn === true){				
 		?>
 		<div class="active-links">
             <div id="session">
 			<ul class="nav navbar-nav">
 			<li class="nav-item dropdown">
-            <a id="signin-link" class="nav-link dropdown-toggle" href="#">
-			<div class="hidden-sm-down">Hi, <u><?php  echo $auth->getEmail(); ?> </u></div>
-			<div class="hidden-md-up"><u>Hi,</u></div>
+            <a id="signout" class="nav-link dropdown-toggle" href="#">
+			<div class="hidden-sm-down"><u>  Sign Out </u></div>
+			<div class="hidden-md-up"><u></u></div>
             </a>
 			</li>
 			</ul>
@@ -114,9 +106,29 @@ if(!$isLoggedIn){
 				<a class="nav-link" href="#">Bridal Wear and Designing</a>
 			  </li>
 			</ul>
+			
 		</div>
+		<div id="message-alert">
+							
+						</div>
 	</nav>
 
+	
+	<div class="modal fade" id="waitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" style="color: #1980FC;">Please Wait !</h5>
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			  <div class="modal-body">
+				<p>Your request is beign processing... This migh take few seconds</p>
+			  </div>
+			</div>
+		</div>
+	</div>
+	
 	
 	<div class="modal fade" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -184,10 +196,14 @@ if(!$isLoggedIn){
 			
 			<!-- Middle Pannel -->
 			<div class="col-lg-8">
+						
 				<div class="row">
 					<div id="mainContent" class="col-lg-12">
 						<!-- put main content here -->
-						<div> Welcome to your page</div>
+						<div class="alert alert-info"  style="margin-top:200px">
+						  <strong>Welcome Merchant!</strong>, you can manage your business information from here. Contact Cinderella Team for further help.
+						</div>
+					
 					
 					</div>
 				</div>
@@ -204,15 +220,19 @@ if(!$isLoggedIn){
     <script src="../../js/jquery-3.1.1.slim.min.js"></script>
     <script src="../../js/tether.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 	
 	<script src="../../js/jquery.validate.min.js"></script>
 	<script src="../../js/additional-methods.min.js"></script>
 
+	<script src="../../js/notify.js"></script>
 	
 <script>
-$(document).ready(function() {	
-var request;
 
+
+$(document).ready(function() {	
+
+var request;
 $('#Profile').click( function(e) {
 		
 		e.preventDefault(); 
@@ -254,7 +274,7 @@ $('#Profile').click( function(e) {
 
 	} );
 
-$('#Business').click( function(e) {
+	$('#AddBusiness').click( function(e) {
 		
 		e.preventDefault(); 
 	 // Abort any pending request
@@ -262,8 +282,59 @@ $('#Business').click( function(e) {
         request.abort();
     }
 	request = $.ajax({
+        url: "AddBusiness.php",
+        type: "get",
+		dataType: 'html',
+          data: {
+              id : '19',
+          },
+    });
+	
+    // Callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR){
+        // Log a message to the console
+        console.log("Logged in "+ response);
+		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
+		$("#mainContent").html(response);
+		
+    });
+
+    // Callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        // Log the error to the console
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
+		$("#mainContent").html(errorThrown);
+    });
+
+    // Callback handler that will be called regardless
+    // if the request failed or succeeded
+    request.always(function () {
+        // Reenable the inputs
+        //$inputs.prop("disabled", false);
+    });
+
+	} );
+
+
+	
+$('#business-list-group').find('a').click( function(e) {
+		e.preventDefault(); 
+	 // Abort any pending request
+    if (request) {
+        request.abort();
+    }
+	var id = $(this).attr('id');
+	request = $.ajax({
         url: "Business.php",
-        type: "get"
+        type: "get",
+		dataType: 'html',
+          data: {
+              id : id,
+          },
     });
 	
     // Callback handler that will be called on success

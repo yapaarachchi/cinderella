@@ -261,12 +261,6 @@ if (isset($_POST)) {
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">Contact Person</label>
-						<input class="form-control" name="contactPerson" type="text"/>
-						<div id="contactPerson_validate" class="form-control-feedback"></div>
-						</div>
-						
-						<div class="form-group">
 						<label class="form-control-label float-xs-left">Business Name</label>
 						<input class="form-control" name="businessName" type="text"/>
 						<small class="form-text text-muted float-right">Ex: ABC Studio</small>
@@ -287,6 +281,12 @@ if (isset($_POST)) {
 						<div id="category2_validate" class="form-control-feedback"></div>
 						</div>
 			
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Contact Person</label>
+						<input class="form-control" name="contactPerson" type="text"/>
+						<div id="contactPerson_validate" class="form-control-feedback"></div>
+						</div>
+						
 						<div class="form-group">
 						<label class="form-control-label float-xs-left">Business Mobile</label>
 						<input class="form-control" name="mobile" type="tel"/>
@@ -472,6 +472,11 @@ $('#registerAsMember').validate({ // initialize the plugin
 				minlength: 10,
 				maxlength: 10
             },
+			phone: {
+				digits: true,
+				minlength: 10,
+				maxlength: 10
+            },
 			address1: {
                 required: true
             },
@@ -499,6 +504,10 @@ $('#registerAsMember').validate({ // initialize the plugin
                     remote: "Email already exists or This is not a valid email address"
                 },
 				mobile:{
+					minlength: "Enter valid phone number",
+					maxlength: "Enter valid phone number"
+				},
+				phone:{
 					minlength: "Enter valid phone number",
 					maxlength: "Enter valid phone number"
 				}
@@ -607,6 +616,8 @@ grecaptcha.reset();
     });
 
 });
+
+
 });
 </script>
   

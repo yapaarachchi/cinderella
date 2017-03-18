@@ -211,6 +211,32 @@ function processRequestData(\Delight\Auth\Auth $auth) {
 					return 'invalid password(s)';
 				}
 			}
+			else if ($_POST['action'] === 'test') {
+				try{
+					$db = new PDO('mysql:dbname=cinderella;host=127.0.0.1;charset=utf8mb4', 'root', '');
+				$Business = new \Delight\Auth\Business($db);
+						$other['contact_person'] = 'Gayan';
+						$other['business_name'] = 'Dummy';
+						$other['district'] = 'Ratnaura';
+						$other['business_mobile'] = 1111111111;
+						$other['category1'] = 1;
+						$other['category2'] = 2;
+						$other['business_email'] = 'yapa@ff.com';
+						$other['business_phone'] = 2222222222;
+						$other['description'] = 'sssssssss';
+						$other['address1'] = 'ddddddddddddddddd';
+						$other['address2'] = 'ffffffffffff';
+						$other['address3'] = 'yyyyyyyyyy';
+						$other['email'] = $auth->getEmail();
+						$other['web'] = 'www.ccc.com';
+						
+				$Business->addBusiness($auth->getUserId(), $other);
+				}
+				catch(Exception $e){
+					return 'Error - '.$e;
+				}
+				return 'ok';
+			}
 			else if ($_POST['action'] === 'logout') {
 				$auth->logout();
 
@@ -379,6 +405,11 @@ function showAuthenticatedUserForm() {
 	echo '<form action="" method="post" accept-charset="utf-8">';
 	echo '<input type="hidden" name="action" value="logout" />';
 	echo '<button type="submit">Logout</button>';
+	echo '</form>';
+	
+	echo '<form action="" method="post" accept-charset="utf-8">';
+	echo '<input type="hidden" name="action" value="test" />';
+	echo '<button type="submit">Test</button>';
 	echo '</form>';
 }
 
