@@ -85,10 +85,8 @@ $text = '
 
 
 $text = $text. '
-<form>
-<button type="submit" class="btn btn-danger" id="editFormButton">Delete Branch</button>
-</form>
-<a href="#" class="btn btn-danger">Delete Branch</a>
+
+<a href="#" class="btn btn-danger">Delete Business</a>
 </br>
 </br>
 <ul class="nav nav-tabs" role="tablist">

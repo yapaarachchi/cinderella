@@ -200,7 +200,7 @@ if(!$isLoggedIn){
 				<div class="row">
 					<div id="mainContent" class="col-lg-12">
 						<!-- put main content here -->
-						<div class="alert alert-info"  style="margin-top:200px">
+						<div class="alert alert-info"  style="margin-top:50px">
 						  <strong>Welcome Merchant!</strong>, you can manage your business information from here. Contact Cinderella Team for further help.
 						</div>
 					
