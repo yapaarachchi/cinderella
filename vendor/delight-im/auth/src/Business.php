@@ -213,6 +213,65 @@ class Business {
 			throw new DatabaseError();
 		}	
 	}
+	
+	public function search($category1, $category2, $district, $text) {
+		try {
+			$requestedColumns = ' business_name, branch_address1, branch_address2, branch_address3, business_email, business_mobile ';
+			
+			$where = "";
+			
+			if($category1 !== null ){
+				$where = " category1 = ".$category1;			
+			}
+			
+			if($category2 != null ){
+				if($where != ""){
+					$where = $where." AND category2 = ".$category2	;	
+				}
+				else{
+					$where = " category2 = ".$category2;	
+				}
+						
+			}
+			
+			if($district !== null ){
+				if($where != ""){
+					$where = $where." AND district = '".$district."'";	
+				}
+				else{
+					$where = " district = '".$district."'";	
+				}
+							
+			}
+			
+			if($text !== null){
+				if($where != ""){
+					$where = $where." AND (business_name like '%".$text."%' OR category1 like '%".$text."%' OR category2 like '%".$text."%' OR business_description like '%".$text."%' OR branch_address1 like '%".$text."%' OR branch_address2 like '%".$text."%' OR branch_address3 like '%".$text."%' OR district like '%".$text."%')";	
+				}
+				else{
+					$where = " business_name like '%".$text."%' OR category1 like '%".$text."%' OR category2 like '%".$text."%' OR business_description like '%".$text."%' OR branch_address1 like '%".$text."%' OR branch_address2 like '%".$text."%' OR branch_address3 like '%".$text."%' OR district like '%".$text."%'";	
+				}			
+			}
+			
+			if($where == null or $where == ""){
+				$where = "1=1";
+			}
+			
+			$result = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM business_branch WHERE '.$where.' ORDER BY business_id DESC;'
+			);
+			
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		
+		if(!empty($result)){
+			return $result;
+		}
+	}
+
+
 
 
 
