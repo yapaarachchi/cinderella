@@ -31,7 +31,7 @@ if (isset($_POST)) {
 			
 			$result = $business->search($category1,$category2,$district,$search_text);
 			
-			$text = '';
+			$text = '<div class="card-columns"> ';
 			
 			if(!empty($result)){
 				foreach($result as $key => $value) {
@@ -46,14 +46,21 @@ if (isset($_POST)) {
 						
 						<div class="col-xs-12">
 						<address>
+						<img  src="../../assets/icons/location.png" alt="Card image cap">
 						'.$value['branch_address1'].', '.$value['branch_address2'].','.$value['branch_address3'].'.</address>
 						</div>
 						</div>
 						<div class="row">
-						
-						
 						<div class="col-xs-12">
+						<img  src="../../assets/icons/phone.png" alt="Card image cap">
 						'.$value['business_mobile'].'
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12">
+						<img  src="../../assets/icons/mail.png" alt="Card image cap">
+						'.$value['business_email'].'
 						</div>
 						</div>
 						
@@ -68,7 +75,7 @@ if (isset($_POST)) {
 				
 				';
 				}
-				
+				$text = $text.'</div>';
 			}
 			else{
 				$text = '

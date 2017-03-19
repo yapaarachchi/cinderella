@@ -87,7 +87,7 @@ $isLoggedIn = $auth->isLoggedIn();
 		<?php
 			if($isLoggedIn === false){				
 		?>
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav hidden-md-down">
 			  <li class="nav-item">
 				<a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><u>Sign In</u></a>
 			  </li>
@@ -119,14 +119,17 @@ $isLoggedIn = $auth->isLoggedIn();
 		<!-- Toggle - Small Screen -->
 		<div class="collapse navbar-toggleable-md" id="navbarNavDropdown">
 			<ul class="nav navbar-nav hidden-lg-up">
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Photography & Videography <span class="sr-only">(current)</span></a>
+			<?php
+			if($isLoggedIn === false){				
+		?>
+			<li class="nav-item">
+				<a class="nav-link" href="#" data-toggle="modal" data-target="#LogInModal"><u>Sign In</u></a>
 			  </li>
+		<?php
+			}
+		?>
 			  <li class="nav-item">
-				<a class="nav-link" href="#">Bridal Dressing</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Bridal Wear and Designing</a>
+				<a class="nav-link" href="app/Search/">Search</a>
 			  </li>
 			</ul>
 		</div>

@@ -125,7 +125,7 @@ if (isset($_GET)) {
 						
 				<div class="row">
 				
-					<div class="col-lg-12 card-columns" id="SearchArea">
+					<div class="col-lg-12" id="SearchArea">
 					
 					</div>
 				</div>
