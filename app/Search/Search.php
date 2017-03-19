@@ -38,38 +38,38 @@ if (isset($_POST)) {
 				$text = $text.'
 					<div class="card">
 
-					  <img class="card-img-top img-fluid" src="../../assets/ads/10.png" alt="Card image cap" style="width: 100%">
+					  <img class="card-img-top img-fluid" src="../../assets/ads/10.png" alt="Card image cap" style="width: 100%; height: 150px;">
 					  <div class="card-block">
 						<h4 class="card-title">'.$value['business_name'].'</h4>
 						<div class="row">
 						
 						
-						<div class="col-xs-12">
+						<div class="col-xs-12 text-muted">
 						<address>
 						<img  src="../../assets/icons/location.png" alt="Card image cap">
 						'.$value['branch_address1'].', '.$value['branch_address2'].','.$value['branch_address3'].'.</address>
 						</div>
 						</div>
 						<div class="row">
-						<div class="col-xs-12">
+						<div class="col-xs-12 text-muted">
 						<img  src="../../assets/icons/phone.png" alt="Card image cap">
 						'.$value['business_mobile'].'
 						</div>
 						</div>
 						
 						<div class="row">
-						<div class="col-xs-12">
+						<div class="col-xs-12 text-muted">
 						<img  src="../../assets/icons/mail.png" alt="Card image cap">
 						'.$value['business_email'].'
 						</div>
 						</div>
 						
-						<div class="row">
-						<div class="float-right">
-							<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-							</div >
-						</div>
 					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="#" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
 					</div>
 					</br>
 				

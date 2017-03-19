@@ -7,7 +7,7 @@
   
     <div class="card ">
 
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/8.jpg" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Donal Studio</h4>
         <div class="row">
@@ -39,7 +39,7 @@
     </div>
 	 
 	 <div class="card ">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Jonathans Havelock Town</h4>
         <div class="row">
@@ -70,7 +70,7 @@
     </div>
 	
 	<div class="card ">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Prasanna Hennayake Studio</h4>
         <div class="row">
@@ -101,7 +101,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Senaka Wedding Studio</h4>
         <div class="row">
@@ -132,7 +132,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Veenavee Studio</h4>
         <div class="row">
@@ -163,7 +163,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Wedding World Studio One</h4>
         <div class="row">
@@ -194,7 +194,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Helen S Studio</h4>
         <div class="row">
@@ -225,7 +225,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Raymac Photos</h4>
         <div class="row">
@@ -256,7 +256,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Studio 3000df</h4>
         <div class="row">
@@ -287,7 +287,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Studio 3000df</h4>
         <div class="row">
@@ -318,7 +318,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Studio 3000df</h4>
         <div class="row">
@@ -349,7 +349,7 @@
     </div>
 	
 	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;">
+      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
       <div class="card-block">
         <h4 class="card-title">Studio 3000df</h4>
         <div class="row">

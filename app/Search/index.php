@@ -111,6 +111,27 @@ if (isset($_GET)) {
 		
 			<!-- Margin Left Pannel -->
 			<div class="col-lg-2 hidden-md-down">
+				
+				<div class="card">
+					<div class="card-block">
+								<div class="card card-block" style="padding: 0px; margin-bottom:10px;">
+								  <a href="#" ><img src="../../assets/ads/300-300.jpg" class="img-fluid d-block" alt="Image"></a>
+								</div>
+								
+								<div class="card card-block" style="padding: 0px; margin-bottom:10px;">
+								  <a href="#" ><img src="../../assets/ads/300-300.jpg" class="img-fluid d-block" alt="Image"></a>
+								</div>
+								
+								<div class="card card-block" style="padding: 0px; margin-bottom:10px;">
+								  <a href="#" ><img src="../../assets/ads/300-300.jpg" class="img-fluid d-block" alt="Image"></a>
+								</div>
+								
+								<div class="card card-block" style="padding: 0px;">
+								  <a href="#" ><img src="../../assets/ads/300-300.jpg" class="img-fluid d-block" alt="Image"></a>
+								</div>
+					</div>
+				</div>
+				
 			</div>
 			
 			
