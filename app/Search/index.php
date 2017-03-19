@@ -6,7 +6,19 @@ require '../../vendor/autoload.php';
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
 $isLoggedIn = $auth->isLoggedIn();
-
+$category1 = 'NULL';
+$category2 = 'NULL';
+if (isset($_GET)) {
+		if (isset($_GET['main']) && isset($_GET['sub'])){
+			if(isset($_GET['main']) and $_GET['main'] != ""){
+				$category1 = $_GET['main'];
+			}
+			if(isset($_GET['sub']) and $_GET['sub'] != ""){
+				$category2 = $_GET['sub'];
+			}
+			
+		}
+}
 
 ?>
 
@@ -20,36 +32,6 @@ $isLoggedIn = $auth->isLoggedIn();
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../css/cinderella.css">
-	<style>
-		.active-links {
-			position:absolute;
-			right:8px;
-			top:0;
-		}
-
-		#session {
-			cursor:pointer;
-			display:inline-block;
-			height:20px;
-			padding:10px 12px;
-			vertical-align: top;
-			white-space: nowrap;
-		}
-
-		#signin-dropdown {
-			background-color: #373a3c ;
-			border-bottom-left-radius:5px;
-			border-bottom-right-radius:5px;
-			box-shadow:0 1px 2px #666666;
-			-webkit-box-shadow: 0 1px 2px #666666;
-			min-height:70px;
-			min-width:130px;
-			position:absolute;
-			right:0;
-			display:none;
-			margin-top: 30px;
-		}
-	</style>
 	
   </head>
   <body>
@@ -72,9 +54,8 @@ $isLoggedIn = $auth->isLoggedIn();
 			?>
 		</ul>
 		
-		
+			<div id="navbarNavDropdown">
 				<form class="form-inline" id="searchForm">
-				
 				<select class="form-control" id="category1" name="category1">
 				</select>
 						
@@ -112,12 +93,12 @@ $isLoggedIn = $auth->isLoggedIn();
 							<option>Vavuniya</option>
 				</select>
 					<input class="form-control" id="action"  name="action" type="hidden" value="search"></input>
-					<input class="form-control"  id="searchText" name="searchText" type="text" placeholder="What are you searching for?"></input>
+					<input class="form-control" id="searchText" name="searchText" type="text" placeholder="What are you searching for?"></input>
 					<!--
 					<button class="btn btn-primary" type="submit">Search</button>
 					-->
 				</form>
-			
+			</div>
 		
 	</nav>
 
@@ -143,8 +124,9 @@ $isLoggedIn = $auth->isLoggedIn();
 			<div class="col-lg-8">
 						
 				<div class="row">
-					<div id="SearchArea" class="col-lg-12">
-						<!-- put main content here -->
+				
+					<div class="col-lg-12 card-columns" id="SearchArea">
+					
 					</div>
 				</div>
 			</div>
@@ -194,6 +176,44 @@ $isLoggedIn = $auth->isLoggedIn();
 
 $(document).ready(function() {	
 
+
+$.ajax({
+    type: "POST",
+    url: '../controller/GetData.php',
+    data: {'action': 'Category1'},
+    dataType:'html',
+    success: function(data) {
+		$("#category1").empty();
+		$("#category1").html(data);
+		if(category1 != 'NULL'){
+			$("#category1 option[value=<?php echo $category1; ?>]").attr('selected', 'selected').change();
+		}
+		
+    }
+	
+});
+
+$('#category1').change(function () {
+	
+	$.ajax({
+    type: "POST",
+    url: '../controller/GetData.php',
+    data: {'action': 'Category2', 'Category1': $(this).find('option:selected').attr('id')},
+    dataType:'html',
+    success: function(data) {
+		$("#category2").empty();
+		$("#category2").html(data);
+		if(category2 != 'NULL'){
+			$("#category2 option[value=<?php echo $category2; ?>]").attr('selected', 'selected').change();
+		}
+    }
+});
+	
+});	
+
+search($("#searchForm"));
+
+
 $("#searchText").keyup(function(){
 	var form = document.getElementById('searchForm');
 	search($("#searchForm"));
@@ -217,7 +237,6 @@ function search($form){
 
 	var response;
 	var request;
-	event.preventDefault();
 
     if (request) {
         request.abort();
@@ -244,34 +263,6 @@ function search($form){
 };
 
 
-
-
-$.ajax({
-    type: "POST",
-    url: '../controller/GetData.php',
-    data: {'action': 'Category1'},
-    dataType:'html',
-    success: function(data) {
-		$("#category1").empty();
-		$("#category1").html(data);
-    }
-});
-
-$('#category1').change(function () {
-	
-	$.ajax({
-    type: "POST",
-    url: '../controller/GetData.php',
-    data: {'action': 'Category2', 'Category1': $(this).find('option:selected').attr('id')},
-    dataType:'html',
-    success: function(data) {
-		$("#category2").empty();
-		$("#category2").html(data);
-
-    }
-});
-	
-});	
 	
 } );
 

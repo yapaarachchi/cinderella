@@ -8,6 +8,7 @@ $search_text = null;
 $district = null;
 $category1 = null;
 $category2 = null;
+$text;
 if (isset($_POST)) {
 	if (isset($_POST['action'])) {
 		
@@ -30,15 +31,53 @@ if (isset($_POST)) {
 			
 			$result = $business->search($category1,$category2,$district,$search_text);
 			
+			$text = '';
+			
 			if(!empty($result)){
 				foreach($result as $key => $value) {
-				echo "<p>".$value['business_name']."</p>";	
+				$text = $text.'
+					<div class="card">
+
+					  <img class="card-img-top img-fluid" src="../../assets/ads/10.png" alt="Card image cap" style="width: 100%">
+					  <div class="card-block">
+						<h4 class="card-title">'.$value['business_name'].'</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12">
+						<address>
+						'.$value['branch_address1'].', '.$value['branch_address2'].','.$value['branch_address3'].'.</address>
+						</div>
+						</div>
+						<div class="row">
+						
+						
+						<div class="col-xs-12">
+						'.$value['business_mobile'].'
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="float-right">
+							<a href="#" class="btn btn-outline-primary btn-sm">more</a>
+							</div >
+						</div>
+					  </div>
+					</div>
+					</br>
+				
+				';
 				}
+				
 			}
 			else{
-				echo "<p> No Data</p>";
+				$text = '
+					<div class="alert alert-danger" role="alert">
+					  <strong>No Businesses Found!</strong> Please check your search items again.
+					</div>
+				';
 			}
-			
+			echo $text;
 			return;
 		}
 	}
