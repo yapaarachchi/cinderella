@@ -49,9 +49,10 @@ if (isset($_GET)) {
 					$description = $value['description'];
 				}
 			}
-		
 
-$text = '
+
+$text =
+'
 
 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -83,10 +84,62 @@ $text = '
 
 </br>';
 
+//waitmodel
+$text = $text.
+'
+<div class="modal fade" id="waitmodel"  tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Please Wait</h5>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Your request is beign processing... This migh take few seconds</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+';
+
+//delete confirm model and button
+$text = $text.
+
+'
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  <form id="DeleteBusinessForm">
+      <div class="modal-body" id="DeleteModalBody">
+	  <input type="hidden" name="BusinessId" id="BusinessId" value=""/>
+	  <input type="hidden" name="action" id="action" value="deletebusiness"/>
+        Are you sure want to Delete this Business? If yes, it will be deleted related information, including Branches.
+      </div>
+      <div class="modal-footer">
+	  <div id="Message" class="float-left">  </div>
+        <button id="CancelDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="DoneDelete" type="submit" class="btn btn-primary">Delete</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+
+<a href="#" class="btn btn-danger" id="deleteConfirmation" data-toggle="modal" data-target="#DeleteModal">Delete '.$business_name.'</a>
+';
 
 $text = $text. '
 
-<a href="#" class="btn btn-danger">Delete Business</a>
+
 </br>
 </br>
 <ul class="nav nav-tabs" role="tablist">
@@ -184,7 +237,132 @@ $text = $text. '
 </div>
   <div class="tab-pane" id="branches" role="tabpanel">
    </br>
-  <a href="#" class="btn btn-primary">+ Add Branch</a>
+
+  <button class="btn btn-primary" type="button" data-toggle="collapse" id="CollapseBranchSection" data-target="#AddBranchSection" aria-expanded="false" aria-controls="collapseExample">
+    + Add Branch
+  </button>
+
+	<div class="collapse" id="AddBranchSection">
+	  <div class="card card-block">
+		<form id="AddBranch" accept-charset="utf-8">
+						
+						
+						
+			
+						<div class="form-check">
+						<label class="form-check-label">
+						<input type="checkbox" class="form-check-input" id="mainBranch">
+							Main Branch
+						</label>
+						<div id="mainBranch_validate" class="form-control-feedback"></div>
+						</div>
+						
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Contact Person *</label>
+						<input class="form-control" name="contactPerson" type="text"/>
+						<div id="contactPerson_validate" class="form-control-feedback"></div>
+						</div>
+						
+						<div class="form-group">
+							<label class="form-control-label float-left" >Branch E-Mail *</label>
+							<input id="email" class="form-control" name="email" placeholder="youremail@example.com" type="email" />
+							<div id="email_validate" class="form-control-feedback"></div>
+						</div>
+						
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Branch Mobile *</label>
+						<input class="form-control" name="mobile" type="tel"/>
+						<small class="form-text text-muted float-right">Ex: 0712345678</small>
+						<div id="mobile_validate" class="form-control-feedback"></div>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Branch Phone</label>
+						<input class="form-control" name="phone" type="tel"/>
+						<small class="form-text text-muted float-right">Ex: 0112345678</small>
+						<div id="phone_validate" class="form-control-feedback"></div>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Address *</label>
+						<input class="form-control" name="address1" type="text"/>
+						<div id="address1_validate" class="form-control-feedback"></div>
+						<small class="form-text text-muted float-right">Ex: No: 49/6/A</small>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Street *</label>
+						<input class="form-control" name="address2" type="text"/>
+						<div id="address2_validate" class="form-control-feedback"></div>
+						<small class="form-text text-muted float-right">Ex: Temple Road</small>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">City *</label>
+						<input class="form-control" name="address3" type="text"/>
+						<div id="address3_validate" class="form-control-feedback"></div>
+						<small class="form-text text-muted float-right">Ex: Maharagama</small>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">District *</label>
+						<select class="form-control" name="district">
+						<option></option>
+							<option>Colombo</option>
+							<option>Kandy</option>
+							<option>Galle</option>
+							<option>Ratnapura</option>
+							<option>Ampara</option>
+							<option>Anuradhapura</option>
+							<option>Badulla</option>
+							<option>Batticaloa</option>
+							<option>Gampaha</option>
+							<option>Hambantota</option>
+							<option>Jaffna</option>
+							<option>Kalutara</option>
+							<option>Kegalle</option>
+							<option>Kilinochchi</option>
+							<option>Kurunegala</option>
+							<option>Mannar</option>
+							<option>Matale</option>
+							<option>Matara</option>
+							<option>Moneragala</option>
+							<option>Mullativu</option>
+							<option>Nuwara Eliya</option>
+							<option>Polonnaruwa</option>
+							<option>Puttalam</option>
+							<option>Trincomalee</option>
+							<option>Vavuniya</option>
+						</select>
+						<div id="district_validate" class="form-control-feedback"></div>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-left">Branch Description</label>
+						<textarea class="form-control" rows="3" name="description" > </textarea>
+						<small class="form-text text-muted float-right">Small description about your business</small>
+						<div id="description_validate" class="form-control-feedback"></div>
+						</div>
+						</br>
+						
+						<div align="center" class="form-group">
+							<div class="g-recaptcha" data-sitekey="6LfSRhUUAAAAAC9_QF8XXJb2pekVh9Kphs4fk0JO" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div><br/><br/>
+						</div>
+						
+						
+						<input type="hidden" name="action" value="AddBranch"/>
+						<p class="text-muted text-center">
+							By clicking Add Branch, I agree to the Terms and Conditions of Cinderella
+						</p>
+						<div class="text-center">
+							<a href="" class="btn btn-secondary " role="button" aria-disabled="true" data-toggle="collapse" id="CollapseBranchSection" data-target="#AddBranchSection">Cancel</a>
+							<button type="submit" class="btn btn-primary" id="submitbutton">Add Branch</button>
+						</div>
+					</form>
+	  </div>
+	</div>
    </br>
   ';
   $Branchses = $Branch->getBranchByBusinessId($business_id);
@@ -227,13 +405,111 @@ echo $text;
 			
 }
 
-
+if (isset($_POST)) {
+		if (isset($_POST['action'])) {
+		if ($_POST['action'] === 'deletebusiness') {
+			try {
+				$status =" ";
+				$status = $Business->deleteBusiness($_POST['BusinessId']);
+			if($status == '200'){
+				echo "CINDERELLA_OK";
+			}
+			}
+			catch (Exception $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+			
+			
+		}
+		}
+}
 
 ?>
- <script src="../../js/jquery-3.1.1.slim.min.js"></script>
+
 <script>
 $(document).ready(function() {	
+
+var request;
+$('#deleteConfirmation').click(function () {
+	$("#DeleteModalBody #BusinessName").val( "<?php echo $business_name; ?>" );
+	$("#DeleteModalBody #BusinessId").val( "<?php echo $business_id; ?>" );
+	} );
+
+	$('#CollapseBranchSection').click(function () {	
+		$('#AddBranch').trigger("reset");
+		$("#mainBranch_validate").html('');
+	} );
+	
+	$('#mainBranch').click(function () {
+		var alert = '<div class="alert alert-warning" role="alert"> This branch will become the main branch of <?php echo $business_name; ?></div>'
+		if($("#mainBranch").is(':checked')){
+			$("#mainBranch_validate").html(alert);
+		}
+		else{
+			$("#mainBranch_validate").html('');
+		}
+		
+	} );
+
+	
 $("#editFormButton").hide();
+
+// Bind to the submit event of our form
+$("#DeleteBusinessForm").submit(function(event){
+    event.preventDefault();
+
+    if (request) {
+        request.abort();
+    }
+    var $form = $(this);
+    var $inputs = $form.find("input, select, button, textarea");
+    var serializedData = $form.serialize();
+	$("#CancelDelete").hide();
+	$("#DoneDelete").hide();
+	$("#Message").html('<div style="color: blue"><strong>Please Wait!</strong> You request is being processing.<div>');
+	//$('#DeleteModal').modal('hide');
+	$(this).prop('disabled',true);
+    request = $.ajax({
+        url: "Business.php",
+        type: "post",
+        data: serializedData
+    });
+	
+    request.done(function (response, textStatus, jqXHR){
+        console.log("Logged in "+ response);
+		//$('#waitModal').modal('hide');
+		if(response.indexOf('CINDERELLA_OK') > -1)
+		{
+			window.location = "index.php";
+		}
+		else{
+			$("#Message").html(response);
+			$("#CancelDelete").show();
+			$("#DoneDelete").show();
+		}
+		
+		
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+		//$('#waitModal').modal('hide');
+		$("#Message").html(errorThrown);
+		$("#CancelDelete").show();
+		$("#DoneDelete").show();
+    });
+    request.always(function () {
+		//$(this).prop('disabled',false);
+    });
+
+});
+
+
+
 } );
 function editonclick(){
 	

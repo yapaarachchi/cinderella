@@ -5,6 +5,24 @@ require __DIR__.'/vendor/autoload.php';
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
 $isLoggedIn = $auth->isLoggedIn();
+
+				if (isset($_POST)) {
+					if (isset($_POST['action'])) {
+						if ($_POST['action'] === 'signout') {
+							try{
+								$auth->logout();
+							}
+							catch(Exception $e){
+								
+							}
+							echo "CINDERELLA_OK";
+							return;
+						}
+						else{
+							
+					}
+				}
+}
 ?>
 
 <!DOCTYPE html>
@@ -78,22 +96,23 @@ $isLoggedIn = $auth->isLoggedIn();
 			}
 			else{
 		?>
-		<div class="active-links">
-            <div id="session">
 			<ul class="nav navbar-nav">
-			<li class="nav-item dropdown">
-            <a id="signin-link" class="nav-link dropdown-toggle" href="#">
-			<div class="hidden-sm-down">Hi, <u><?php  echo $auth->getEmail(); ?> </u></div>
-			<div class="hidden-md-up"><u>Hi,</u></div>
-            </a>
-			</li>
+			
+			<?php
+			if($auth->getUserRole($auth->getEmail()) == '3')
+			{
+			?>
+			  <li class="nav-item">
+				<a class="nav-link active" href="app/Merchant/"><u>Merchant Page</u></a>
+			  </li>
+			  
+			  <?php
+			}
+			  ?>
+			  <li class="nav-item">
+				<a class="nav-link" href="#" id="signOut"><u>Sign Out</u></a>
+			  </li>
 			</ul>
-            </div>
-            	<div class="nav navbar-nav float-xs-right" id="signin-dropdown">
-				<a class="btn btn-secondary btn-sm btn-block"  return false;" style="margin-top: 5px;" href="app/user/userProfile.php" role="button">My Profile</a>
-				<a class="btn btn-secondary btn-sm btn-block" onclick="logout(); return false;" style="margin-top: 5px;" href="#" role="button">Sign Out</a>
-         	</div>
-        </div>
 		<?php
 			}
 		?>
@@ -383,28 +402,41 @@ $("#login").submit(function(event){
 
 });
 
+$('#signOut').click(function () {
+	if (request) {
+        request.abort();
+    }
+	
+	request = $.ajax({
+        url: "index.php",
+        type: "post",
+        data: { action: "signout"}
+    });
+	
+	request.done(function (response, textStatus, jqXHR){
+        // Log a message to the console
+        console.log("Sign out "+ response);
+		
+		if(response.indexOf('CINDERELLA_OK') > -1)
+		{
+			location.reload();
+		}
+		else{
+			//$("#loginModalError").html(response);
+		}
+		
+		
+    });
+
+    // Callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown){
+		//$("#loginModalError").html(errorThrown);
+    });
+	
+	});  
+	
 });
-
-
-$(document).ready(function () {
-$('.active-links').click(function () {
-        if ($('#signin-dropdown').is(":visible")) {
-            $('#signin-dropdown').hide()
-			$('#session').removeClass('active');
-        } else {
-            $('#signin-dropdown').show()
-			$('#session').addClass('active');
-        }
-		return false;
-    });
-	$('#signin-dropdown').click(function(e) {
-        e.stopPropagation();
-    });
-    $(document).click(function() {
-        $('#signin-dropdown').hide();
-		$('#session').removeClass('active');
-    });
-});     
+    
 
 
 </script>

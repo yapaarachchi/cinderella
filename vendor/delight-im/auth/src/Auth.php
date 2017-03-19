@@ -1372,5 +1372,22 @@ final class Auth extends UserManager {
 		}
 	}
 	
+	public function getUserRole($email) {
+		try {
+			$userData = $this->getUserDataByEmailAddress($email,[ 'user_role' ]);
+			return $userData['user_role'];
+		}
+		catch (Exception $e) {
+			return true;
+		}
+		catch(InvalidEmailException $e){
+			return true;
+		}
+		
+		
+		
+	}
+	
+	
 
 }

@@ -88,8 +88,7 @@ class Business {
 		}
 	}
 	
-	public function addBusiness($userId , $other) {
-		
+	public function addBusiness($userId , $other) {		
 	
 		//$auth->throttle(self::THROTTLE_ACTION_REGISTER);
 
@@ -191,6 +190,28 @@ class Business {
 		
 		$this->db->commit();
 		return $business_id;
+	}
+	
+	public function deleteBusiness($businessId) {	
+	
+		try {
+			$this->db->startTransaction();
+			$this->db->delete(
+				'business',
+				[ 'id' => $businessId ]
+			);
+			
+			$this->db->delete(
+				'branch',
+				[ 'business_id' => $businessId ]
+			);
+			$this->db->commit();
+			return "200";
+		}
+		catch (Error $e) {
+			$this->db->rollBack();
+			throw new DatabaseError();
+		}	
 	}
 
 

@@ -89,47 +89,52 @@ $text = $text.'
 			
 			<div class="card-block">
 				<div class="row">
+						
+						
 					<div class="col-lg-12 float-xs-left">
-					
+						<div class="form-group">
+						<small class="form-text text-muted float-left">* mandatory fields</small>
+						</div>
+						</br>
 					<div id="RegisterError" style="padding-bottom: 10px;"></div>
 					<form id="AddAsBusiness" accept-charset="utf-8">
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">Business Name</label>
+						<label class="form-control-label float-xs-left">Business Name *</label>
 						<input class="form-control" name="businessName" type="text"/>
 						<small class="form-text text-muted float-right">Ex: ABC Studio</small>
 						<div id="businessName_validate" class="form-control-feedback"></div>
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-left">Main Category</label>
+						<label class="form-control-label float-left">Main Category *</label>
 						<select class="form-control" id="category1" name="category1">
 						</select>
 						<div id="category1_validate" class="form-control-feedback"></div>
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-left">Sub Category</label>
+						<label class="form-control-label float-left">Sub Category *</label>
 						<select class="form-control" id="category2" name="category2">
 						</select>
 						<div id="category2_validate" class="form-control-feedback"></div>
 						</div>
 			
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">Contact Person</label>
+						<label class="form-control-label float-xs-left">Contact Person *</label>
 						<input class="form-control" name="contactPerson" type="text"/>
 						<div id="contactPerson_validate" class="form-control-feedback"></div>
 						</div>
 						
 						<div class="form-group">
-							<label class="form-control-label float-left" >Business E-Mail</label>
+							<label class="form-control-label float-left" >Business E-Mail *</label>
 							<input id="email" class="form-control" name="email" placeholder="youremail@example.com" type="email" />
 							<div id="email_validate" class="form-control-feedback"></div>
 						</div>
 						
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">Business Mobile</label>
+						<label class="form-control-label float-xs-left">Business Mobile *</label>
 						<input class="form-control" name="mobile" type="tel"/>
 						<small class="form-text text-muted float-right">Ex: 0712345678</small>
 						<div id="mobile_validate" class="form-control-feedback"></div>
@@ -143,28 +148,28 @@ $text = $text.'
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">Address1</label>
+						<label class="form-control-label float-xs-left">Address *</label>
 						<input class="form-control" name="address1" type="text"/>
 						<div id="address1_validate" class="form-control-feedback"></div>
 						<small class="form-text text-muted float-right">Ex: No: 49/6/A</small>
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">Address2</label>
+						<label class="form-control-label float-xs-left">Street *</label>
 						<input class="form-control" name="address2" type="text"/>
 						<div id="address2_validate" class="form-control-feedback"></div>
 						<small class="form-text text-muted float-right">Ex: Temple Road</small>
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">City</label>
+						<label class="form-control-label float-xs-left">City *</label>
 						<input class="form-control" name="address3" type="text"/>
 						<div id="address3_validate" class="form-control-feedback"></div>
 						<small class="form-text text-muted float-right">Ex: Maharagama</small>
 						</div>
 						
 						<div class="form-group">
-						<label class="form-control-label float-xs-left">District</label>
+						<label class="form-control-label float-xs-left">District *</label>
 						<select class="form-control" name="district">
 						<option></option>
 							<option>Colombo</option>
@@ -210,6 +215,7 @@ $text = $text.'
 						<div id="description_validate" class="form-control-feedback"></div>
 						</div>
 						</br>
+						
 						<div align="center" class="form-group">
 							<div class="g-recaptcha" data-sitekey="6LfSRhUUAAAAAC9_QF8XXJb2pekVh9Kphs4fk0JO" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div><br/><br/>
 						</div>
@@ -221,7 +227,7 @@ $text = $text.'
 						</p>
 						<div class="text-center">
 							<a href="" class="btn btn-secondary " role="button" aria-disabled="true">Cancel</a>
-							<button type="submit" class="btn btn-primary">Add Business</button>
+							<button type="submit" class="btn btn-primary" id="submitbutton">Add Business</button>
 						</div>
 					</form>
 					
@@ -231,6 +237,43 @@ $text = $text.'
 		</div>
 ';
 
+//waitmodel
+$text = $text.
+'
+<div class="modal fade" id="waitmodel"  tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Please Wait</h5>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Your request is beign processing... This migh take few seconds</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="errormodel"  tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Error</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you not a Human? Please tick the Im not a robot check box</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+';
 echo $text;
 }
 			
@@ -349,8 +392,6 @@ if (isset($_POST)) {
 
 
 ?>
-	<script src="../../js/jquery-3.1.1.slim.min.js"></script>
- 
 	<script src='https://www.google.com/recaptcha/api.js'></script>
  
 	<script src="../../js/jquery.validate.min.js"></script>
@@ -479,6 +520,13 @@ if (!$(this).valid()) {  //<<< I was missing this check
 grecaptcha.reset();
                 return false;
             }
+			
+			var response = grecaptcha.getResponse();
+
+		if(response.length == 0){
+				$('#errormodel').modal('show');
+			 return false;
+		}
     // Prevent default posting of form - put here to work in case of errors
     event.preventDefault();
 
@@ -500,7 +548,7 @@ grecaptcha.reset();
     // Disabled form elements will not be serialized.
     $inputs.prop("disabled", true);
 
-	//$('#waitModal').modal('show');
+	$('#waitmodel').modal('show');
     // Fire off the request to /form.php
     request = $.ajax({
         url: "AddBusiness.php",
@@ -512,7 +560,7 @@ grecaptcha.reset();
     request.done(function (response, textStatus, jqXHR){
         // Log a message to the console
         console.log("Logged in "+ response);
-		//$('#waitModal').modal('hide');
+		$('#waitmodel').modal('hide');
 		if(response.indexOf('CINDERELLA_OK') > -1)
 		{
 			window.location = "index.php";
@@ -534,7 +582,7 @@ grecaptcha.reset();
             "The following error occurred: "+
             textStatus, errorThrown
         );
-		//$('#waitModal').modal('hide');
+		$('#waitModal').modal('hide');
 		$("html,body").animate({scrollTop:$('div#AddBusinessBanner').offset().top}, 500);
 		$("#RegisterError").html(errorThrown);
 		grecaptcha.reset()
