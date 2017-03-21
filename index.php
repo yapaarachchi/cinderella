@@ -35,37 +35,6 @@ $isLoggedIn = $auth->isLoggedIn();
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/cinderella.css">
-	<style>
-		.active-links {
-			position:absolute;
-			right:8px;
-			top:0;
-		}
-
-		#session {
-			cursor:pointer;
-			display:inline-block;
-			height:20px;
-			padding:10px 12px;
-			vertical-align: top;
-			white-space: nowrap;
-		}
-
-		#signin-dropdown {
-			background-color: #373a3c ;
-			border-bottom-left-radius:5px;
-			border-bottom-right-radius:5px;
-			box-shadow:0 1px 2px #666666;
-			-webkit-box-shadow: 0 1px 2px #666666;
-			min-height:70px;
-			min-width:130px;
-			position:absolute;
-			right:0;
-			display:none;
-			margin-top: 30px;
-		}
-	</style>
-	
   </head>
   <body>
 	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
@@ -128,11 +97,9 @@ $isLoggedIn = $auth->isLoggedIn();
 		<?php
 			}
 		?>
-			  <li class="nav-item">
-				<a class="nav-link" href="app/Search/">Search</a>
-			  </li>
 			</ul>
 		</div>
+		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - 071 5104647</span>
 	</nav>
 
 	
@@ -194,20 +161,16 @@ $isLoggedIn = $auth->isLoggedIn();
 			
 			
 			<!-- Left Pannel -->
-			<div class="col-lg-2 hidden-md-down">
-				<?php
-					include('app/layout/SideMenu.php');
-				?>
+			<div id="SideMenu" class="col-lg-2 hidden-md-down">
+				
 			</div>
 			
 			<!-- Middle Pannel -->
 			<div class="col-lg-8">
 				<div class="row">
-					<div class="col-lg-12">
+					<div id="MainBanner" class="col-lg-12">
 						<!-- put main banner here -->
-						<?php
-							include('app/layout/MainBanner.php');
-						?>
+
 					</div>
 				</div>
 				
@@ -227,11 +190,9 @@ $isLoggedIn = $auth->isLoggedIn();
 				?>
 				
 				<div class="row">
-					<div class="col-lg-12">
+					<div id="Promotions" class="col-lg-12">
 						<!-- put promotions here -->
-						<?php
-							include('app/layout/Promotions.php')
-						?>
+
 					</div>
 				</div>
 				<div class="row">
@@ -251,6 +212,34 @@ $isLoggedIn = $auth->isLoggedIn();
 		</div>
 	</div>
 	
+	<nav class="navbar sticky-top navbar-inverse bg-inverse">
+
+		<div class="row">
+		
+		<div class="col-5">
+			<div class="col-5">
+				<a href="#" >About Us</a>
+				<span class="text-muted">|</span>
+				<a href="#" >Contact Us</a>
+				<span class="text-muted">|</span>
+				<a href="#" >Search</a>
+			</div>
+		</div>
+		
+		<div class="col-5">
+		
+		<span style="color:white">© 2017 Cinderella  </span> 
+		<span  class="text-muted">(All Rights Reserved)</span> 
+		</div>
+		
+		<div class="col-2 float-right">
+		<a href="#" ><img src="assets/icons/facebook.png" style="width:30px; height:30px; margin: 0 auto" class="img-fluid d-block" alt="Image"></a>		
+		</div>
+		
+		</div>
+		
+	</nav>
+	
 	<?php
 	if($isLoggedIn === false){
 		include('app/layout/RegisterPannelSm.php');
@@ -269,13 +258,54 @@ $isLoggedIn = $auth->isLoggedIn();
 <script>
 
 
-     function logout() {
+     
+
+$(document).ready(function() {	
+
+
+getLayout("app/layout/MainBanner.php","#MainBanner");
+getLayout("app/layout/SideMenu.php","#SideMenu");
+getLayout("app/layout/Promotions.php","#Promotions");
+//getLayout("app/layout/SideMenu.php","#SideMenu");
+
+
+
+
+function getLayout(pageName, divName){
+
+	var response;
+	var request;
+
+    if (request) {
+        request.abort();
+    }
+	
+    request = $.ajax({
+        url: pageName,
+        type: "get",
+        data: "action=getLayout"
+    });
+	
+    request.done(function (response, textStatus, jqXHR){		
+		$(divName).html(response);
+		$(divName).hide().fadeIn('fast');	
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        $(divName).html('No data');
+		$(divName).hide().fadeIn('fast');	
+    });
+
+};
+
+
+function logout() {
          $.post('app/layout/logout.php', {"action":"logout"}, function(resp) {
              location.reload();
          });
      }
 
-$(document).ready(function() {	 
+ 
 
 $('#LogInModal').on('hidden.bs.modal', function (e) {
   $("#loginModalError").html('');

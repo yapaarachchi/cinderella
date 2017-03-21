@@ -8,13 +8,13 @@ echo "
   </ol>
   <div class='carousel-inner' role='listbox'>
     <div class='carousel-item active'>
-      <img src='assets/mainbanner/7.png' alt='First slide' class='img-fluid rounded mx-auto d-block' style='height: 500px; width: 100%;'>
+      <img src='assets/mainbanner/7.png' alt='First slide' class='img-fluid rounded mx-auto d-block' style='height: 350px; width: 100%;'>
     </div>
     <div class='carousel-item'>
-      <img src='assets/mainbanner/5.jpg' alt='Second slide' class='img-fluid rounded mx-auto d-block' style='height: 500px; width: 100%;'>
+      <img src='assets/mainbanner/5.jpg' alt='Second slide' class='img-fluid rounded mx-auto d-block' style='height: 350px; width: 100%;'>
     </div>
     <div class='carousel-item'>
-      <img src='assets/mainbanner/3.jpg' alt='Third slide' class='img-fluid rounded mx-auto d-block' style='height: 500px; width: 100%;'>
+      <img src='assets/mainbanner/3.jpg' alt='Third slide' class='img-fluid rounded mx-auto d-block' style='height: 350px; width: 100%;'>
     </div>
   </div>
   <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>

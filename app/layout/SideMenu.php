@@ -1,5 +1,8 @@
 <?php
+require '../config.php';
+require '../../vendor/autoload.php';
 
+$db = Config::initDb();
 $Category = new \Delight\Auth\Category($db);
 
 ?>
