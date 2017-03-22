@@ -4,6 +4,11 @@ require "../../ErrorCode.php";
 require '../../../vendor/autoload.php';
 
 
+
+
+
+
+
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
 $Business = new \Delight\Auth\Business($db);
@@ -224,30 +229,40 @@ if (isset($_GET)) {
 				
 				<div class="row" style="margin-top:5px">
 				
-					<div id="OtherBusinesses" class="col-lg-3 col-md-4 hidden-sm-down">
-						<div class="card">
-						  <div class="card-block">
-							<h6 class="card-subtitle mb-2 text-muted">
-								Other Businesses Of this Merchant
-							</h6>
-							</br>
-							<div id="Other"> <!-- other businesses -->  </div>
-						  </div>
-						</div>
+				
+					<div class="col-lg-3 col-md-4 hidden-sm-down">
+						<div class="card">								
+								<div class="card-block">
+									<h6 class="card-subtitle mb-2 text-muted">
+									Branches
+									</h6>	
+								<div id="Branches" >	
+								</div>
+								</div>
+							</div>
 					</div>
 					<div class="col-lg-9 col-md-8">
 					
-						<div class="card">
+						<div id="Description"  class="card">
 						 <!-- 
-							<div class="card-header hidden-sm-up">
+							<div class="card-header">
 								<a data-toggle="collapse" href="#Description" aria-expanded="false" aria-controls="Description">
 									Collapse
 								</a>
 							</div>
 							-->
-						  <div id="Description" class="card-block">
+						  <div class="card-block">
 								
 						  </div>
+						</div>
+						</br>
+						
+						<div class="row">
+							
+								<iframe class="col-lg-6 col-md-6" height="300px" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
+							
+								<iframe class="col-lg-6 col-md-6" height="300px" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
+							
 						</div>
 					
 					</div>
@@ -265,6 +280,10 @@ if (isset($_GET)) {
 					</div>
 				
 				</div><!-- end row -->
+				
+				
+				
+				
 				
 				
 			</div>
@@ -331,6 +350,7 @@ getLayout("GetMerchantData.php","#HeaderInformation", "info");
 getLayout("GetMerchantData.php","#Description", "description");
 getLayout("GetMerchantData.php","#Other", "other");
 getLayout("GetMerchantData.php","#OtherMobile", "other");
+getLayout("GetMerchantData.php","#Branches", "branches");
 
 
 

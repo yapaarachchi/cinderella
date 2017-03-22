@@ -7,6 +7,7 @@ require '../../../vendor/autoload.php';
 $db = Config::initDb();
 $Business = new \Delight\Auth\Business($db);
 $Branch = new \Delight\Auth\Branch($db);
+$Category = new \Delight\Auth\Category($db);
 $auth = new \Delight\Auth\Auth($db);
 $isLoggedIn = $auth->isLoggedIn();
 $business_id;
@@ -73,15 +74,19 @@ $branch_address3= null;
 									'.$branch_address1.','.$branch_address2.','.$branch_address3.'
 									</address>
 								</h6>
-								<p class="card-text">
+								<p class="card-text text-muted">
 									<img  src="../../../assets/icons/mail.png" alt="Card image cap"> </img>
 									'.$email.'
 								</p>
-								<p class="card-text">
+								<p class="card-text text-muted">
 									<img  src="../../../assets/icons/phone.png" alt="Card image cap"> </img>
 									'.$mobile.' '.$mobile.'
 								</p>
 								<a href="http://'.$web.'" target="_blank" class="card-link"><img  src="../../../assets/icons/web.png" alt="Card image cap"> </img>'.$web.'</a>
+								<p class="card-text text-muted">
+									<img  src="../../../assets/icons/person.png" alt="Card image cap"> </img>
+									'.$contact_person.'
+								</p>
 							  </div>
 							</div>
 							';
@@ -119,15 +124,70 @@ $branch_address3= null;
 								foreach($Businesses as $key => $value) {
 									
 									echo '
-									<h6 class="card-subtitle mb-2 text-muted">
-										'.$value['description'].'
-									</h6>
+									<div class="card-header  text-muted">
+										<span>'.$Category->getCategoryName($value['category1']).' > '.$Category->getSubCategoryName($value['category1'], $value['category2']).'</span>
+									</div>
+									<div class="card-block">
+										<h6 class="card-subtitle mb-2 text-muted">
+											'.$value['description'].'
+										</h6>								
+									</div>
+									
 									';
 								}
 							}
+							return;
+						}
+						elseif ($_POST['action'] === 'branches') {
 							
-							
-						
+							$business_id = $_POST['business_id'] ;
+							$Branches = $Branch->getBranchByBusinessId($business_id );
+							if (is_array($Branches) || is_object($Branches))
+							{
+								foreach($Branches as $key => $value) {
+									
+									echo '
+										<div class="card">
+											<div class="card-header">
+												'.$value['district'].'
+											</div>
+  
+										  <div class="card-block">
+											<div class="row">
+											
+											
+											<div class="col-xs-12 text-muted">
+											<address>
+											<img  src="../../../assets/icons/location.png" alt="Card image cap">
+											'.$value['branch_address1'].', '.$value['branch_address2'].','.$value['branch_address3'].'</address>
+											</div>
+											</div>
+											
+											<div class="row">
+											<div class="col-xs-12 text-muted">
+											<img  src="../../../assets/icons/mail.png" alt="Card image cap">
+											'.$value['branch_email'].'
+											</div>
+											</div>
+											
+											<div class="row">
+											<div class="col-xs-12 text-muted">
+											<img  src="../../../assets/icons/person.png" alt="Card image cap">
+											'.$value['contact_person'].'
+											</div>
+											</div>
+											
+											<div class="row">
+											<div class="col-xs-12 text-muted">
+											<img  src="../../../assets/icons/phone.png" alt="Card image cap">
+											'.$value['branch_mobile'].' '.$value['branch_phone'].'
+											</div>
+											</div>
+									</div></div>
+										</br>										
+									';
+								}
+							}
 							return;
 						}
 				}

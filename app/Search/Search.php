@@ -47,7 +47,7 @@ if (isset($_POST)) {
 						<div class="col-xs-12 text-muted">
 						<address>
 						<img  src="../../assets/icons/location.png" alt="Card image cap">
-						'.$value['branch_address1'].', '.$value['branch_address2'].','.$value['branch_address3'].'.</address>
+						'.$value['branch_address1'].', '.$value['branch_address2'].','.$value['branch_address3'].'</address>
 						</div>
 						</div>
 						<div class="row">
