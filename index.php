@@ -1,5 +1,5 @@
 <?php
-require 'app/config.php';
+require 'app/Config.php';
 require __DIR__.'/vendor/autoload.php';
 
 $db = Config::initDb();
