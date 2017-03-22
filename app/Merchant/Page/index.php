@@ -1,11 +1,26 @@
 <?php
-require 'app/config.php';
-require __DIR__.'/vendor/autoload.php';
+require "../../Config.php";
+require "../../ErrorCode.php";
+require '../../../vendor/autoload.php';
+
 
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
+$Business = new \Delight\Auth\Business($db);
 $isLoggedIn = $auth->isLoggedIn();
-
+$business_id = null;
+if (isset($_GET)) {
+					if (isset($_GET['business'])) {
+						$business_id = $_GET['business'];
+						if($Business->IsBusinessByIdExist($business_id) === false){
+							header('Location: ../../../');
+						}
+						
+					}
+					else{
+						header('Location: ../../../');
+					}
+}
 				if (isset($_POST)) {
 					if (isset($_POST['action'])) {
 						if ($_POST['action'] === 'signout') {
@@ -33,8 +48,8 @@ $isLoggedIn = $auth->isLoggedIn();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/cinderella.css">
+    <link rel="stylesheet" href="../../../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../../css/cinderella.css">
 	
 	<title>Cinderella</title>
   </head>
@@ -43,7 +58,10 @@ $isLoggedIn = $auth->isLoggedIn();
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#"><b>Cinderella</b></a>
+		<a class="navbar-brand" href="../../../">
+		<img src="../../../assets/icons/home.svg" width="30" height="30" alt="">
+		<b>Cinderella</b>
+		</a>
 		
 		<!-- Large Screens -->
 		<ul class="nav navbar-nav hidden-md-down">
@@ -74,14 +92,14 @@ $isLoggedIn = $auth->isLoggedIn();
 			{
 			?>
 			  <li class="nav-item">
-				<a class="nav-link active" href="app/Merchant/"><u>Merchant Page</u></a>
+				<a class="nav-link active" href="../"><u>Merchant Page</u></a>
 			  </li>
 			  
 			  <?php
 			}
 			  ?>
 			  <li class="nav-item">
-				<a class="nav-link" href="#" id="signOut"><u>Sign Out</u></a>
+				<a class="nav-link" id="signOut"><u>Sign Out</u></a>
 			  </li>
 			</ul>
 		<?php
@@ -162,49 +180,93 @@ $isLoggedIn = $auth->isLoggedIn();
 			</div>
 			
 			
-			<!-- Left Pannel -->
-			<div id="SideMenu" class="col-lg-2 hidden-md-down">
-				
-			</div>
+			
 			
 			<!-- Middle Pannel -->
-			<div class="col-lg-8">
+			<div class="col-lg-10">
 				<div class="row">
-					<div id="MainBanner" class="col-lg-12">
-						<!-- put main banner here -->
-
+				
+				<div id="HeaderInformation" class="col-lg-3 col-md-4">
+					<!-- Business name and info -->
+				</div>
+				
+				<div id="MerchantBanner" class="col-lg-9 col-md-8  hidden-sm-down">
+					<div id='MerchantPageBanner' class='carousel slide' data-ride='carousel'>
+					  <ol class='carousel-indicators'>
+						<li data-target='#MerchantPageBanner' data-slide-to='0' class='active'></li>
+						<li data-target='#MerchantPageBanner' data-slide-to='1'></li>
+						<li data-target='#MerchantPageBanner' data-slide-to='2'></li>
+					  </ol>
+					  <div class='carousel-inner' role='listbox'>
+						<div class='carousel-item active'>
+						  <img src='../../../assets/mainbanner/7.png' alt='First slide' class='img-fluid rounded mx-auto d-block' style='height: 300px; width: 100%;'>
+						</div>
+						<div class='carousel-item'>
+						  <img src='../../../assets/mainbanner/5.jpg' alt='Second slide' class='img-fluid rounded mx-auto d-block' style='height: 300px; width: 100%;'>
+						</div>
+						<div class='carousel-item'>
+						  <img src='../../../assets/mainbanner/3.jpg' alt='Third slide' class='img-fluid rounded mx-auto d-block' style='height: 300px; width: 100%;'>
+						</div>
+					  </div>
+					  <a class='carousel-control-prev' href='#MerchantPageBanner' role='button' data-slide='prev'>
+						<span class='carousel-control-prev-icon' aria-hidden='true'></span>
+						<span class='sr-only'>Previous</span>
+					  </a>
+					  <a class='carousel-control-next' href='#MerchantPageBanner' role='button' data-slide='next'>
+						<span class='carousel-control-next-icon' aria-hidden='true'></span>
+						<span class='sr-only'>Next</span>
+					  </a>
 					</div>
 				</div>
 				
-				<?php
-				if($isLoggedIn === false){				
-				?>
-					<div class="row">
-						<div class="col-lg-12">
-							<!-- put promotions here -->
-							<?php
-								include('app/layout/RegisterPannelLg.php')
-							?>
+				</div><!-- end row -->
+				
+				
+				<div class="row" style="margin-top:5px">
+				
+					<div id="OtherBusinesses" class="col-lg-3 col-md-4 hidden-sm-down">
+						<div class="card">
+						  <div class="card-block">
+							<h6 class="card-subtitle mb-2 text-muted">
+								Other Businesses Of this Merchant
+							</h6>
+							</br>
+							<div id="Other"> <!-- other businesses -->  </div>
+						  </div>
 						</div>
 					</div>
-				<?php
-				}
-				?>
+					<div class="col-lg-9 col-md-8">
+					
+						<div class="card">
+						 <!-- 
+							<div class="card-header hidden-sm-up">
+								<a data-toggle="collapse" href="#Description" aria-expanded="false" aria-controls="Description">
+									Collapse
+								</a>
+							</div>
+							-->
+						  <div id="Description" class="card-block">
+								
+						  </div>
+						</div>
+					
+					</div>
+					
+					<div id="OtherBusinesses" class="col-lg-3 col-md-4 hidden-sm-up">
+						<div class="card">
+						  <div class="card-block">
+							<h6 class="card-subtitle mb-2 text-muted">
+								Other Businesses Of this Merchant
+							</h6>
+							</br>
+							<div id="OtherMobile"> <!-- other businesses -->  </div>
+						  </div>
+						</div>
+					</div>
 				
-				<div class="row">
-					<div id="Promotions" class="col-lg-12">
-						<!-- put promotions here -->
-
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-12">
-					<!-- put main adds here -->
-						<?php
-							include('app/layout/MainAds.php')
-						?>
-					</div>
-				</div>
+				</div><!-- end row -->
+				
+				
 			</div>
 			
 			<!-- Margin Right Pannel -->
@@ -213,7 +275,7 @@ $isLoggedIn = $auth->isLoggedIn();
 		
 		</div>
 	</div>
-	
+	</br>
 	<nav class="navbar sticky-top navbar-inverse bg-inverse">
 
 		<div class="row">
@@ -235,7 +297,7 @@ $isLoggedIn = $auth->isLoggedIn();
 		</div>
 		
 		<div class="col-2 float-right">
-		<a href="#" ><img src="assets/icons/facebook.png" style="width:30px; height:30px; margin: 0 auto" class="img-fluid d-block" alt="Image"></a>		
+		<a href="#" ><img src="../../../assets/icons/facebook.png" style="width:30px; height:30px; margin: 0 auto" class="img-fluid d-block" alt="Image"></a>		
 		</div>
 		
 		</div>
@@ -244,17 +306,17 @@ $isLoggedIn = $auth->isLoggedIn();
 	
 	<?php
 	if($isLoggedIn === false){
-		include('app/layout/RegisterPannelSm.php');
+		include('../../layout/RegisterPannelSm.php');
 	}		
 	?>
 						
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="js/jquery-3.1.1.slim.min.js"></script>
-    <script src="js/tether.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../../../js/jquery-3.1.1.slim.min.js"></script>
+    <script src="../../../js/tether.min.js"></script>
+    <script src="../../../js/bootstrap.min.js"></script>
 	
-	<script src="js/jquery.validate.min.js"></script>
-	<script src="js/additional-methods.min.js"></script>
+	<script src="../../../js/jquery.validate.min.js"></script>
+	<script src="../../../js/additional-methods.min.js"></script>
 
 	
 <script>
@@ -264,16 +326,18 @@ $isLoggedIn = $auth->isLoggedIn();
 
 $(document).ready(function() {	
 
-
-getLayout("app/layout/MainBanner.php","#MainBanner");
-getLayout("app/layout/SideMenu.php","#SideMenu");
-getLayout("app/layout/Promotions.php","#Promotions");
-//getLayout("app/layout/SideMenu.php","#SideMenu");
-
-
+var businessId = <?php echo $business_id ;?>;
+getLayout("GetMerchantData.php","#HeaderInformation", "info");
+getLayout("GetMerchantData.php","#Description", "description");
+getLayout("GetMerchantData.php","#Other", "other");
+getLayout("GetMerchantData.php","#OtherMobile", "other");
 
 
-function getLayout(pageName, divName){
+
+
+
+
+function getLayout(pageName, divName, action){
 
 	var response;
 	var request;
@@ -284,8 +348,8 @@ function getLayout(pageName, divName){
 	
     request = $.ajax({
         url: pageName,
-        type: "get",
-        data: "action=getLayout"
+        type: "post",
+        data: {action:action,business_id: businessId}
     });
 	
     request.done(function (response, textStatus, jqXHR){		
@@ -294,7 +358,6 @@ function getLayout(pageName, divName){
     });
 
     request.fail(function (jqXHR, textStatus, errorThrown){
-        $(divName).html('No data');
 		$(divName).hide().fadeIn('fast');	
     });
 
@@ -302,7 +365,7 @@ function getLayout(pageName, divName){
 
 
 function logout() {
-         $.post('app/layout/logout.php', {"action":"logout"}, function(resp) {
+         $.post('../../layout/logout.php', {"action":"logout"}, function(resp) {
              location.reload();
          });
      }
@@ -319,7 +382,7 @@ $('#LogInModal').on('hidden.bs.modal', function (e) {
                 required: true,
                 email: true,
 				remote: {
-					url: "app/controller/Validate.php",
+					url: "../../controller/Validate.php",
 					type: "post",
 					data: {
 						  action: function() {
@@ -400,7 +463,7 @@ $("#login").submit(function(event){
 
     // Fire off the request to /form.php
     request = $.ajax({
-        url: "app/controller/Login.php",
+        url: "../../controller/Login.php",
         type: "post",
         data: serializedData
     });
@@ -443,7 +506,7 @@ $('#signOut').click(function () {
     }
 	
 	request = $.ajax({
-        url: "index.php",
+        url: "../../../index.php",
         type: "post",
         data: { action: "signout"}
     });

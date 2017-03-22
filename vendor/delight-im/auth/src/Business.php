@@ -41,8 +41,12 @@ class Business {
 	
 	
 	//Business related data handling
-	public function getBusinessByUserId($user_id) {
+	public function getBusinessByUserId($buser_id) {
+		$id = 0;
 		try {
+			if(is_numeric($buser_id) ){
+				$user_id = $buser_id;
+			}
 			$requestedColumns = 'id, email, category1, category2, contact_person, business_mobile, business_phone, business_name, business_email, website, more_info, description';
 			
 			$business = $this->db->select(
@@ -66,10 +70,29 @@ class Business {
 			}
 		}
 	}
-	
-	public function getBusinessById($id) {
+	/*
+	public function getUserIdByBusinessId($id) {
 		try {
-			$requestedColumns = 'email, category1, category2, contact_person, business_mobile, business_phone, business_name, business_email, website, more_info, description';
+			$requestedColumns = 'user_id';
+			
+			$user_id = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id 
+			);
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		return $user_id;
+	}
+	*/
+	public function getBusinessById($bid) {
+		$id = 0;
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			$requestedColumns = 'user_id, email, category1, category2, contact_person, business_mobile, business_phone, business_name, business_email, website, more_info, description';
 			
 			$business = $this->db->select(
 				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id 
@@ -85,6 +108,30 @@ class Business {
 		}
 		else {
 			return $business;
+		}
+	}
+	
+	public function IsBusinessByIdExist($bid) {
+		$id = 0;
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			$requestedColumns = 'id';
+			
+			$count = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id 
+			);
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if (empty($count)) {
+			return false;
+		}
+		else {
+			return true;
 		}
 	}
 	
@@ -216,7 +263,7 @@ class Business {
 	
 	public function search($category1, $category2, $district, $text) {
 		try {
-			$requestedColumns = ' business_name, branch_address1, branch_address2, branch_address3, business_email, business_mobile ';
+			$requestedColumns = 'business_id, business_name, branch_address1, branch_address2, branch_address3, business_email, business_mobile ';
 			
 			$where = "";
 			

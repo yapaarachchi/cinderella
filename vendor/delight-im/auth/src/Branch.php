@@ -62,6 +62,27 @@ class Branch {
 			return $business;
 		}
 	}
+	
+	public function getMainBranchByBusinessId($id) {
+		try {
+			$requestedColumns = 'id, branch_address1, branch_address2, branch_address3, district, contact_person, branch_email, branch_mobile, branch_phone, main_branch, description';
+			
+			$business = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE main_branch = "YES" AND business_id = '.$id 
+			);
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if (empty($id)) {
+			$value['value'] = 'NULL';
+			return $value;
+		}
+		else {
+			return $business;
+		}
+	}
 
 
 }

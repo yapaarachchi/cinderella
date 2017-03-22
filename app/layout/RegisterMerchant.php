@@ -152,7 +152,7 @@ if (isset($_POST)) {
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#">
+		<a class="navbar-brand" href="../../">
 		<img src="../../assets/icons/home.svg" width="30" height="30" alt="">
 		<b>Cinderella</b>
 		</a>

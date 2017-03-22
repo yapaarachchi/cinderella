@@ -39,7 +39,10 @@ if (isset($_GET)) {
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="../../"><b>Cinderella</b></a>
+		<a class="navbar-brand" href="../../">
+		<img src="../../assets/icons/home.svg" width="30" height="30" alt="">
+		<b>Cinderella</b>
+		</a>
 		
 		<!-- Large Screens -->
 		<ul class="nav navbar-nav hidden-md-down">
@@ -184,7 +187,33 @@ if (isset($_GET)) {
 		
 		</div>
 	</div>
-					
+			
+	<nav class="navbar sticky-top navbar-inverse bg-inverse ">
+
+		<div class="row">
+		
+		<div class="col-5">
+			
+				<a href="#" >About Us</a>
+				<span class="text-muted">|</span>
+				<a href="#" >Contact Us</a>
+			
+		</div>
+		
+		<div class="col-5">
+		
+		<span style="color:white">© 2017 Cinderella  </span> 
+		<span  class="text-muted">(All Rights Reserved)</span> 
+		</div>
+		
+		<div class="col-2 float-right">
+		<a href="#" ><img src="../../assets/icons/facebook.png" style="width:30px; height:30px; margin: 0 auto" class="img-fluid d-block" alt="Image"></a>		
+		</div>
+		
+		</div>
+		
+	</nav>					
+
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="../../js/jquery-3.1.1.slim.min.js"></script>
     <script src="../../js/tether.min.js"></script>

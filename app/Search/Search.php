@@ -67,7 +67,7 @@ if (isset($_POST)) {
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="#" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="../Merchant/Page/index.php?business='.$value['business_id'].'" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
