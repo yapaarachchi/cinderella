@@ -188,7 +188,7 @@ if (isset($_GET)) {
 		</div>
 	</div>
 			
-	<nav class="navbar sticky-top navbar-inverse bg-inverse ">
+	<div class="navbar sticky-top navbar-inverse bg-inverse " >
 
 		<div class="row">
 		
@@ -212,7 +212,7 @@ if (isset($_GET)) {
 		
 		</div>
 		
-	</nav>					
+	</div>					
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="../../js/jquery-3.1.1.slim.min.js"></script>

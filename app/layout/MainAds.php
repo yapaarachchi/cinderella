@@ -4,386 +4,419 @@
 
 <div class="card-columns" style="padding-top: 30px;">
 
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
+					<div class="card">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <div class="card-block">
+						<h4 class="card-title">Business Name</h4>
+						<div class="row">
+						
+						
+						<div class="col-xs-12 text-muted">
+						<address>
+						<img  src="assets/icons/location.png" alt="Card image cap">
+						Address1,Address2, City</address>
+						</div>
+						</div>
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/phone.png" alt="Card image cap">
+						0123456789
+						</div>
+						</div>
+						
+						<div class="row">
+						<div class="col-xs-12 text-muted">
+						<img  src="assets/icons/mail.png" alt="Card image cap">
+						email@host.com
+						</div>
+						</div>
+						
+					  </div>
+					  
+							<div class="card-footer text-muted text-center">
+								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							</div>
+							
+					</div>
   
-    <div class="card ">
-
-      <img class="card-img-top img-fluid" src="assets/ads/8.jpg" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Donal Studio</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		<adsdress>
-		No: 189, Residencies, Dr Danister De Silva</adsdress>
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	 
-	 <div class="card ">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Jonathans Havelock Town</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card ">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Prasanna Hennayake Studio</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Senaka Wedding Studio</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Veenavee Studio</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		32/1A, Katuwana Roads, Homagama, Sri Lanka
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		+94 114 992 333
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Wedding World Studio One</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Helen S Studio</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Raymac Photos</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Studio 3000df</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Studio 3000df</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Studio 3000df</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	<div class="card">
-      <img class="card-img-top img-fluid" src="assets/ads/10.png" alt="Card image cap" style="width: 100%;  height: 150px;">
-      <div class="card-block">
-        <h4 class="card-title">Studio 3000df</h4>
-        <div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/location.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		No: 189, Residencies, Dr Danister De Silva
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-xs-2">
-		<img  src="assets/icons/phone.png" alt="Card image cap">
-		</div>
-		
-		<div class="col-xs-10">
-		0777773000
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="float-xs-right">
-			<a href="#" class="btn btn-outline-primary btn-sm">more</a>
-			</div >
-		</div>
-      </div>
-    </div>
-	
-	
-    
-	 
-    
-	 
-    
-   
+				
 	 </div>

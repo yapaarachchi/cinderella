@@ -17,26 +17,26 @@ echo '
 				<div class="carousel-inner" role="listbox">
 					<div class="carousel-item active">
 						<div class="row">
-							<div class="col-3"><a href="http://www.quackit.com/bootstrap/bootstrap_4/examples/" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>  
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>  
+							<div class="col-3"><a href="http://www.quackit.com/bootstrap/bootstrap_4/examples/" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%; width: 100%;"></a></div>
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%; width: 100%;"></a></div>
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%; width: 100%;"></a></div>  
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%; width: 100%;"></a></div>  
 						</div><!--.row-->
 					</div>
 					<div class="carousel-item">
 						<div class="row">
-							<div class="col-3"><a href="http://www.quackit.com/bootstrap/bootstrap_4/examples/" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>  							
+							<div class="col-3"><a href="http://www.quackit.com/bootstrap/bootstrap_4/examples/" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%;; width: 100%;"></a></div>
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%;; width: 100%;"></a></div>
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%;; width: 100%;"></a></div>
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%;; width: 100%;"></a></div>  							
 						</div><!--.row-->
 					</div>
 					<div class="carousel-item">
 						<div class="row">
-							<div class="col-3"><a href="http://www.quackit.com/bootstrap/bootstrap_4/examples/" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/5.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
-							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>  
+							<div class="col-3"><a href="http://www.quackit.com/bootstrap/bootstrap_4/examples/" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%;; width: 100%;"></a></div>
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%;; width: 100%;"></a></div>
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%;; width: 100%;"></a></div>
+							<div class="col-3"><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 100%;; width: 100%;"></a></div>  
 						</div><!--.row-->
 					</div>
 				</div>
@@ -79,33 +79,33 @@ echo '
 		  </ol>
 		  <div class="carousel-inner" role="listbox">
 			<div class="carousel-item active">
-                	  <div><a href="http://www.quackit.com/bootstrap/bootstrap_4/examples/" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="http://www.quackit.com/bootstrap/bootstrap_4/examples/" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
         
 			</div>
 			
 			<div class="carousel-item">
-                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
 			</div>
 			<div class="carousel-item">
-                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
 			</div>
 			<div class="carousel-item">
-                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
 			</div>
 			<div class="carousel-item">
-                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
 			</div>
 			<div class="carousel-item">
-                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
 			</div>
 			<div class="carousel-item">
-                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
 			</div>
 			<div class="carousel-item">
-                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
 			</div>
 			<div class="carousel-item">
-                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/6.jpg" alt="Image" style="height: 200px; width: 100%;"></a></div>
+                	  <div><a href="#" class="img-fluid rounded mx-auto d-block img-thumbnail"><img src="assets/promotions/promotion.png" alt="Image" style="height: 200px; width: 100%;"></a></div>
 			</div>
 			
 		  </div>

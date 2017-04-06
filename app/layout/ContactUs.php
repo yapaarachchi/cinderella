@@ -18,7 +18,7 @@ $isLoggedIn = $auth->isLoggedIn();
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../css/cinderella.css">
 	
-	<title>Cinderella - About Us</title>
+	<title>Cinderella - Contact Us</title>
   </head>
   <body>
 	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
@@ -33,7 +33,7 @@ $isLoggedIn = $auth->isLoggedIn();
 		<!-- Large Screens -->
 		<ul class="nav navbar-nav hidden-md-down">
 		  <li class="nav-item">
-			<a class="nav-link" href="ContactUs.php">Contact Us</a>
+			<a class="nav-link" href="AboutUs.php">About Us</a>
 		  </li>
 		  <li class="nav-item">
 			<a class="nav-link" href="../Search">Search</a>
@@ -150,7 +150,7 @@ $isLoggedIn = $auth->isLoggedIn();
 			<div class="col-lg-10">
 				<div class="card">
 				<div class="card-header">
-				<h4 class="card-title">About Us</h4>
+				<h4 class="card-title">Contact Us</h4>
 				</div>
 				  <div class="card-block">
 					
@@ -184,7 +184,7 @@ But it can be accomplished. In fact, there are some companies out there with rem
 		
 		<div class="col-5">
 			
-				<a href="ContactUs.php" >Contact Us</a>
+				<a href="AboutUs.php" >About Us</a>
 				<span class="text-muted">|</span>
 				<a href="../Search" >Search</a>
 			

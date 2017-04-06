@@ -199,6 +199,9 @@ if (isset($_POST)) {
 						<div class="card card-block" style="padding: 0px;">
 						  <a href="#" ><img src="../../assets/ads/300-300.jpg" class="img-fluid d-block" alt="Image"></a>
 						</div>
+						<div class="card card-block" style="padding: 0px;">
+						  <a href="#" ><img src="../../assets/ads/300-300.jpg" class="img-fluid d-block" alt="Image"></a>
+						</div>
 			</div>
 		</div>
 	   

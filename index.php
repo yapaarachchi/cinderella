@@ -48,10 +48,10 @@ $isLoggedIn = $auth->isLoggedIn();
 		<!-- Large Screens -->
 		<ul class="nav navbar-nav hidden-md-down">
 		  <li class="nav-item">
-			<a class="nav-link" href="#">About Us</a>
+			<a class="nav-link" href="app/layout/AboutUs.php">About Us</a>
 		  </li>
 		  <li class="nav-item">
-			<a class="nav-link" href="#">Contact Us</a>
+			<a class="nav-link" href="app/layout/ContactUs.php">Contact Us</a>
 		  </li>
 		</ul>
 		
@@ -172,6 +172,11 @@ $isLoggedIn = $auth->isLoggedIn();
 				<div class="row">
 					<div id="MainBanner" class="col-lg-12">
 						<!-- put main banner here -->
+						<!-- put promotions here -->
+							<?php
+								include('app/layout/MainBanner.php')
+							?>
+						
 
 					</div>
 				</div>
@@ -194,7 +199,9 @@ $isLoggedIn = $auth->isLoggedIn();
 				<div class="row">
 					<div id="Promotions" class="col-lg-12">
 						<!-- put promotions here -->
-
+							<?php
+								include('app/layout/Promotions.php')
+							?>
 					</div>
 				</div>
 				<div class="row">
@@ -214,28 +221,28 @@ $isLoggedIn = $auth->isLoggedIn();
 		</div>
 	</div>
 	
-	<nav class="navbar sticky-top navbar-inverse bg-inverse">
+	<nav class="navbar sticky-top navbar-light" style="background-color:#E6E8EA; margin-top:20px">
 
 		<div class="row">
 		
 		<div class="col-5">
 			
-				<a href="#" >About Us</a>
-				<span class="text-muted">|</span>
-				<a href="#" >Contact Us</a>
-				<span class="text-muted">|</span>
-				<a href="#" >Search</a>
+				<a href="app/layout/AboutUs.php" style="color:#888A8D">About Us</a>
+				<span style="color:#888A8D">|</span>
+				<a href="app/layout/ContactUs.php" style="color:#888A8D">Contact Us</a>
+				<span style="color:#888A8D">|</span>
+				<a href="app/Search/" style="color:#888A8D">Search</a>
 			
 		</div>
 		
 		<div class="col-5">
 		
-		<span style="color:white">© 2017 Cinderella  </span> 
-		<span  class="text-muted">(All Rights Reserved)</span> 
+		<span style="color:#888A8D">© 2017 Cinderella  </span> 
+		<span style="color:#B0B1B2"  >(All Rights Reserved)</span> 
 		</div>
 		
 		<div class="col-2 float-right">
-		<a href="#" ><img src="assets/icons/facebook.png" style="width:30px; height:30px; margin: 0 auto" class="img-fluid d-block" alt="Image"></a>		
+		<a href="https://www.facebook.com/Cinderellalk-379706339094765/" target="_blank" ><img src="assets/icons/facebook.png" style="width:30px; height:30px; margin: 0 auto" class="img-fluid d-block" alt="Image"></a>		
 		</div>
 		
 		</div>
@@ -265,9 +272,9 @@ $isLoggedIn = $auth->isLoggedIn();
 $(document).ready(function() {	
 
 
-getLayout("app/layout/MainBanner.php","#MainBanner");
+//getLayout("app/layout/MainBanner.php","#MainBanner");
 getLayout("app/layout/SideMenu.php","#SideMenu");
-getLayout("app/layout/Promotions.php","#Promotions");
+//getLayout("app/layout/Promotions.php","#Promotions");
 //getLayout("app/layout/SideMenu.php","#SideMenu");
 
 
