@@ -51,6 +51,43 @@ if(!$isLoggedIn){
 			display:none;
 			margin-top: 30px;
 		}
+		
+		.cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        border-radius: 1px;
+        margin-top: 7px;
+      }
+
+      .cropit-preview-image-container {
+        cursor: move;
+      }
+
+      .image-size-label {
+        margin-top: 10px;
+      }
+
+      input {
+        display: block;
+      }
+
+      button[type="submit"] {
+        margin-top: 10px;
+      }
+
+      #result {
+        margin-top: 10px;
+        width: 900px;
+      }
+
+      #result-data {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+      }
 	</style>
 	
   </head>
@@ -222,13 +259,16 @@ if(!$isLoggedIn){
     <script src="../../js/bootstrap.min.js"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="../../js/jquery.cropit.js"></script>
+	
 	<script src="../../js/jquery.validate.min.js"></script>
 	<script src="../../js/additional-methods.min.js"></script>
 
 	<script src="../../js/notify.js"></script>
 	
+	
 <script>
-
 
 $(document).ready(function() {	
 

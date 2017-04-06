@@ -64,6 +64,10 @@ $text =
   <div class="carousel-inner" role="listbox">
     <div class="carousel-item active">
       <img src="images/7.png" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 300px; width: 100%;">
+	  <div class="carousel-caption d-none d-md-block">
+		<a href="#"><h1><u>Change Image</u></h1></a>
+		<p>...</p>
+	  </div>
     </div>
     <div class="carousel-item">
       <img src="images/5.jpg" alt="Second slide" class="img-fluid rounded mx-auto d-block" style="height: 300px; width: 100%;">
@@ -136,6 +140,69 @@ $text = $text.
 
 <a href="#" class="btn btn-danger" id="deleteConfirmation" data-toggle="modal" data-target="#DeleteModal">Delete '.$business_name.'</a>
 ';
+
+//profile image
+$text=$text .' </br> </br> 
+<div class="card">
+ <div class="card-header">
+ <div class ="float-left">Profile Image</div>
+ <div class ="float-right" ><a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update</u></a></div>
+  </div>
+  <div class="card-block">
+    <img src="images/profile/profile.jpg" class="img-fluid img-thumbnail float-right" alt="Responsive image">
+  </div>  
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="UpdateProfileModal" tabindex="-1" role="dialog" aria-labelledby="UpdateProfileModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="UpdateProfileModal">Update Profile Image (300px * 200px)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  <form id="UpdateProfileModalForm">
+      <div class="modal-body">
+        <div id="UpdateProfileModalMessage"> </div>
+		
+		  <div class="image-editor">
+			<div class="select-image-btn btn btn-outline-primary"> Select New Image </div>
+			<input type="file" style=" visibility: hidden;" class="cropit-image-input" />
+			<div id="ImageInfo" class="text-muted"> </div>
+			<div class="cropit-preview" style="width: 300px; height: 200px;"></div>
+			</br>
+			
+			<div class="row">
+				<div class="col-2">
+					<img src="../../assets/icons/rotate_left.png" class="rotate-ccw img-thumbnail img-fluid" role="button"></img>
+				</div>
+				<div class="col-2">
+					<img src="../../assets/icons/rotate_right.png" class="rotate-cw img-thumbnail img-fluid" role="button"></img>
+				</div>
+				<div class="col-8">
+					<input type="range" class="cropit-image-zoom-input">
+				</div>
+				
+			</div>
+			<input type="hidden" name="action" value="profile" />
+			<input type="hidden" name="image-data" class="hidden-image-data" />
+			
+		  </div>
+      </div>
+	  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+
+';
+
 
 $text = $text. '
 
@@ -419,8 +486,21 @@ if (isset($_POST)) {
 				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
 				return;
 			}	
+		}
+		else if ($_POST['action'] === 'profile') {
+			try {
+				//$status =" ";
+				//$status = $Business->deleteBusiness($_POST['BusinessId']);
+			//if($status == '200'){
+				//echo "CINDERELLA_OK";
+			//}
 			
-			
+			echo "DONE";
+			}
+			catch (Exception $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
 		}
 		}
 }
@@ -507,6 +587,69 @@ $("#DeleteBusinessForm").submit(function(event){
     });
 
 });
+
+
+//pro
+	$(function() {
+        $('.image-editor').cropit();
+		
+		$('.select-image-btn').click(function() {
+		  $('.cropit-image-input').click();
+			$("#ImageInfo").html('Resize and adjust the image as needed');
+		});
+
+
+		$('.rotate-cw').click(function() {
+          $('.image-editor').cropit('rotateCW');
+        });
+        $('.rotate-ccw').click(function() {
+          $('.image-editor').cropit('rotateCCW');
+        });
+   	
+
+        $('#UpdateProfileModalForm').submit(function() {
+			event.preventDefault();
+          // Move cropped image data to hidden input
+          var imageData = $('.image-editor').cropit('export');
+		  if(imageData == ""){
+			  return false;
+		  }
+          $('.hidden-image-data').val(imageData);
+
+          // Print HTTP request params
+          var formValue = $(this).serialize();
+
+		  $(this).prop('disabled',true);
+			request = $.ajax({
+				url: "Business.php",
+				type: "post",
+				data: formValue
+			});
+			
+			request.done(function (response, textStatus, jqXHR){
+				console.log("Logged in "+ response);
+				//$('#waitModal').modal('hide');
+				$("#UpdateProfileModalMessage").html(response);
+				$("#UpdateProfileModal").hide();	
+				
+				
+			});
+
+			request.fail(function (jqXHR, textStatus, errorThrown){
+				console.error(
+					"The following error occurred: "+
+					textStatus, errorThrown
+				);
+				//$('#waitModal').modal('hide');
+				//$("#UpdateProfileModalMessage").html(errorThrown);
+				$("#UpdateProfileModal").show();
+			});
+			request.always(function () {
+				//$(this).prop('disabled',false);
+			});
+        });
+
+});  
 
 
 
@@ -611,5 +754,5 @@ function editonclick(){
 		
 	}
 	
-
+	
 </script>
