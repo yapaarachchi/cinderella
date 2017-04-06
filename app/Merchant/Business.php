@@ -145,7 +145,7 @@ $text = $text.
 $text=$text .' </br> </br> 
 <div class="card">
  <div class="card-header">
- <div class ="float-left">Profile Image</div>
+ <div class ="float-left">Profile Image (300px * 200px)</div>
  <div class ="float-right" ><a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update</u></a></div>
   </div>
   <div class="card-block">
