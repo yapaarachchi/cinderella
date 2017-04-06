@@ -187,6 +187,7 @@ $text=$text .' </br> </br>
 				
 			</div>
 			<input type="hidden" name="action" value="profile" />
+			<input type="hidden" name="business_id" value="'.$business_id.'" />
 			<input type="hidden" name="image-data" class="hidden-image-data" />
 			
 		  </div>
@@ -489,13 +490,30 @@ if (isset($_POST)) {
 		}
 		else if ($_POST['action'] === 'profile') {
 			try {
+				$business_id = $_POST['business_id'];
+				 $encoded = $_POST['image-data'];
+				//explode at ',' - the last part should be the encoded image now
+				$exp = explode(',', $encoded);
+				//decode the image and finally save it
+				$data = base64_decode($exp[1]);
+				
+				$mime_type = finfo_buffer(finfo_open(), $data, FILEINFO_MIME_TYPE);
+				$mime_type_arr = explode('/', $mime_type);
+				$mime_type = $mime_type_arr[1];
+				
+				$file = 'images/profile/'.$business_id.'.'.$mime_type;
+				//make sure you are the owner and have the rights to write content
+				file_put_contents($file, $data);
+	
+	
+			
 				//$status =" ";
 				//$status = $Business->deleteBusiness($_POST['BusinessId']);
 			//if($status == '200'){
 				//echo "CINDERELLA_OK";
 			//}
 			
-			echo "DONE";
+			echo $file;
 			}
 			catch (Exception $e) {
 				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);

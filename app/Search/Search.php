@@ -38,7 +38,7 @@ if (isset($_POST)) {
 				$text = $text.'
 					<div class="card">
 
-					  <img class="card-img-top img-fluid" src="../../assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="../Merchant/images/profile/'.$value['business_id'].'.png" alt="Card image cap">
 					  <div class="card-block">
 						<h4 class="card-title">'.$value['business_name'].'</h4>
 						<div class="row">
