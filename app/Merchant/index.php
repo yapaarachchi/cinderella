@@ -93,10 +93,10 @@ if(!$isLoggedIn){
   </head>
   <body>
 	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
-		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<a class="navbar-brand" href="../../"><b>Cinderella</b></a>
+		<a class="navbar-brand" href="../../">
+		<img src="../../assets/icons/home.svg" width="30" height="30" alt="">
+		<b>Cinderella</b>
+		</a>
 		
 		<!-- Large Screens -->
 		<ul class="nav navbar-nav hidden-md-down">
@@ -111,40 +111,10 @@ if(!$isLoggedIn){
 		<?php
 			if($isLoggedIn === true){				
 		?>
-		<div class="active-links">
-            <div id="session">
-			<ul class="nav navbar-nav">
-			<li class="nav-item dropdown">
-            <a id="signout" class="nav-link dropdown-toggle" href="#">
-			<div class="hidden-sm-down"><u>  Sign Out </u></div>
-			<div class="hidden-md-up"><u></u></div>
-            </a>
-			</li>
-			</ul>
-            </div>
-            	<div class="nav navbar-nav float-xs-right" id="signin-dropdown">
-				<a class="btn btn-secondary btn-sm btn-block"  return false;" style="margin-top: 5px;" href="app/user/userProfile.php" role="button">My Profile</a>
-				<a class="btn btn-secondary btn-sm btn-block" onclick="logout(); return false;" style="margin-top: 5px;" href="#" role="button">Sign Out</a>
-         	</div>
-        </div>
+<!-- add singn out here -->
 		<?php
 			}
 		?>
-		<!-- Toggle - Small Screen -->
-		<div class="collapse navbar-toggleable-md" id="navbarNavDropdown">
-			<ul class="nav navbar-nav hidden-lg-up">
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Photography & Videography <span class="sr-only">(current)</span></a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Bridal Dressing</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Bridal Wear and Designing</a>
-			  </li>
-			</ul>
-			
-		</div>
 		<div id="message-alert">
 							
 						</div>
@@ -237,10 +207,13 @@ if(!$isLoggedIn){
 				<div class="row">
 					<div id="mainContent" class="col-lg-12">
 						<!-- put main content here -->
-						<div class="alert alert-info"  style="margin-top:50px">
+						<div class="alert alert-info hidden-md-down"  style="margin-top:50px">
 						  <strong>Welcome Merchant!</strong>, you can manage your business information from here. Contact Cinderella Team for further help.
 						</div>
 					
+					<div class="alert alert-warning hidden-lg-up"  style="margin-top:50px">
+						  <strong>Sorry!</strong>,This view is not fully supported for small Devices. Please <strong>use desktop version</strong> to manage your business information.
+						</div>
 					
 					</div>
 				</div>
