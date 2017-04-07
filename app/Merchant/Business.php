@@ -7,6 +7,7 @@ $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
 $Business = new \Delight\Auth\Business($db);
 $Branch = new \Delight\Auth\Branch($db);
+$Media = new \Delight\Auth\Media($db);
 
 $business_id;
 $business_details;
@@ -491,29 +492,33 @@ if (isset($_POST)) {
 		else if ($_POST['action'] === 'profile') {
 			try {
 				$business_id = $_POST['business_id'];
-				 $encoded = $_POST['image-data'];
-				//explode at ',' - the last part should be the encoded image now
+				if($_POST['image-data'] == ''){
+					ErrorCode::SetError(ErrorCode::MEDIA_NO_FILE);
+					return;
+				}
+				$encoded = $_POST['image-data'];
+				 
 				$exp = explode(',', $encoded);
-				//decode the image and finally save it
 				$data = base64_decode($exp[1]);
 				
 				$mime_type = finfo_buffer(finfo_open(), $data, FILEINFO_MIME_TYPE);
 				$mime_type_arr = explode('/', $mime_type);
-				$mime_type = $mime_type_arr[1];
 				
-				$file = 'images/profile/'.$business_id.'.'.$mime_type;
-				//make sure you are the owner and have the rights to write content
-				file_put_contents($file, $data);
-	
-	
-			
-				//$status =" ";
-				//$status = $Business->deleteBusiness($_POST['BusinessId']);
-			//if($status == '200'){
-				//echo "CINDERELLA_OK";
-			//}
-			
-			echo $file;
+				$mime_type = $mime_type_arr[1];				
+				$filename = $business_id.'.'.$mime_type;
+				
+				$status = $Media->UpdateMedia($business_id, 'PROFILE', 'IMAGE', $filename, $mime_type, $data);
+				if($status == '200'){
+					echo "CINDERELLA_OK";
+				}
+				else if($status == '1'){
+					ErrorCode::SetError(ErrorCode::MEDIA_MIME_TYPES);
+				}
+				return;
+			}
+			catch (TooManyRequestsException $e) {
+				ErrorCode::SetError(ErrorCode::TOO_MANY_REQUESTS);
+				return;
 			}
 			catch (Exception $e) {
 				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
@@ -609,7 +614,24 @@ $("#DeleteBusinessForm").submit(function(event){
 
 //pro
 	$(function() {
-        $('.image-editor').cropit();
+        $('.image-editor').cropit({
+		  smallImage: 'stretch',
+		  allowDragNDrop: true,
+		  onFileReaderError: function() {
+			   $("#UpdateProfileModalMessage").html('<div class="alert alert-danger" role="alert" >Please attach an image file. (.png, .gif, .jpeg, .jpg)</div>');            			
+        },
+		onImageError: function(e) {
+            if (e.code === 0) {
+                $("#UpdateProfileModalMessage").html('<div class="alert alert-danger" role="alert" >Please attach an image file. (.png, .gif, .jpeg, .jpg)</div>');
+            }
+			else if (e.code === 1) {
+                $("#UpdateProfileModalMessage").html('<div class="alert alert-danger" role="alert" >Image is too small.</div>');
+            }
+		},
+		onFileChange: function() {
+			   $("#UpdateProfileModalMessage").html('');            			
+        }
+		});
 		
 		$('.select-image-btn').click(function() {
 		  $('.cropit-image-input').click();
@@ -646,9 +668,15 @@ $("#DeleteBusinessForm").submit(function(event){
 			
 			request.done(function (response, textStatus, jqXHR){
 				console.log("Logged in "+ response);
-				//$('#waitModal').modal('hide');
-				$("#UpdateProfileModalMessage").html(response);
-				$("#UpdateProfileModal").hide();	
+				if(response.indexOf('CINDERELLA_OK') > -1)
+				{
+					$("#UpdateProfileModalMessage").html(response);
+				}
+				else{
+					$("#UpdateProfileModalMessage").html(response);
+					//$("#UpdateProfileModal").hide();	
+				}
+				
 				
 				
 			});

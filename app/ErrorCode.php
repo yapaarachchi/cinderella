@@ -51,6 +51,11 @@ final class ErrorCode {
 	const LOGIN_EMAIL_WRONG = 'The email appears to be incorrect.';
 	const LOGIN_PASSWOED_WRONG = 'The password appears to be incorrect.';
 	
+	const TOO_MANY_REQUESTS = 'Too many requests. Please try againg later';
+	
+	const MEDIA_MIME_TYPES = 'Allowed extensions are .png, .gif, .jpeg, .jpg';
+	const MEDIA_NO_FILE = 'Please attach an image file (.png, .gif, .jpeg, .jpg)';
+	
 	public static function SetError($errorcode){
 		echo '<div class="alert alert-danger" role="alert" >'.$errorcode.'</div>';
 	}
