@@ -58,8 +58,32 @@ if (isset($_GET)) {
 $text =
 '
 
+<div class="card">
+ <div class="card-header">
+ <div class="row">
+	 <div class="col-4">
+	 Banner Images (800px * 300px)
+	 </div>
+	 <div class="col-8">
+		 <div class="row">
+			 <div class="col-4">
+				<a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update Image 1</u></a>
+			 </div>
+			 <div class="col-4">
+				<a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update Image 2</u></a>
+			 </div>
+			 <div class="col-4">
+				<a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update Image 3</u></a>
+			 </div>
+		</div>
+	 </div>
+ </div>
+ 
+  </div>
+</div>
 
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -67,17 +91,22 @@ $text =
   </ol>
   <div class="carousel-inner" role="listbox">
     <div class="carousel-item active">
-      <img src="images/7.png" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 300px; width: 100%;">
+      <img class="d-block img-fluid" src="images/banner/banner.png" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
-		<a href="#"><h1><u>Change Image</u></h1></a>
-		<p>...</p>
+		<h1><u>Image 1</u></h1>
 	  </div>
     </div>
     <div class="carousel-item">
-      <img src="images/5.jpg" alt="Second slide" class="img-fluid rounded mx-auto d-block" style="height: 300px; width: 100%;">
+      <img class="d-block img-fluid" src="images/banner/banner.png" style="height: 100%; width: 100%;">
+	  <div class="carousel-caption d-none d-md-block">
+		<h1><u>Image 2</u></h1>
+	  </div>
     </div>
     <div class="carousel-item">
-      <img src="images/3.jpg" alt="Third slide" class="img-fluid rounded mx-auto d-block" style="height: 300px; width: 100%;">
+      <img class="d-block img-fluid" src="images/banner/banner.png" style="height: 100%; width: 100%;">
+	  <div class="carousel-caption d-none d-md-block">
+		<h1><u>Image 3</u></h1>
+	  </div>
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -90,6 +119,7 @@ $text =
   </a>
 </div>
 
+	
 </br>';
 
 //waitmodel
@@ -710,7 +740,7 @@ $("#DeleteBusinessForm").submit(function(event){
 				);
 				$("#UpdateProfileModalMessage").html('');  
 				$(this).prop('disabled',false);
-				$("#UpdateProfileModalMessage").html(response);
+				$("#UpdateProfileModalMessage").html(errorThrown);
 				$("#UpdateProfileModal").show();
 			});
 			request.always(function () {

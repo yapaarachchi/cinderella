@@ -288,7 +288,7 @@ $('#Profile').click( function(e) {
     request.done(function (response, textStatus, jqXHR){
         // Log a message to the console
         console.log("Logged in "+ response);
-		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
+		//$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
 		$("#mainContent").html(response);
 		
     });
@@ -300,7 +300,7 @@ $('#Profile').click( function(e) {
             "The following error occurred: "+
             textStatus, errorThrown
         );
-		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
+		//$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
 		$("#mainContent").html(errorThrown);
     });
 
@@ -333,7 +333,7 @@ $('#Profile').click( function(e) {
     request.done(function (response, textStatus, jqXHR){
         // Log a message to the console
         console.log("Logged in "+ response);
-		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
+		//$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
 		$("#mainContent").html(response);
 		
     });
@@ -345,7 +345,7 @@ $('#Profile').click( function(e) {
             "The following error occurred: "+
             textStatus, errorThrown
         );
-		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
+		//$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
 		$("#mainContent").html(errorThrown);
     });
 
@@ -380,7 +380,7 @@ $('#business-list-group').find('a').click( function(e) {
     request.done(function (response, textStatus, jqXHR){
         // Log a message to the console
         console.log("Logged in "+ response);
-		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
+		//$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
 		$("#mainContent").html(response);
 		
     });
@@ -392,7 +392,7 @@ $('#business-list-group').find('a').click( function(e) {
             "The following error occurred: "+
             textStatus, errorThrown
         );
-		$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
+		//$("html,body").animate({scrollTop:$('div#topDiv').offset().top}, 500);
 		$("#mainContent").html(errorThrown);
     });
 
