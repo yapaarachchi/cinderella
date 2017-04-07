@@ -32,6 +32,8 @@ $branch_phone;
 $main_branch;
 $branch_description;
 
+$profile_image;
+
 if (isset($_GET)) {
 		if (isset($_GET['id'])){
 			$business_id = $_GET['id'];
@@ -48,6 +50,7 @@ if (isset($_GET)) {
 					$contact_person = $value['contact_person'];
 					$web = $value['website'];
 					$description = $value['description'];
+					$profile_image = $business_id ;
 				}
 			}
 
@@ -149,8 +152,8 @@ $text=$text .' </br> </br>
  <div class ="float-left">Profile Image (300px * 200px)</div>
  <div class ="float-right" ><a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update</u></a></div>
   </div>
-  <div class="card-block">
-    <img src="images/profile/profile.jpg" class="img-fluid img-thumbnail float-right" alt="Responsive image">
+  <div class="card-block" id="profilecard">
+    <img id="ProfileImage" src="images/profile/'.$Media->getProfileImage($business_id).'" class="img-fluid img-thumbnail float-right" alt="Responsive image">
   </div>  
 </div>
 
@@ -510,6 +513,7 @@ if (isset($_POST)) {
 				$status = $Media->UpdateMedia($business_id, 'PROFILE', 'IMAGE', $filename, $mime_type, $data);
 				if($status == '200'){
 					echo "CINDERELLA_OK";
+					$profile_image = $filename;
 				}
 				else if($status == '1'){
 					ErrorCode::SetError(ErrorCode::MEDIA_MIME_TYPES);
@@ -618,9 +622,11 @@ $("#DeleteBusinessForm").submit(function(event){
 		  smallImage: 'stretch',
 		  allowDragNDrop: true,
 		  onFileReaderError: function() {
+			$("#ImageInfo").html(''); 
 			   $("#UpdateProfileModalMessage").html('<div class="alert alert-danger" role="alert" >Please attach an image file. (.png, .gif, .jpeg, .jpg)</div>');            			
         },
 		onImageError: function(e) {
+			 $("#ImageInfo").html(''); 
             if (e.code === 0) {
                 $("#UpdateProfileModalMessage").html('<div class="alert alert-danger" role="alert" >Please attach an image file. (.png, .gif, .jpeg, .jpg)</div>');
             }
@@ -630,12 +636,22 @@ $("#DeleteBusinessForm").submit(function(event){
 		},
 		onFileChange: function() {
 			   $("#UpdateProfileModalMessage").html('');            			
+        },
+		onImageLoaded: function() {
+			$(this).prop('disabled',false);
+			   $("#ImageInfo").html('Resize and adjust the image as needed');   
+				$("#UpdateProfileModalMessage").html('');	
+				
+        },
+		onImageLoading: function() {
+			$(this).prop('disabled',true);
+			   $("#UpdateProfileModalMessage").html('<div class="alert alert-info" role="alert" >Image is loading...</div>');         			
         }
 		});
 		
 		$('.select-image-btn').click(function() {
 		  $('.cropit-image-input').click();
-			$("#ImageInfo").html('Resize and adjust the image as needed');
+			
 		});
 
 
@@ -660,6 +676,7 @@ $("#DeleteBusinessForm").submit(function(event){
           var formValue = $(this).serialize();
 
 		  $(this).prop('disabled',true);
+		  $("#UpdateProfileModalMessage").html('<div class="alert alert-info" role="alert" >Please wait....</div>');   
 			request = $.ajax({
 				url: "Business.php",
 				type: "post",
@@ -670,9 +687,14 @@ $("#DeleteBusinessForm").submit(function(event){
 				console.log("Logged in "+ response);
 				if(response.indexOf('CINDERELLA_OK') > -1)
 				{
-					$("#UpdateProfileModalMessage").html(response);
+					$("#UpdateProfileModalMessage").html('');  
+					var d = new Date(); 
+					document.getElementById("ProfileImage").src = "images/profile/<?php echo $profile_image; ?>?ver=" + d.getTime();
+					$("#profilecard").hide().fadeIn('fast');
+					$('#UpdateProfileModal').modal('hide');		
 				}
 				else{
+					$(this).prop('disabled',false);
 					$("#UpdateProfileModalMessage").html(response);
 					//$("#UpdateProfileModal").hide();	
 				}
@@ -686,8 +708,9 @@ $("#DeleteBusinessForm").submit(function(event){
 					"The following error occurred: "+
 					textStatus, errorThrown
 				);
-				//$('#waitModal').modal('hide');
-				//$("#UpdateProfileModalMessage").html(errorThrown);
+				$("#UpdateProfileModalMessage").html('');  
+				$(this).prop('disabled',false);
+				$("#UpdateProfileModalMessage").html(response);
 				$("#UpdateProfileModal").show();
 			});
 			request.always(function () {
@@ -696,8 +719,6 @@ $("#DeleteBusinessForm").submit(function(event){
         });
 
 });  
-
-
 
 } );
 function editonclick(){

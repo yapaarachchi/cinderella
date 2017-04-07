@@ -46,13 +46,13 @@ class Media {
 	}
 
 
-	public function getProfileImageByBusiness($bid) {
+	public function getProfileImageDataByBusiness($bid) {
 		$id = 0;
 		try {
 			if(is_numeric($bid) ){
 				$id = $bid;
 			}
-			$requestedColumns = 'file_name, location, mime_type';
+			$requestedColumns = 'filename, location, mime_type';
 			
 			$media = $this->db->select(
 				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "PROFILE" AND type = "IMAGE" AND business_id = '.$id 
@@ -74,6 +74,47 @@ class Media {
 			return $media;
 		}
 	}
+	public function getProfileImage($bid) {
+		$id = 0;
+		$i=0;
+		$media_image = '';
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			$requestedColumns = 'filename';
+			
+			$media = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "PROFILE" AND type = "IMAGE" AND business_id = '.$id 
+			);
+			
+			if (is_array($media) || is_object($media))
+			{
+				
+				foreach($media as $key => $value) {
+					$i = $i + 1;
+					if($i == 1){
+						$media_image = $value['filename'];
+					}
+					
+				}
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			$value['value'] = 'NULL';
+			return $value;
+		}
+
+		if ($media_image == '') {
+			return 'profile.png';
+		}
+		else {
+			return $media_image;
+		}
+	}
 	
 	public function getBannerImagesByBusiness($bid) {
 		$id = 0;
@@ -81,7 +122,7 @@ class Media {
 			if(is_numeric($bid) ){
 				$id = $bid;
 			}
-			$requestedColumns = 'file_name, location, mime_type';
+			$requestedColumns = 'filename, location, mime_type';
 			
 			$media = $this->db->select(
 				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "BANNER" AND type = "IMAGE" AND business_id = '.$id 
@@ -110,7 +151,7 @@ class Media {
 			if(is_numeric($bid) ){
 				$id = $bid;
 			}
-			$requestedColumns = 'file_name, location, mime_type';
+			$requestedColumns = 'filename, location, mime_type';
 			
 			$media = $this->db->select(
 				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "GALLERY" AND type = "IMAGE" AND business_id = '.$id 

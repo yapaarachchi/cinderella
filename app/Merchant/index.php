@@ -259,7 +259,6 @@ if(!$isLoggedIn){
     <script src="../../js/bootstrap.min.js"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	<script src="../../js/jquery.cropit.js"></script>
 	
 	<script src="../../js/jquery.validate.min.js"></script>
