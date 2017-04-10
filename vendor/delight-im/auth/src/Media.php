@@ -150,7 +150,7 @@ class Media {
 		}
 	}
 	
-	public function getBannerImage($bid,$index,$approve) {
+	public function getBannerImage($bid,$index,$approve, $refresh = null) {
 		$id = 0;
 		$i=0;
 		$media_image = '';
@@ -190,7 +190,13 @@ class Media {
 				return 'banner.png';
 			}
 			else{
-				return $media_image.'?ver='.time();
+				if($refresh === null or $refresh === true){
+					return $media_image.'?ver='.time();
+				}
+				else{
+					return $media_image;
+				}
+				
 			}
 			
 		}
@@ -364,6 +370,60 @@ class Media {
 	}
 	else{
 		return 'NULL';
+	}
+		
+	}
+
+
+	public function getMediaStatusMessage($bid,$category,$type, $filename = null) {
+		$id = 0;
+		$i=0;
+		$file_name;
+		$media_status;
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			if($filename == null){
+				$file_name = $bid.'.png';
+			}
+			else{
+				$file_name = $filename;
+			}
+			$media = $this->db->select(
+				'SELECT approve FROM media WHERE category = "'.$category.'" AND type = "'.$type.'" AND business_id = '.$id.' AND filename = "'.$file_name.'"'				
+			);
+			
+			if (is_array($media) || is_object($media))
+			{
+				foreach($media as $key => $value) {
+					$i = $i + 1;
+					$media_status = $value['approve'];	
+					
+				}
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return '';
+		}
+	if($i == 1){
+		if ($media_status == '') {
+			return '';
+		}
+		else {
+			if($media_status == '0'){
+				return '<div class="alert alert-warning" role="alert"><strong> This Image is not approved yet</strong>. It will display to the users once it get approved</div> ';
+			}
+			else{
+				return '';
+			}
+		}	
+	}
+	else{
+		return '<div class="alert alert-info" role="alert"><strong> NO Image!</strong>. Please insert an image</div> ';
 	}
 		
 	}

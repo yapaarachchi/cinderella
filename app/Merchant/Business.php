@@ -93,18 +93,21 @@ $text =
       <img id="BannerImage1" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 1, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 1</u></h1>
+		'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 1, false, false)).'
 	  </div>
     </div>
     <div class="carousel-item">
       <img id="BannerImage2" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 2, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 2</u></h1>
+		'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 2, false, false)).'
 	  </div>
     </div>
     <div class="carousel-item">
       <img id="BannerImage3" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 3, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 3</u></h1>
+		'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 3, false, false)).'
 	  </div>
     </div>
   </div>
