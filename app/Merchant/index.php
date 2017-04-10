@@ -88,6 +88,22 @@ if(!$isLoggedIn){
         text-overflow: ellipsis;
         word-wrap: break-word;
       }
+	  
+	  .cropit-preview-profile {
+			background-color: #f8f8f8;
+			background-size: cover;
+			border: 1px solid #ccc;
+			border-radius: 1px;
+			margin-top: 7px;
+		}
+		
+		.cropit-preview-banner {
+			background-color: #f8f8f8;
+			background-size: cover;
+			border: 1px solid #ccc;
+			border-radius: 1px;
+			margin-top: 7px;
+		}
 	</style>
 	
   </head>

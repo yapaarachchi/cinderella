@@ -74,7 +74,7 @@ class Media {
 			return $media;
 		}
 	}
-	public function getProfileImage($bid) {
+	public function getProfileImage($bid, $approve) {
 		$id = 0;
 		$i=0;
 		$media_image = '';
@@ -82,7 +82,7 @@ class Media {
 			if(is_numeric($bid) ){
 				$id = $bid;
 			}
-			$requestedColumns = 'filename';
+			$requestedColumns = 'filename, approve';
 			
 			$media = $this->db->select(
 				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "PROFILE" AND type = "IMAGE" AND business_id = '.$id 
@@ -112,7 +112,13 @@ class Media {
 			return 'profile.png';
 		}
 		else {
-			return $media_image;
+			if($approve === true and $value['approve'] == '0'){
+				return 'profile.png';
+			}
+			else{
+				return $media_image.'?ver='.time();
+			}
+			
 		}
 	}
 	
@@ -137,11 +143,56 @@ class Media {
 		}
 
 		if (empty($id)) {
-			$value['value'] = 'NULL';
-			return $value;
+			return 'profile.png';
 		}
 		else {
 			return $media;
+		}
+	}
+	
+	public function getBannerImage($bid,$index,$approve) {
+		$id = 0;
+		$i=0;
+		$media_image = '';
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			$requestedColumns = 'filename, approve';
+			
+			$media = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "BANNER" AND type = "IMAGE" AND business_id = '.$id 
+			);
+			
+			if (is_array($media) || is_object($media))
+			{
+				foreach($media as $key => $value) {
+					$imagearray = explode('_', $value['filename']);
+					
+					if($imagearray[1] == $index){
+						$media_image = $value['filename'];
+					}					
+				}
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return 'banner.png';
+		}
+
+		if ($media_image == '') {
+			return 'banner.png';
+		}
+		else {
+			if($approve === true and $value['approve'] == '0'){
+				return 'banner.png';
+			}
+			else{
+				return $media_image.'?ver='.time();
+			}
+			
 		}
 	}
 
@@ -183,7 +234,13 @@ class Media {
 			return '1';
 		}
 		
-		$location = 'images/profile/'.$filename;
+		if($category == 'BANNER'){
+			$location = 'images/banner/'.$filename;
+		}
+		else if($category == 'PROFILE'){
+			$location = 'images/profile/'.$filename;
+		}	
+		
 		$i = 0;
 		$media_id;
 		
@@ -217,7 +274,7 @@ class Media {
 				else{
 					$this->db->update(
 						'media',
-						[ 'filename' => $filename ],
+						[ 'filename' => $filename, 'review' => '0', 'approve' => '0' ],
 						[ 'id' => $media_id]
 					);
 									
@@ -256,6 +313,59 @@ class Media {
 			return false;
 		}
 
+	}
+	
+	public function getMediaStatus($bid,$category,$type, $filename = null) {
+		$id = 0;
+		$i=0;
+		$file_name;
+		$media_status;
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			if($filename == null){
+				$file_name = $bid.'.png';
+			}
+			else{
+				$file_name = $filename;
+			}
+			$media = $this->db->select(
+				'SELECT approve FROM media WHERE category = "'.$category.'" AND type = "'.$type.'" AND business_id = '.$id.' AND filename = "'.$file_name.'"'				
+			);
+			
+			if (is_array($media) || is_object($media))
+			{
+				foreach($media as $key => $value) {
+					$i = $i + 1;
+					$media_status = $value['approve'];	
+					
+				}
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return 'NULL';
+		}
+	if($i == 1){
+		if ($media_status == '') {
+			return 'NULL';
+		}
+		else {
+			if($media_status == '1'){
+				return 'APPROVE';
+			}
+			else{
+				return 'NOT_APPROVE';
+			}
+		}	
+	}
+	else{
+		return 'NULL';
+	}
+		
 	}
 
 

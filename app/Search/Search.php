@@ -4,6 +4,7 @@ require '../../vendor/autoload.php';
 
 $db = Config::initDb();
 $business = new \Delight\Auth\Business($db);
+$Media = new \Delight\Auth\Media($db);
 $search_text = null;
 $district = null;
 $category1 = null;
@@ -38,7 +39,7 @@ if (isset($_POST)) {
 				$text = $text.'
 					<div class="card">
 
-					  <img class="card-img-top img-fluid" src="../Merchant/images/profile/'.$value['business_id'].'.png" alt="Card image cap">
+					  <img class="card-img-top img-fluid" src="../Merchant/images/profile/'.$Media->getProfileImage($value['business_id'], true).'" alt="Card image cap">
 					  <div class="card-block">
 						<h4 class="card-title">'.$value['business_name'].'</h4>
 						<div class="row">

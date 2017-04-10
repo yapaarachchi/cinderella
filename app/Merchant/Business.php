@@ -32,7 +32,7 @@ $branch_phone;
 $main_branch;
 $branch_description;
 
-$profile_image;
+$profile_media_status;
 
 if (isset($_GET)) {
 		if (isset($_GET['id'])){
@@ -50,14 +50,14 @@ if (isset($_GET)) {
 					$contact_person = $value['contact_person'];
 					$web = $value['website'];
 					$description = $value['description'];
-					$profile_image = $business_id ;
 				}
 			}
 
-
+//banner images
 $text =
 '
-
+<a href="#" class="btn btn-danger" id="deleteConfirmation" data-toggle="modal" data-target="#DeleteModal">Delete '.$business_name.'</a>
+</br></br>
 <div class="card">
  <div class="card-header">
  <div class="row">
@@ -67,13 +67,13 @@ $text =
 	 <div class="col-8">
 		 <div class="row">
 			 <div class="col-4">
-				<a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update Image 1</u></a>
+				<a id="UpdateImage1" data-toggle="modal" data-target="#UpdateBannerModal" data-id="1" > <u>Update Image 1</u></a>
 			 </div>
 			 <div class="col-4">
-				<a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update Image 2</u></a>
+				<a id="UpdateImage2" data-toggle="modal" data-target="#UpdateBannerModal" data-id="2"> <u>Update Image 2</u></a>
 			 </div>
 			 <div class="col-4">
-				<a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update Image 3</u></a>
+				<a id="UpdateImage3" data-toggle="modal" data-target="#UpdateBannerModal" data-id="3"> <u>Update Image 3</u></a>
 			 </div>
 		</div>
 	 </div>
@@ -81,7 +81,6 @@ $text =
  
   </div>
 </div>
-
 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
   <ol class="carousel-indicators">
@@ -91,19 +90,19 @@ $text =
   </ol>
   <div class="carousel-inner" role="listbox">
     <div class="carousel-item active">
-      <img class="d-block img-fluid" src="images/banner/banner.png" style="height: 100%; width: 100%;">
+      <img id="BannerImage1" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 1, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 1</u></h1>
 	  </div>
     </div>
     <div class="carousel-item">
-      <img class="d-block img-fluid" src="images/banner/banner.png" style="height: 100%; width: 100%;">
+      <img id="BannerImage2" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 2, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 2</u></h1>
 	  </div>
     </div>
     <div class="carousel-item">
-      <img class="d-block img-fluid" src="images/banner/banner.png" style="height: 100%; width: 100%;">
+      <img id="BannerImage3" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 3, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 3</u></h1>
 	  </div>
@@ -119,8 +118,56 @@ $text =
   </a>
 </div>
 
-	
-</br>';
+<!-- Modal -->
+<div class="modal fade" id="UpdateBannerModal" tabindex="-1" role="dialog" aria-labelledby="UpdateBannerModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="UpdateBannerModal">Update Banner Image (800px * 300px)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  <form id="UpdateBannerModalForm">
+      <div class="modal-body">
+	  <input type="hidden" name="imageindex" id="imageindex" value=""/>
+        <div id="UpdateBannerModalMessage"> </div>
+		
+		  <div class="image-editor-banner">
+			<div class="select-image-banner-btn btn btn-outline-primary"> Select New Image </div>
+			<input type="file" style=" visibility: hidden;" class="cropit-image-input-banner"/>
+			<div id="BannerImageInfo" class="text-muted"> </div>
+			<div class="cropit-preview-banner" style="width: 800px; height: 300px;"></div>
+			</br>
+			
+			<div class="row">
+				<div class="col-2">
+					<img src="../../assets/icons/rotate_left.png" class="rotate-banner-ccw img-thumbnail img-fluid" role="button"></img>
+				</div>
+				<div class="col-2">
+					<img src="../../assets/icons/rotate_right.png" class="rotate-banner-cw img-thumbnail img-fluid" role="button"></img>
+				</div>
+				<div class="col-8">
+					<input type="range" class="cropit-image-zoom-input">
+				</div>
+				
+			</div>
+			<input type="hidden" name="action" value="banner" />
+			<input type="hidden" name="business_id" value="'.$business_id.'" />
+			<input type="hidden" name="image-data" class="hidden-image-data-banner" />
+			
+		  </div>
+      </div>
+	  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+';
 
 //waitmodel
 $text = $text.
@@ -172,19 +219,31 @@ $text = $text.
   </div>
 </div>
 
-<a href="#" class="btn btn-danger" id="deleteConfirmation" data-toggle="modal" data-target="#DeleteModal">Delete '.$business_name.'</a>
+
 ';
 
 //profile image
-$text=$text .' </br> </br> 
-<div class="card">
+$text = $text .' </br>
+<div id="profilecard" class="card">
  <div class="card-header">
  <div class ="float-left">Profile Image (300px * 200px)</div>
  <div class ="float-right" ><a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update</u></a></div>
   </div>
-  <div class="card-block" id="profilecard">
-    <img id="ProfileImage" src="images/profile/'.$Media->getProfileImage($business_id).'" class="img-fluid img-thumbnail float-right" alt="Responsive image">
-  </div>  
+  <div class="card-block " >
+    <img id="ProfileImage" src="images/profile/'.$Media->getProfileImage($business_id, false).'" class="img-fluid img-thumbnail float-right" alt="Responsive image">
+  </div> 
+ ';
+ $profile_media_status = $Media->getMediaStatus($business_id, "PROFILE", "IMAGE");
+ if( $profile_media_status == "NOT_APPROVE"){
+	 
+$text = $text .'
+	<div class="card-footer">
+		<div class="alert alert-warning" role="alert"><strong> Profile Image is not approved yet</strong>. It will display to the users once it get approved</div> 
+	</div>
+ ';
+ }
+ 
+ $text = $text .'
 </div>
 
 <!-- Modal -->
@@ -201,19 +260,19 @@ $text=$text .' </br> </br>
       <div class="modal-body">
         <div id="UpdateProfileModalMessage"> </div>
 		
-		  <div class="image-editor">
-			<div class="select-image-btn btn btn-outline-primary"> Select New Image </div>
-			<input type="file" style=" visibility: hidden;" class="cropit-image-input" />
-			<div id="ImageInfo" class="text-muted"> </div>
-			<div class="cropit-preview" style="width: 300px; height: 200px;"></div>
+		  <div class="image-editor-profile">
+			<div class="select-image-profile-btn btn btn-outline-primary"> Select New Image </div>
+			<input type="file" style=" visibility: hidden;" class="cropit-image-input-profile" />
+			<div id="ProfileImageInfo" class="text-muted"> </div>
+			<div class="cropit-preview-profile" style="width: 300px; height: 200px;"></div>
 			</br>
 			
 			<div class="row">
 				<div class="col-2">
-					<img src="../../assets/icons/rotate_left.png" class="rotate-ccw img-thumbnail img-fluid" role="button"></img>
+					<img src="../../assets/icons/rotate_left.png" class="rotate-profile-ccw img-thumbnail img-fluid" role="button"></img>
 				</div>
 				<div class="col-2">
-					<img src="../../assets/icons/rotate_right.png" class="rotate-cw img-thumbnail img-fluid" role="button"></img>
+					<img src="../../assets/icons/rotate_right.png" class="rotate-profile-cw img-thumbnail img-fluid" role="button"></img>
 				</div>
 				<div class="col-8">
 					<input type="range" class="cropit-image-zoom-input">
@@ -222,7 +281,7 @@ $text=$text .' </br> </br>
 			</div>
 			<input type="hidden" name="action" value="profile" />
 			<input type="hidden" name="business_id" value="'.$business_id.'" />
-			<input type="hidden" name="image-data" class="hidden-image-data" />
+			<input type="hidden" name="image-data" class="hidden-image-data-profile" />
 			
 		  </div>
       </div>
@@ -542,8 +601,44 @@ if (isset($_POST)) {
 				
 				$status = $Media->UpdateMedia($business_id, 'PROFILE', 'IMAGE', $filename, $mime_type, $data);
 				if($status == '200'){
-					echo "CINDERELLA_OK";
-					$profile_image = $filename;
+					echo "CINDERELLA_OK^".$filename.'^';
+				}
+				else if($status == '1'){
+					ErrorCode::SetError(ErrorCode::MEDIA_MIME_TYPES);
+				}
+				return;
+			}
+			catch (TooManyRequestsException $e) {
+				ErrorCode::SetError(ErrorCode::TOO_MANY_REQUESTS);
+				return;
+			}
+			catch (Exception $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+		}
+		else if ($_POST['action'] === 'banner') {
+			try {
+				$business_id = $_POST['business_id'];
+				$imageindex = $_POST['imageindex'];
+				if($_POST['image-data'] == ''){
+					ErrorCode::SetError(ErrorCode::MEDIA_NO_FILE);
+					return;
+				}
+				$encoded = $_POST['image-data'];
+				 
+				$exp = explode(',', $encoded);
+				$data = base64_decode($exp[1]);
+				
+				$mime_type = finfo_buffer(finfo_open(), $data, FILEINFO_MIME_TYPE);
+				$mime_type_arr = explode('/', $mime_type);
+				
+				$mime_type = $mime_type_arr[1];				
+				$filename = $business_id.'_'.$imageindex.'.'.$mime_type;
+				
+				$status = $Media->UpdateMedia($business_id, 'BANNER', 'IMAGE', $filename, $mime_type, $data);
+				if($status == '200'){
+					echo "CINDERELLA_OK^".$filename.'^'.$imageindex.'^';
 				}
 				else if($status == '1'){
 					ErrorCode::SetError(ErrorCode::MEDIA_MIME_TYPES);
@@ -646,17 +741,34 @@ $("#DeleteBusinessForm").submit(function(event){
 });
 
 
+$('#UpdateImage1').click(function () {
+	var imageindex = $(this).data('id');
+     $(".modal-body #imageindex").val( imageindex );
+});
+
+$('#UpdateImage2').click(function () {
+	var imageindex = $(this).data('id');
+    $(".modal-body #imageindex").val( imageindex );
+});
+
+$('#UpdateImage3').click(function () {
+	var imageindex = $(this).data('id');
+    $(".modal-body #imageindex").val( imageindex );
+});
 //pro
 	$(function() {
-        $('.image-editor').cropit({
+        $('.image-editor-profile').cropit({
+		  $preview: $(".cropit-preview-profile"),
+		  $fileInput: $("input.cropit-image-input-profile"),
 		  smallImage: 'stretch',
 		  allowDragNDrop: true,
+		 //cropit-image-input
 		  onFileReaderError: function() {
-			$("#ImageInfo").html(''); 
+			$("#ProfileImageInfo").html(''); 
 			   $("#UpdateProfileModalMessage").html('<div class="alert alert-danger" role="alert" >Please attach an image file. (.png, .gif, .jpeg, .jpg)</div>');            			
         },
 		onImageError: function(e) {
-			 $("#ImageInfo").html(''); 
+			 $("#ProfileImageInfo").html(''); 
             if (e.code === 0) {
                 $("#UpdateProfileModalMessage").html('<div class="alert alert-danger" role="alert" >Please attach an image file. (.png, .gif, .jpeg, .jpg)</div>');
             }
@@ -669,7 +781,7 @@ $("#DeleteBusinessForm").submit(function(event){
         },
 		onImageLoaded: function() {
 			$(this).prop('disabled',false);
-			   $("#ImageInfo").html('Resize and adjust the image as needed');   
+			   $("#ProfileImageInfo").html('Resize and adjust the image as needed');   
 				$("#UpdateProfileModalMessage").html('');	
 				
         },
@@ -679,28 +791,28 @@ $("#DeleteBusinessForm").submit(function(event){
         }
 		});
 		
-		$('.select-image-btn').click(function() {
-		  $('.cropit-image-input').click();
-			
+		$('.select-image-profile-btn').click(function() {
+		  $('.cropit-image-input-profile').click();
 		});
 
 
-		$('.rotate-cw').click(function() {
-          $('.image-editor').cropit('rotateCW');
+		$('.rotate-profile-cw').click(function() {
+          $('.image-editor-profile').cropit('rotateCW');
         });
-        $('.rotate-ccw').click(function() {
-          $('.image-editor').cropit('rotateCCW');
+        $('.rotate-profile-ccw').click(function() {
+          $('.image-editor-profile').cropit('rotateCCW');
         });
    	
 
         $('#UpdateProfileModalForm').submit(function() {
 			event.preventDefault();
           // Move cropped image data to hidden input
-          var imageData = $('.image-editor').cropit('export');
+          var imageData = $('.image-editor-profile').cropit('export');
+		
 		  if(imageData == ""){
 			  return false;
 		  }
-          $('.hidden-image-data').val(imageData);
+          $('.hidden-image-data-profile').val(imageData);
 
           // Print HTTP request params
           var formValue = $(this).serialize();
@@ -715,11 +827,12 @@ $("#DeleteBusinessForm").submit(function(event){
 			
 			request.done(function (response, textStatus, jqXHR){
 				console.log("Logged in "+ response);
-				if(response.indexOf('CINDERELLA_OK') > -1)
+				var responseString = response.split('^');
+				if(responseString[0] == 'CINDERELLA_OK')
 				{
-					$("#UpdateProfileModalMessage").html('');  
+					$("#UpdateProfileModalMessage").html('');
 					var d = new Date(); 
-					document.getElementById("ProfileImage").src = "images/profile/<?php echo $profile_image; ?>?ver=" + d.getTime();
+					document.getElementById("ProfileImage").src = "images/profile/"+responseString[1]+"?ver=" + d.getTime();
 					$("#profilecard").hide().fadeIn('fast');
 					$('#UpdateProfileModal').modal('hide');		
 				}
@@ -747,6 +860,120 @@ $("#DeleteBusinessForm").submit(function(event){
 				//$(this).prop('disabled',false);
 			});
         });
+		
+		
+		
+		$('.image-editor-banner').cropit({
+		  $preview: $(".cropit-preview-banner"),
+		  $fileInput: $("input.cropit-image-input-banner"),
+		  smallImage: 'stretch',
+		  allowDragNDrop: true,
+		  onFileReaderError: function() {
+			$("#BannerImageInfo").html(''); 
+			   $("#UpdateBannerModalMessage").html('<div class="alert alert-danger" role="alert" >Please attach an image file. (.png, .gif, .jpeg, .jpg)</div>');            			
+        },
+		onImageError: function(e) {
+			 $("#BannerImageInfo").html(''); 
+            if (e.code === 0) {
+                $("#UpdateBannerModalMessage").html('<div class="alert alert-danger" role="alert" >Please attach an image file. (.png, .gif, .jpeg, .jpg)</div>');
+            }
+			else if (e.code === 1) {
+                $("#UpdateBannerModalMessage").html('<div class="alert alert-danger" role="alert" >Image is too small.</div>');
+            }
+		},
+		onFileChange: function() {
+			   $("#UpdateBannerModalMessage").html('');            			
+        },
+		onImageLoaded: function() {
+			$(this).prop('disabled',false);
+			   $("#BannerImageInfo").html('Resize and adjust the image as needed');   
+				$("#UpdateBannerModalMessage").html('');	
+				
+        },
+		onImageLoading: function() {
+			$(this).prop('disabled',true);
+			   $("#UpdateBannerModalMessage").html('<div class="alert alert-info" role="alert" >Image is loading...</div>');         			
+        }
+		});
+		
+		$('.select-image-banner-btn').click(function() {
+		  $('.cropit-image-input-banner').click();
+		});
+
+		$('.rotate-banner-cw').click(function() {
+          $('.image-editor-banner').cropit('rotateCW');
+        });
+        $('.rotate-banner-ccw').click(function() {
+          $('.image-editor-banner').cropit('rotateCCW');
+        });
+		
+		 $('#UpdateBannerModalForm').submit(function() {
+			event.preventDefault();
+          // Move cropped image data to hidden input
+          var imageData = $('.image-editor-banner').cropit('export');
+		
+		  if(imageData == ""){
+			  return false;
+		  }
+          $('.hidden-image-data-banner').val(imageData);
+
+          // Print HTTP request params
+          var formValue = $(this).serialize();
+
+		  $(this).prop('disabled',true);
+		  $("#UpdateBannerModalMessage").html('<div class="alert alert-info" role="alert" >Please wait....</div>');   
+			request = $.ajax({
+				url: "Business.php",
+				type: "post",
+				data: formValue
+			});
+			
+			request.done(function (response, textStatus, jqXHR){
+				console.log("Logged in "+ response);
+				var responseString = response.split('^');
+				if(responseString[0] == 'CINDERELLA_OK')
+				{
+					$("#UpdateBannerModalMessage").html('');  
+					var d = new Date(); 
+					if(responseString[2] == '1'){
+						document.getElementById("BannerImage1").src = "images/banner/"+responseString[1]+"?ver=" + d.getTime();
+					}
+					else if(responseString[2] == '2'){
+						document.getElementById("BannerImage2").src = "images/banner/"+responseString[1]+"?ver=" + d.getTime();
+					}
+					else if(responseString[2] == '3'){
+						document.getElementById("BannerImage3").src = "images/banner/"+responseString[1]+"?ver=" + d.getTime();
+					}
+					
+					$("#profilecard").hide().fadeIn('fast');
+					$('#UpdateBannerModal').modal('hide');		
+				}
+				else{
+					$(this).prop('disabled',false);
+					$("#UpdateBannerModalMessage").html(response);
+					//$("#UpdateProfileModal").hide();	
+				}
+				
+				
+				
+			});
+
+			request.fail(function (jqXHR, textStatus, errorThrown){
+				console.error(
+					"The following error occurred: "+
+					textStatus, errorThrown
+				);
+				$("#UpdateBannerModalMessage").html('');  
+				$(this).prop('disabled',false);
+				$("#UpdateBannerModalMessage").html(errorThrown);
+				$("#UpdateBannerModal").show();
+			});
+			request.always(function () {
+				//$(this).prop('disabled',false);
+			});
+        });
+		
+		
 
 });  
 
