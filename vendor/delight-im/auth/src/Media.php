@@ -78,13 +78,14 @@ class Media {
 		$id = 0;
 		$i=0;
 		$media_image = '';
+		$media_status = '';
 		try {
 			if(is_numeric($bid) ){
 				$id = $bid;
 			}
 			$requestedColumns = 'filename, approve';
 			
-			$media = $this->db->select(
+			$media = $this->db->selectRow(
 				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "PROFILE" AND type = "IMAGE" AND business_id = '.$id 
 			);
 			
@@ -92,11 +93,8 @@ class Media {
 			{
 				
 				foreach($media as $key => $value) {
-					$i = $i + 1;
-					if($i == 1){
-						$media_image = $value['filename'];
-					}
-					
+					$media_image = $media['filename'];
+					$media_status = $media['approve'];
 				}
 			}
 		}
@@ -112,7 +110,7 @@ class Media {
 			return 'profile.png';
 		}
 		else {
-			if($approve === true and $value['approve'] == '0'){
+			if($approve === true and $media_status == '0'){
 				return 'profile.png';
 			}
 			else{
@@ -248,24 +246,21 @@ class Media {
 		}	
 		
 		$i = 0;
-		$media_id;
+		$media_id = null;
 		
 		try {
 			$this->db->startTransaction();
 			
-			$media = $this->db->select(
+			$media = $this->db->selectRow(
 				'SELECT id FROM media WHERE category = "'.$category.'" AND type = "'.$type.'" AND business_id = '.$business_id.' AND filename = "'.$filename.'"'				
 			);
 			
 			if (is_array($media) || is_object($media))
 			{
-				foreach($media as $key => $value) {
-					$i = $i + 1;
-					$media_id = $value['id'];
-				}
+				$media_id = $media['id'];
 			}
 			
-				if($i == 0){
+				if($media_id == null){
 					$this->db->insert(
 						'media',
 						[
@@ -325,7 +320,7 @@ class Media {
 		$id = 0;
 		$i=0;
 		$file_name;
-		$media_status;
+		$media_status = '';
 		try {
 			if(is_numeric($bid) ){
 				$id = $bid;
@@ -336,17 +331,13 @@ class Media {
 			else{
 				$file_name = $filename;
 			}
-			$media = $this->db->select(
+			$media = $this->db->selectRow(
 				'SELECT approve FROM media WHERE category = "'.$category.'" AND type = "'.$type.'" AND business_id = '.$id.' AND filename = "'.$file_name.'"'				
 			);
 			
 			if (is_array($media) || is_object($media))
 			{
-				foreach($media as $key => $value) {
-					$i = $i + 1;
-					$media_status = $value['approve'];	
-					
-				}
+				$media_status = $media['approve'];	
 			}
 		}
 		catch (Error $e) {
@@ -355,8 +346,7 @@ class Media {
 		catch (Exception $e) {
 			return 'NULL';
 		}
-	if($i == 1){
-		if ($media_status == '') {
+	if ($media_status == '') {
 			return 'NULL';
 		}
 		else {
@@ -367,10 +357,6 @@ class Media {
 				return 'NOT_APPROVE';
 			}
 		}	
-	}
-	else{
-		return 'NULL';
-	}
 		
 	}
 
@@ -379,7 +365,7 @@ class Media {
 		$id = 0;
 		$i=0;
 		$file_name;
-		$media_status;
+		$media_status = '';
 		try {
 			if(is_numeric($bid) ){
 				$id = $bid;
@@ -390,17 +376,13 @@ class Media {
 			else{
 				$file_name = $filename;
 			}
-			$media = $this->db->select(
+			$media = $this->db->selectRow(
 				'SELECT approve FROM media WHERE category = "'.$category.'" AND type = "'.$type.'" AND business_id = '.$id.' AND filename = "'.$file_name.'"'				
 			);
 			
 			if (is_array($media) || is_object($media))
 			{
-				foreach($media as $key => $value) {
-					$i = $i + 1;
-					$media_status = $value['approve'];	
-					
-				}
+				$media_status = $media['approve'];
 			}
 		}
 		catch (Error $e) {
@@ -409,9 +391,8 @@ class Media {
 		catch (Exception $e) {
 			return '';
 		}
-	if($i == 1){
-		if ($media_status == '') {
-			return '';
+	if ($media_status == '') {
+			return '<div class="alert alert-info" role="alert"><strong> NO Image!</strong>. Please insert an image</div> ';
 		}
 		else {
 			if($media_status == '0'){
@@ -421,10 +402,6 @@ class Media {
 				return '';
 			}
 		}	
-	}
-	else{
-		return '<div class="alert alert-info" role="alert"><strong> NO Image!</strong>. Please insert an image</div> ';
-	}
 		
 	}
 
