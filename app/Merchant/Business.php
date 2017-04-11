@@ -93,21 +93,21 @@ $text =
       <img id="BannerImage1" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 1, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 1</u></h1>
-		'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 1, false, false)).'
+		<div id="BannerImage1Message">'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 1, false, false)).' </div>
 	  </div>
     </div>
     <div class="carousel-item">
       <img id="BannerImage2" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 2, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 2</u></h1>
-		'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 2, false, false)).'
+		<div id="BannerImage2Message">'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 2, false, false)).' </div>
 	  </div>
     </div>
     <div class="carousel-item">
       <img id="BannerImage3" class="d-block img-fluid" src="images/banner/'.$Media->getBannerImage($business_id, 3, false).'" style="height: 100%; width: 100%;">
 	  <div class="carousel-caption d-none d-md-block">
 		<h1><u>Image 3</u></h1>
-		'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 3, false, false)).'
+		<div id="BannerImage3Message">'.$Media->getMediaStatusMessage($business_id, "BANNER", "IMAGE", $Media->getBannerImage($business_id, 3, false, false)).' </div>
 	  </div>
     </div>
   </div>
@@ -235,19 +235,24 @@ $text = $text .' </br>
   <div class="card-block " >
     <img id="ProfileImage" src="images/profile/'.$Media->getProfileImage($business_id, false).'" class="img-fluid img-thumbnail float-right" alt="Responsive image">
   </div> 
+  <div id="ProfileImageMessage" >
+  </div> 
  ';
  $profile_media_status = $Media->getMediaStatus($business_id, "PROFILE", "IMAGE");
  if( $profile_media_status == "NOT_APPROVE"){
 	 
 $text = $text .'
-	<div class="card-footer">
+	
 		<div class="alert alert-warning" role="alert"><strong> Profile Image is not approved yet</strong>. It will display to the users once it get approved</div> 
-	</div>
+	
+ 
  ';
  }
+
  
  $text = $text .'
 </div>
+</br>
 
 <!-- Modal -->
 <div class="modal fade" id="UpdateProfileModal" tabindex="-1" role="dialog" aria-labelledby="UpdateProfileModal" aria-hidden="true">
@@ -838,6 +843,7 @@ $('#UpdateImage3').click(function () {
 					document.getElementById("ProfileImage").src = "images/profile/"+responseString[1]+"?ver=" + d.getTime();
 					$("#profilecard").hide().fadeIn('fast');
 					$('#UpdateProfileModal').modal('hide');		
+					$("#ProfileImageMessage").html('<div class="alert alert-warning" role="alert"><strong> Profile Image is not approved yet</strong>. It will display to the users once it get approved</div>');  
 				}
 				else{
 					$(this).prop('disabled',false);
@@ -940,12 +946,15 @@ $('#UpdateImage3').click(function () {
 					var d = new Date(); 
 					if(responseString[2] == '1'){
 						document.getElementById("BannerImage1").src = "images/banner/"+responseString[1]+"?ver=" + d.getTime();
+						$("#BannerImage1Message").html('<div class="alert alert-warning" role="alert"><strong> This Image is not approved yet</strong>. It will display to the users once it get approved</div>');  
 					}
 					else if(responseString[2] == '2'){
 						document.getElementById("BannerImage2").src = "images/banner/"+responseString[1]+"?ver=" + d.getTime();
+						$("#BannerImage2Message").html('<div class="alert alert-warning" role="alert"><strong> This Image is not approved yet</strong>. It will display to the users once it get approved</div>');  
 					}
 					else if(responseString[2] == '3'){
 						document.getElementById("BannerImage3").src = "images/banner/"+responseString[1]+"?ver=" + d.getTime();
+						$("#BannerImage3Message").html('<div class="alert alert-warning" role="alert"><strong> This Image is not approved yet</strong>. It will display to the users once it get approved</div>');  
 					}
 					
 					$("#profilecard").hide().fadeIn('fast');
