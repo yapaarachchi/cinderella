@@ -236,21 +236,9 @@ $text = $text .' </br>
     <img id="ProfileImage" src="images/profile/'.$Media->getProfileImage($business_id, false).'" class="img-fluid img-thumbnail float-right" alt="Responsive image">
   </div> 
   <div id="ProfileImageMessage" >
+  '.$Media->getMediaStatusMessage($business_id, "PROFILE", "IMAGE").'
   </div> 
- ';
- $profile_media_status = $Media->getMediaStatus($business_id, "PROFILE", "IMAGE");
- if( $profile_media_status == "NOT_APPROVE"){
-	 
-$text = $text .'
-	
-		<div class="alert alert-warning" role="alert"><strong> Profile Image is not approved yet</strong>. It will display to the users once it get approved</div> 
-	
- 
- ';
- }
 
- 
- $text = $text .'
 </div>
 </br>
 
