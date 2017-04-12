@@ -64,39 +64,41 @@ class Category {
 	public function getCategoryName($cat1_id){
 		
 		try {
-			$categoryData = $this->db->select(
+			$categoryData = $this->db->selectRow(
 				'SELECT category FROM category1 WHERE id = '.$cat1_id);
 				
 				if (is_array($categoryData) || is_object($categoryData))
 				{
-					foreach($categoryData as $key => $value) {
-						$return = $value['category'];
-					}
+					$return = $categoryData['category'];
 				}
 				
 				return $return;
 		}
 		catch (Error $e) {
 			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return '';
 		}
 	}
 	
 	public function getSubCategoryName($cat1_id, $cat2_id){
 		
 		try {
-			$categoryData = $this->db->select(
+			$categoryData = $this->db->selectRow(
 				'SELECT category2 FROM category2 WHERE category1_id = '.$cat1_id .' AND id = '.$cat2_id);
 				
 				if (is_array($categoryData) || is_object($categoryData))
 				{
-					foreach($categoryData as $key => $value) {
-						$return = $value['category2'];
-					}
+					$return = $categoryData['category2'];
 				}
 				return $return;
 		}
 		catch (Error $e) {
 			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return '';
 		}
 	}
 	

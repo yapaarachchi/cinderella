@@ -238,6 +238,22 @@ class Business {
 		$this->db->commit();
 		return $business_id;
 	}
+	public function updateBusiness($businessId , $fields = null) {		
+	
+		try {
+			$this->db->update(
+				'business',
+				[ 'approve' => '1' ],
+				[ 'id' => $businessId ]
+			);
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+	}
+		
+		
 	
 	public function deleteBusiness($businessId) {	
 	
@@ -317,109 +333,4 @@ class Business {
 			return $result;
 		}
 	}
-
-/*
-Media
-
-type
------
-IMAGE
-EXT-VIDEO
-
-category
---------
-PROFILE
-BANNER
-GALLERY
-*/
-
-	public function getProfileImageByBusiness($bid) {
-		$id = 0;
-		try {
-			if(is_numeric($bid) ){
-				$id = $bid;
-			}
-			$requestedColumns = 'file_name, location';
-			
-			$media = $this->db->select(
-				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "PROFILE" AND type = "IMAGE" AND business_id = '.$id 
-			);
-		}
-		catch (Error $e) {
-			throw new DatabaseError();
-		}
-		catch (Exception $e) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-
-		if (empty($id)) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-		else {
-			return $media;
-		}
-	}
-	
-	public function getBannerImagesByBusiness($bid) {
-		$id = 0;
-		try {
-			if(is_numeric($bid) ){
-				$id = $bid;
-			}
-			$requestedColumns = 'file_name, location';
-			
-			$media = $this->db->select(
-				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "BANNER" AND type = "IMAGE" AND business_id = '.$id 
-			);
-		}
-		catch (Error $e) {
-			throw new DatabaseError();
-		}
-		catch (Exception $e) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-
-		if (empty($id)) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-		else {
-			return $media;
-		}
-	}
-
-	public function getGalleryImagesByBusiness($bid) {
-		$id = 0;
-		try {
-			if(is_numeric($bid) ){
-				$id = $bid;
-			}
-			$requestedColumns = 'file_name, location';
-			
-			$media = $this->db->select(
-				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "GALLERY" AND type = "IMAGE" AND business_id = '.$id 
-			);
-		}
-		catch (Error $e) {
-			throw new DatabaseError();
-		}
-		catch (Exception $e) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-
-		if (empty($id)) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-		else {
-			return $media;
-		}
-	}
-
-
-
 }

@@ -8,6 +8,7 @@ $auth = new \Delight\Auth\Auth($db);
 $Business = new \Delight\Auth\Business($db);
 $Branch = new \Delight\Auth\Branch($db);
 $Media = new \Delight\Auth\Media($db);
+$Category = new \Delight\Auth\Category($db);
 
 $business_id;
 $business_details;
@@ -311,11 +312,11 @@ $text = $text. '
 <!-- Tab panes -->
 <div class="tab-content">
   <div class="tab-pane active" id="business" role="tabpanel">
+';
 
 
 
-
-
+$text = $text. '
 <div id="mainarea">
 
 <div class="card">
@@ -325,61 +326,76 @@ $text = $text. '
 	<div onclick="editonclick();" id="edit" class ="float-right" value="Edit"><u> Edit </u></div>
   </div>
   </div>
-<form method="post" action ="Profile.php">
-  <div class="card-block">
+<form id="EditBusinessInfo">
+  <div class="card-block" id="EditBusinessInfoDiv">
+			<div id="EditBusinessInfoMessage"> </div>
 			<div class="form-group">
 				<label for="business_name" class="form-label text-muted ">Business Name:</label>
-					<input value="'.$business_name.'" type="hidden"  id="business_name_hidden"></input>
-					<p class="form-control-static" type="text" value="'.$business_name.'" id="business_name" name="business_name"> '.$business_name.'</p>
+					<input value="'.$business_name.'" type="hidden"  id="business_name_hidden" name="business_name_hidden"></input>
+					<p type="text" value="'.$business_name.'" id="businessName" name="businessName" class="form-control-static" > '.$business_name.'</p>
+					<div id="businessName_validate" class="form-control-feedback"></div>
 			</div>
 			
 			<div class="form-group">
 					<label for="category1" class="form-label text-muted">Main Category:</label>
-					<input value="'.$category1.'" type="hidden"  id="category1_hidden"></input>
-					<p class="form-control-static" type="text" value="'.$category1.'" id="category1" name="category1"> '.$category1.'</p>
+					<input value="'.$category1.'" type="hidden"  id="category1_hidden" name="category1_hidden"></input>
+					<p type="text" value="'.$Category->getCategoryName($category1).'" id="category1_" name="category1_" class="form-control-static" > '.$Category->getCategoryName($category1).'</p>
+				
+				<select id="category1" name="category1" class="form-control" >
+				</select>
+				<div id="category1_validate" class="form-control-feedback"></div>
 			</div>
 			
 			<div class="form-group">
 					<label for="category2" class="form-label text-muted">Sub Category:</label>
-					<input value="'.$category2.'" type="hidden"  id="category2_hidden"></input>
-					<p class="form-control-static" type="text" value="'.$category2.'" id="category2" name="category2"> '.$category2.'</p>
+					<input value="'.$category2.'" type="hidden"  id="category2_hidden" name="category2_hidden"></input>
+					<p type="text" value="'.$Category->getSubCategoryName($category1, $category2).'" id="category2_" name="category2_" class="form-control-static" > '.$Category->getSubCategoryName($category1, $category2).'</p>
+					
+					<select id="category2" name="category2" class="form-control" >
+				</select>
+				<div id="category2_validate" class="form-control-feedback"></div>
 			</div>
 			
 			<div class="form-group">
 					<label for="email" class="form-label text-muted">Email:</label>
-					<input value="'.$email.'" type="hidden"  id="email_hidden"></input>
-					<p class="form-control-static" type="text" value="'.$email.'" id="email" name="email"> '.$email.'</p>
+					<input value="'.$email.'" type="hidden"  id="email_hidden" name="email_hidden"></input>
+					<p type="text" value="'.$email.'" id="email" name="email" class="form-control-static" > '.$email.'</p>
+					<div id="email_validate" class="form-control-feedback"></div>
 			</div>
 			
 			<div class="form-group">
 					<label for="phone" class="form-label text-muted">Phone:</label>
-					<input value="'.$phone.'" type="hidden"  id="phone_hidden"></input>
-					<p class="form-control-static" type="text" value="'.$phone.'" id="phone" name="phone"> '.$phone.'</p>
+					<input value="'.$phone.'" type="hidden"  id="phone_hidden" name="phone_hidden"></input>
+					<p type="text" value="'.$phone.'" id="phone" name="phone" class="form-control-static" > '.$phone.'</p>
+					<div id="phone_validate" class="form-control-feedback"></div>
 			</div>
 			
 			<div class="form-group">
 					<label for="mobile" class="form-label text-muted">Mobile:</label>
-					<input value="'.$mobile.'" type="hidden"  id="mobile_hidden"></input>
-					<p class="form-control-static" type="text" value="'.$mobile.'" id="mobile" name="mobile"> '.$mobile.'</p>
+					<input value="'.$mobile.'" type="hidden"  id="mobile_hidden" name="mobile_hidden"></input>
+					<p type="text" value="'.$mobile.'" id="mobile" name="mobile" class="form-control-static" > '.$mobile.'</p>
+					<div id="mobile_validate" class="form-control-feedback"></div>
 			</div>
 			
 			<div class="form-group">
 					<label for="contact_person" class="form-label text-muted">Contact Person:</label>
-					<input value="'.$contact_person.'" type="hidden"  id="contact_person_hidden"></input>
-					<p class="form-control-static" type="text" value="'.$contact_person.'" id="contact_person" name="contact_person"> '.$contact_person.'</p>
+					<input value="'.$contact_person.'" type="hidden"  id="contact_person_hidden" name="contact_person_hidden"></input>
+					<p type="text" value="'.$contact_person.'" id="contactPerson" name="contactPerson" class="form-control-static" > '.$contact_person.'</p>
+					<div id="contactPerson_validate" class="form-control-feedback"></div>
 			</div>
 			
 			<div class="form-group">
 					<label for="web" class="form-label text-muted">Web Site:</label>
-					<input value="'.$web.'" type="hidden"  id="web_hidden"></input>
-					<p class="form-control-static" type="text" value="'.$web.'" id="web" named="web"> '.$web.'</p>
+					<input value="'.$web.'" type="hidden"  id="web_hidden" name="web_hidden"></input>
+					<p type="text" value="'.$web.'" id="web" named="web" class="form-control-static" > '.$web.'</p>
 			</div>
 			
 			<div class="form-group">
 					<label for="description" class="form-label text-muted">Description:</label>
-					<input value="'.$description.'" type="hidden"  id="description"></input>
-					<p class="form-control-static" type="text" value="'.$description.'" id="description" name="description"> '.$description.'</p>
+					<input value="'.$description.'" type="hidden"  id="description_hidden" name="description_hidden"></input>
+					<p type="text" value="'.$description.'" id="description" name="description" class="form-control-static" > '.$description.'</p>
 			</div>
+			<input value="updatebusiness" type="hidden"  id="action" name="action"></input>
 			<button type="submit" class="btn btn-primary float-right" id="editFormButton">Save</button>
 	</form>
 	
@@ -389,6 +405,29 @@ $text = $text. '
 
 </div>
 
+
+<div class="modal fade" id="ChangeCategoryModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This change will affect to your business listing. Are you sure want to change the Business Category?</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="NoChangeCategoryClick();" type="button" class="btn btn-secondary" id="NoChangeCategory">No</button>
+		<button type="button" class="btn btn-primary" id="YesChangeCategory" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+';
+
+$text = $text. '
 
 
 </div>
@@ -613,6 +652,10 @@ if (isset($_POST)) {
 				return;
 			}	
 		}
+		else if ($_POST['action'] === 'updatebusiness') {
+			$Business->updateBusiness(19);
+			return;
+		}
 		else if ($_POST['action'] === 'banner') {
 			try {
 				$business_id = $_POST['business_id'];
@@ -682,6 +725,174 @@ $('#deleteConfirmation').click(function () {
 
 	
 $("#editFormButton").hide();
+$("#category1").hide();
+$("#category2").hide();
+
+$.ajax({
+    type: "POST",
+    url: '../controller/GetData.php',
+    data: {'action': 'Category1_'},
+    dataType:'html',
+    success: function(data) {
+		$("#category1").empty();
+		$("#category1").html(data);
+		if(category1 != 'NULL'){
+			$("#category1 option[value=<?php echo $category1; ?>]").attr('selected', 'selected').change();
+		}
+		
+    }
+	
+});
+
+$('#category1').change(function () {
+	
+	var categoryOldValue = $('#EditBusinessInfo').find('input[name="category1_hidden"]').val();
+	var category = $(this).find('option:selected').attr('id');
+	
+	if(category != categoryOldValue){
+		$('#ChangeCategoryModal').modal('show');
+	}
+	
+	$.ajax({
+    type: "POST",
+    url: '../controller/GetData.php',
+    data: {'action': 'Category2_', 'Category1': category},
+    dataType:'html',
+    success: function(data) {
+		$("#category2").empty();
+		$("#category2").html(data);
+		if(category2 != 'NULL'){
+			$("#category2 option[value=<?php echo $category2; ?>]").attr('selected', 'selected').change();
+		}
+    }
+});
+	
+});	
+
+
+$('#EditBusinessInfo').validate({ // initialize the plugin
+        rules: {
+            email: {
+                required: true,
+                email: true				
+            },
+           
+		  contactPerson: {
+                required: true
+            },
+			category1:{
+				required: true	
+			},
+			category2:{
+				required: true	
+			},
+			businessName: {
+                required: true
+            },
+			mobile: {
+                required: true,
+				digits: true,
+				minlength: 10,
+				maxlength: 10
+            },
+			phone: {
+				digits: true,
+				minlength: 10,
+				maxlength: 10
+            },
+        },
+		 messages: {
+                email: {
+                    required: "Please Enter Email!",
+                    email: "This is not a valid email!"
+                },
+				mobile:{
+					minlength: "Enter valid phone number",
+					maxlength: "Enter valid phone number"
+				},
+				phone:{
+					minlength: "Enter valid phone number",
+					maxlength: "Enter valid phone number"
+				}
+            },
+			errorPlacement: function(error, element) {
+				var name = $(element).attr("name");
+				error.appendTo($("#" + name + "_validate"));
+			},
+		highlight: function(element) {
+			jQuery(element).closest('.form-group').addClass('has-danger').removeClass('has-success');
+			jQuery(element).closest('.form-control').addClass('form-control-danger').removeClass('form-control-success');
+    },	
+	success: function(element) {
+		jQuery(element).closest('.form-group').addClass('has-success').removeClass('has-danger');
+			jQuery(element).closest('.form-control').addClass('form-control-success').removeClass('form-control-danger');
+    },
+	onkeyup: function(element) {$(element).valid()},
+	unhighlight: function(element) {
+		jQuery(element).closest('.form-group').addClass('has-success').removeClass('has-danger');
+			jQuery(element).closest('.form-control').addClass('form-control-success').removeClass('form-control-danger');
+    },
+	
+    });
+
+$("#EditBusinessInfo").submit(function(event){
+    event.preventDefault();
+		if (!$(this).valid()) { 
+		//grecaptcha.reset();
+                return false;
+            }
+	if (request) {
+        request.abort();
+    }
+    var $form = $(this);
+    var $inputs = $form.find("input, select, button, textarea");
+    var serializedData = $form.serialize();
+	
+	
+	$(this).prop('disabled',true);
+    
+	request = $.ajax({
+        url: "Business.php",
+        type: "post",
+        data: serializedData
+    });
+	
+    request.done(function (response, textStatus, jqXHR){
+        console.log("Logged in "+ response);
+		//$('#waitModal').modal('hide');
+		if(response.indexOf('CINDERELLA_OK') > -1)
+		{
+			//window.location = "index.php";
+			//$("#EditBusinessInfoDiv").hide().fadeIn('fast'); 
+		}
+		else{
+			//$("#Message").html(response);
+			//$("#CancelDelete").show();
+			//$("#DoneDelete").show();
+			$("#EditBusinessInfoMessage").html(response);
+			$("html,body").animate({scrollTop:$('div#mainarea').offset().top}, 500);
+		}
+		
+		
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+		//$('#waitModal').modal('hide');
+		//$("#CancelDelete").show();
+		//$("#DoneDelete").show();
+    });
+    request.always(function () {
+		//$(this).prop('disabled',false);
+    });
+	
+
+});
+	
+
 
 // Bind to the submit event of our form
 $("#DeleteBusinessForm").submit(function(event){
@@ -850,7 +1061,7 @@ $('#UpdateImage3').click(function () {
 				);
 				$("#UpdateProfileModalMessage").html('');  
 				$(this).prop('disabled',false);
-				$("#UpdateProfileModalMessage").html(errorThrown);
+				$("#UpdateProfileModalMessage").html(errorThrown);				
 				$("#UpdateProfileModal").show();
 			});
 			request.always(function () {
@@ -979,8 +1190,16 @@ $('#UpdateImage3').click(function () {
 
 } );
 function editonclick(){
+	$("#EditBusinessInfo").validate().resetForm();
 	
+	$('#EditBusinessInfo .form-group').removeClass('has-danger');
+	$('#EditBusinessInfo .form-group').removeClass('has-success');
+
+	$('#EditBusinessInfo .form-control').removeClass('form-control-danger');
+	$('#EditBusinessInfo .form-control').removeClass('form-control-success');	
 	
+	 
+
 	var attr;
 	var TextVale;
 	var OldVale;
@@ -1012,20 +1231,28 @@ function editonclick(){
 		});
 		
 		if(OldVale == "Edit"){
-			$('#mainarea').find('p').each(function(){
 			$("#editFormButton").show();
+			$("#category1_").hide();
+			$("#category2_").hide();
+			$("#category1").show();
+			$("#category2").show();
+			$("#category1 option[value='<?php echo $category1; ?>']").attr('selected', 'selected').change();
+			$("#category2 option[value='<?php echo $category2; ?>']").attr('selected', 'selected').change();
+			$('#mainarea').find('p').each(function(){
+			
 				attr = "";
 				  $.each(this.attributes, function() {
 					// this.attributes is not a plain object, but an array
 					// of attribute nodes, which contain both the name and value
 					if(this.specified) {
-						if(this.name == "type" & this.value == "hidden"){
+						if((this.name == "type" & this.value == "hidden") || (this.name == "id" & this.value == "category1") || (this.name == "id" & this.value == "category2")){
 							possible = false;
 							return false; 
 						}
 						else{
 							possible = true;						
 						}	
+						
 						
 						if(this.name == "class" & this.value == "form-control-static"){
 								this.value= "form-control"
@@ -1041,9 +1268,19 @@ function editonclick(){
 		});
 		}
 		else if(OldVale == "CancelEdit"){
-			$('#mainarea').find(':input').each(function(){
-			
 			$("#editFormButton").hide();
+			$("#category1_").show();
+			$("#category2_").show();
+			
+			var category = $('#EditBusinessInfo').find('input[name="category1_hidden"]').val();
+			$('#category1 option[value='+category+']').prop('selected', true);
+			
+			var category2 = $('#EditBusinessInfo').find('input[name="category2_hidden"]').val();
+			$('#category2 option[value='+category2+']').prop('selected', true);
+			
+			$("#category1").hide();
+			$("#category2").hide();
+			$('#mainarea').find(':input').each(function(){			
 				attr = "";
 				  $.each(this.attributes, function() {
 					// this.attributes is not a plain object, but an array
@@ -1053,17 +1290,20 @@ function editonclick(){
 							OldFieldVale = this.value;
 						}
 						
-						if(this.name == "type" & (this.value == "hidden" || this.value == "submit")){
+						if((this.name == "type" & (this.value == "hidden" || this.value == "submit")) || (this.name == "id" & this.value == "category1") || (this.name == "id" & this.value == "category2")){
 							possible = false;
 							return false; 
 						}
 						else{
 							possible = true;						
 						}	
-						if(this.name == "class" & this.value == "form-control"){
+						if(possible == true){
+							if(this.name == "class" & this.value == "form-control"){
 							this.value= "form-control-static"
 						}
-						attr = attr + ' ' + this.name + ' = "' + this.value + '"';			
+							attr = attr + ' ' + this.name + ' = "' + this.value + '"';		
+						}
+							
 					}
 				  });
 				
@@ -1078,5 +1318,14 @@ function editonclick(){
 		
 	}
 	
+function NoChangeCategoryClick(){
+	$('#ChangeCategoryModal').modal('hide');
+	var category = $('#EditBusinessInfo').find('input[name="category1_hidden"]').val();
+	var category2 = $('#EditBusinessInfo').find('input[name="category2_hidden"]').val();
 	
+	$('#category1 option[value='+category+']').prop('selected', true).change();
+	$('#category2 option[value='+category2+']').prop('selected', true).change();
+	
+}
+
 </script>
