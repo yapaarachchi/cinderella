@@ -22,6 +22,7 @@ final class ErrorCode {
 	const REQUIRED_BUSINESS_NAME = 'Your Business Name is required';
 	const REQUIRED_MERCHANT_ADDRESS = 'Address of Your Business is required';
 	const REQUIRED_CATEGORY = 'Categories are required';
+	const REQUIRED_MOBILE = 'Mobile Number is required';
 	
 	/*
 	const REQUIRED_EMAIL = 'Email is required';

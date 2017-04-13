@@ -387,7 +387,7 @@ $text = $text. '
 			<div class="form-group">
 					<label for="web" class="form-label text-muted">Web Site:</label>
 					<input value="'.$web.'" type="hidden"  id="web_hidden" name="web_hidden"></input>
-					<p type="text" value="'.$web.'" id="web" named="web" class="form-control-static" > '.$web.'</p>
+					<p type="text" value="'.$web.'" id="web" name="web" class="form-control-static" > '.$web.'</p>
 			</div>
 			
 			<div class="form-group">
@@ -396,6 +396,7 @@ $text = $text. '
 					<p type="text" value="'.$description.'" id="description" name="description" class="form-control-static" > '.$description.'</p>
 			</div>
 			<input value="updatebusiness" type="hidden"  id="action" name="action"></input>
+			<input value="'.$business_id.'" type="hidden"  id="business_id" name="business_id"></input>
 			<button type="submit" class="btn btn-primary float-right" id="editFormButton">Save</button>
 	</form>
 	
@@ -653,7 +654,89 @@ if (isset($_POST)) {
 			}	
 		}
 		else if ($_POST['action'] === 'updatebusiness') {
-			$Business->updateBusiness(19);
+			
+			$UpdatedValues;
+			$updatedfields = array();
+			$approve = '1';
+			if(isset($_POST['businessName']) == false or (isset($_POST['businessName']) and $_POST['businessName'] == '')){
+				ErrorCode::SetError(ErrorCode::REQUIRED_BUSINESS_NAME);
+			}
+			
+			if(isset($_POST['category1']) == false or (isset($_POST['category1']) and $_POST['category1'] == '')){
+				ErrorCode::SetError(ErrorCode::REQUIRED_CATEGORY);
+			}
+			
+			if(isset($_POST['category2']) == false or (isset($_POST['category2']) and $_POST['category2'] == '')){
+				ErrorCode::SetError(ErrorCode::REQUIRED_CATEGORY);
+			}
+			
+			if(isset($_POST['email']) == false or (isset($_POST['email']) and $_POST['email'] == '')){
+				ErrorCode::SetError(ErrorCode::REQUIRED_EMAIL);
+			}
+			
+			if(isset($_POST['mobile']) == false or (isset($_POST['mobile']) and $_POST['mobile'] == '')){
+				ErrorCode::SetError(ErrorCode::REQUIRED_MOBILE);
+			}
+			
+			if(isset($_POST['contactPerson']) == false or (isset($_POST['contactPerson']) and $_POST['contactPerson'] == '')){
+				ErrorCode::SetError(ErrorCode::REQUIRED_CONTACT_PERSON);
+			}
+			
+			$UpdatedValues['businessName'] = $_POST['businessName'];
+			$UpdatedValues['category1'] = $_POST['category1'];
+			$UpdatedValues['category2'] = $_POST['category2'];
+			$UpdatedValues['email'] = $_POST['email'];
+			$UpdatedValues['phone'] = $_POST['phone'];
+			$UpdatedValues['mobile'] = $_POST['mobile'];
+			$UpdatedValues['contactPerson'] = $_POST['contactPerson'];
+			$UpdatedValues['description'] = $_POST['description'];
+			
+			if($_POST['web'] == ' '){
+				$UpdatedValues['web'] = '';
+			}
+			else{
+				$UpdatedValues['web'] = $_POST['web'];
+			}
+			
+			if(isset($_POST['businessName'])and isset($_POST['business_name_hidden']) and $_POST['businessName'] != $_POST['business_name_hidden']){				
+				array_push($updatedfields, 'business_name');
+				$approve = '0';
+			}
+			if(isset($_POST['category1']) and isset($_POST['category1_hidden']) and $_POST['category1'] != $_POST['category1_hidden']){				
+				array_push($updatedfields, 'category1');
+			}
+			if(isset($_POST['category2']) and isset($_POST['category2_hidden']) and $_POST['category2'] != $_POST['category2_hidden']){				
+				array_push($updatedfields, 'category2');
+			}
+			if(isset($_POST['email']) and isset($_POST['email_hidden']) and $_POST['email'] != $_POST['email_hidden']){				
+				array_push($updatedfields, 'business_email');
+			}
+			if(isset($_POST['phone']) and isset($_POST['phone_hidden']) and $_POST['phone'] != $_POST['phone_hidden']){				
+				array_push($updatedfields, 'business_phone');
+			}
+			if(isset($_POST['mobile']) and isset($_POST['mobile_hidden']) and $_POST['mobile'] != $_POST['mobile_hidden']){				
+				array_push($updatedfields, 'business_mobile');
+			}
+			if(isset($_POST['contactPerson']) and isset($_POST['contact_person_hidden']) and $_POST['contactPerson'] != $_POST['contact_person_hidden']){				
+				array_push($updatedfields, 'contact_person');
+				$approve = '0';
+			}
+			if(isset($_POST['description']) and isset($_POST['description_hidden']) and $_POST['description'] != $_POST['description_hidden']){				
+				array_push($updatedfields, 'description');
+				$approve = '0';
+			}
+			if(isset($_POST['web']) and isset($_POST['web_hidden']) and $_POST['web'] != $_POST['web_hidden']){				
+				array_push($updatedfields, 'website');
+				$approve = '0';
+			}
+			
+			$status = $Business->updateBusiness($_POST['business_id'], $UpdatedValues, $updatedfields, $approve);
+			if($status == '200'){
+				echo "CINDERELLA_OK";
+			}
+			else if($status == '1'){
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+			}
 			return;
 		}
 		else if ($_POST['action'] === 'banner') {
@@ -686,6 +769,9 @@ if (isset($_POST)) {
 			}
 			catch (TooManyRequestsException $e) {
 				ErrorCode::SetError(ErrorCode::TOO_MANY_REQUESTS);
+			}	
+			catch (InvalidEmailException $e) {
+				ErrorCode::SetError(ErrorCode::LOGIN_EMAIL_WRONG);
 				return;
 			}
 			catch (Exception $e) {
@@ -862,7 +948,7 @@ $("#EditBusinessInfo").submit(function(event){
 		//$('#waitModal').modal('hide');
 		if(response.indexOf('CINDERELLA_OK') > -1)
 		{
-			//window.location = "index.php";
+			window.location = "index.php";
 			//$("#EditBusinessInfoDiv").hide().fadeIn('fast'); 
 		}
 		else{

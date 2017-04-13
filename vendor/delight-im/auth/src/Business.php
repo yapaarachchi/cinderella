@@ -238,22 +238,112 @@ class Business {
 		$this->db->commit();
 		return $business_id;
 	}
-	public function updateBusiness($businessId , $fields = null) {		
+	public function updateBusiness($businessId , $fields = null, $updatedfields = array(), $approve = null) {	
 	
+		$found = false;
+		if(is_numeric($businessId) == false){
+			throw new Exception(); 
+		}
+		$email = self::validateEmailAddress($fields['email']);
+		
+		$updated_fields = $this->getUpdatedFields($businessId);
+		
+		if($updated_fields != ''){
+			$u_fields = explode(',', $updated_fields);
+			
+			if (is_array($u_fields) || is_array($updatedfields))
+			{
+				$merge_array = array_unique(array_merge($u_fields,$updatedfields));
+				$updated_fields = '';
+				foreach($merge_array as $value) {
+					if($updated_fields == ''){
+						$updated_fields = $value;
+					}
+					else{
+						$updated_fields = $updated_fields .','.$value;
+					}
+				}
+			}
+		}
+		else{
+			$updated_fields = '';
+			foreach($updatedfields as $value) {
+				if($updated_fields == ''){
+					$updated_fields = $value;
+				}
+				else{
+					$updated_fields = $updated_fields .','.$value;
+				}				
+			}
+		}
+		
+		
+		if(is_numeric($fields['phone'])){
+			$phone = $fields['phone'];
+		}
+		else{
+			$phone = null;
+		}
+		
+		if(is_numeric($fields['mobile'])){
+			$mobile = $fields['mobile'];
+		}
+		else{
+			$mobile = null;
+		}
+		
 		try {
 			$this->db->update(
 				'business',
-				[ 'approve' => '1' ],
+				[ 'approve' => $approve, 'business_name' => $fields['businessName'], 'category1' => $fields['category1']
+					, 'category2' => $fields['category2'], 'business_email' => $email, 'business_phone' => $phone, 
+					'business_mobile' => $phone, 'contact_person' => $fields['contactPerson'], 'website' => $fields['web'] , 
+					'description' => $fields['description'], 'updated_fields' => $updated_fields	],
 				[ 'id' => $businessId ]
 			);
+			
+			return '200';
 		}
 		catch (Error $e) {
 			throw new DatabaseError();
 		}
+		catch (Exception $e) {
+			return '1';
+		}
 
 	}
 		
-		
+	public function getUpdatedFields($bid) {
+		$id = 0;
+		$fields = '';
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			$requestedColumns = 'updated_fields';
+			
+			$updated_fields = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id 
+			);
+			
+			if (is_array($updated_fields) || is_object($updated_fields)){
+				$fields = $updated_fields['updated_fields'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return null;
+		}
+
+		if ($fields != ''){
+			return $fields;
+		}
+		else{
+			return null;
+		}
+	}		
 	
 	public function deleteBusiness($businessId) {	
 	
@@ -332,5 +422,19 @@ class Business {
 		if(!empty($result)){
 			return $result;
 		}
+	}
+	
+	protected static function validateEmailAddress($email) {
+		if (empty($email)) {
+			throw new InvalidEmailException();
+		}
+
+		$email = trim($email);
+
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			throw new InvalidEmailException();
+		}
+
+		return $email;
 	}
 }
