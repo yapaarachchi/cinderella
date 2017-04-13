@@ -411,7 +411,7 @@ class Business {
 			}
 			
 			$result = $this->db->select(
-				'SELECT ' . $requestedColumns . ' FROM business_branch WHERE '.$where.' ORDER BY business_id DESC;'
+				'SELECT ' . $requestedColumns . ' FROM business_branch WHERE '.$where.' AND approve = "1" ORDER BY business_id DESC;'
 			);
 			
 		}
@@ -437,4 +437,68 @@ class Business {
 
 		return $email;
 	}
+	
+	public function getBusinessStatus($bid) {
+		$id = 0;
+		$status = '';
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			$requestedColumns = 'approve';
+			
+			$result = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id 
+			);
+			
+			if (is_array($result) || is_object($result)){
+				$status = $result['approve'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return null;
+		}
+
+		if ($status == '1'){
+			return 'APPROVE';
+		}
+		else{
+			return 'NOT_APPROVE';
+		}
+	}	
+
+	public function getBusinessStatusMessage($bid) {
+		$id = 0;
+		$status = '';
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			$requestedColumns = 'approve';
+			
+			$result = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id 
+			);
+			
+			if (is_array($result) || is_object($result)){
+				$status = $result['approve'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return null;
+		}
+
+		if ($status == '0'){
+			return '<div class="alert alert-warning" role="alert"><strong> This Business is not approved yet</strong>. It will display to the users once it get approved</div> ';
+		}
+		else{
+			return '';
+		}
+	}			
 }

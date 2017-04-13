@@ -57,6 +57,7 @@ if (isset($_GET)) {
 //banner images
 $text =
 '
+<div id="ApproveMessage"> '.$Business->getBusinessStatusMessage($business_id).'</div>
 <a href="#" class="btn btn-danger" id="deleteConfirmation" data-toggle="modal" data-target="#DeleteModal">Delete '.$business_name.'</a>
 </br></br>
 <div class="card">
@@ -393,7 +394,8 @@ $text = $text. '
 			<div class="form-group">
 					<label for="description" class="form-label text-muted">Description:</label>
 					<input value="'.$description.'" type="hidden"  id="description_hidden" name="description_hidden"></input>
-					<p type="text" value="'.$description.'" id="description" name="description" class="form-control-static" > '.$description.'</p>
+					<p type="text" value="'.$description.'" id="description_" name="description_" class="form-control-static" > '.$description.'</p>
+					<textarea rows="10" name="description" id="description"  class="form-control" >'.$description.'</textarea>
 			</div>
 			<input value="updatebusiness" type="hidden"  id="action" name="action"></input>
 			<input value="'.$business_id.'" type="hidden"  id="business_id" name="business_id"></input>
@@ -562,6 +564,8 @@ $text = $text. '
 	</div>
    </br>
   ';
+  
+  
   $Branchses = $Branch->getBranchByBusinessId($business_id);
   if (is_array($Branchses) || is_object($Branchses))
 {
@@ -596,6 +600,26 @@ $text = $text. '
   </div>
 </div>
 ';
+
+
+//profile image
+$text = $text .' </br>
+<div id="profilecard" class="card">
+ <div class="card-header">
+ <div class ="float-left">Videos - 2 (youtube)</div>
+ <div class ="float-right" ><a> <u>Edit</u></a></div>
+  </div>
+  <div class="card-block " >
+	  <div id="VideoDiv" class="row" >
+		<iframe class="col-6" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
+		<iframe class="col-6" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
+	  </div> 
+  </div> 
+  <div id="ProfileImageMessage" >
+  '.$Media->getMediaStatusMessage($business_id, "PROFILE", "IMAGE").'
+  </div> 
+
+</div>';
 
 echo $text;
 }
@@ -813,6 +837,7 @@ $('#deleteConfirmation').click(function () {
 $("#editFormButton").hide();
 $("#category1").hide();
 $("#category2").hide();
+$("#description").hide();
 
 $.ajax({
     type: "POST",
@@ -1320,8 +1345,10 @@ function editonclick(){
 			$("#editFormButton").show();
 			$("#category1_").hide();
 			$("#category2_").hide();
+			$("#description_").hide();
 			$("#category1").show();
 			$("#category2").show();
+			$("#description").show();
 			$("#category1 option[value='<?php echo $category1; ?>']").attr('selected', 'selected').change();
 			$("#category2 option[value='<?php echo $category2; ?>']").attr('selected', 'selected').change();
 			$('#mainarea').find('p').each(function(){
@@ -1331,7 +1358,7 @@ function editonclick(){
 					// this.attributes is not a plain object, but an array
 					// of attribute nodes, which contain both the name and value
 					if(this.specified) {
-						if((this.name == "type" & this.value == "hidden") || (this.name == "id" & this.value == "category1") || (this.name == "id" & this.value == "category2")){
+						if((this.name == "type" & this.value == "hidden") || (this.name == "id" & this.value == "category1") || (this.name == "id" & this.value == "category2") || (this.name == "id" & this.value == "description")){
 							possible = false;
 							return false; 
 						}
@@ -1357,6 +1384,10 @@ function editonclick(){
 			$("#editFormButton").hide();
 			$("#category1_").show();
 			$("#category2_").show();
+			$("#category1").hide();
+			$("#category2").hide();
+			$("#description_").show();
+			$("#description").hide();
 			
 			var category = $('#EditBusinessInfo').find('input[name="category1_hidden"]').val();
 			$('#category1 option[value='+category+']').prop('selected', true);
@@ -1364,8 +1395,7 @@ function editonclick(){
 			var category2 = $('#EditBusinessInfo').find('input[name="category2_hidden"]').val();
 			$('#category2 option[value='+category2+']').prop('selected', true);
 			
-			$("#category1").hide();
-			$("#category2").hide();
+			
 			$('#mainarea').find(':input').each(function(){			
 				attr = "";
 				  $.each(this.attributes, function() {
@@ -1376,7 +1406,7 @@ function editonclick(){
 							OldFieldVale = this.value;
 						}
 						
-						if((this.name == "type" & (this.value == "hidden" || this.value == "submit")) || (this.name == "id" & this.value == "category1") || (this.name == "id" & this.value == "category2")){
+						if((this.name == "type" & (this.value == "hidden" || this.value == "submit")) || (this.name == "id" & this.value == "category1") || (this.name == "id" & this.value == "category2")|| (this.name == "id" & this.value == "description") ){
 							possible = false;
 							return false; 
 						}

@@ -5,7 +5,7 @@
 <div class="card-columns" style="padding-top: 30px;">
 
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -40,7 +40,7 @@
 					</div>
 					
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -75,7 +75,7 @@
 					</div>
 					
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -110,7 +110,7 @@
 					</div>
 					
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -145,7 +145,7 @@
 					</div>
 					
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -180,7 +180,7 @@
 					</div>
 					
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -214,7 +214,7 @@
 							
 					</div>
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -248,7 +248,7 @@
 							
 					</div>
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -282,7 +282,7 @@
 							
 					</div>
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -316,7 +316,7 @@
 							
 					</div>
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -350,7 +350,7 @@
 							
 					</div>
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">
@@ -384,7 +384,7 @@
 							
 					</div>
 					<div class="card">
-					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap" style="width: 100%; height: 150px;">
+					  <img class="card-img-top img-fluid" src="assets/ads/add1.jpg" alt="Card image cap"  >
 					  <div class="card-block">
 						<h4 class="card-title">Business Name</h4>
 						<div class="row">

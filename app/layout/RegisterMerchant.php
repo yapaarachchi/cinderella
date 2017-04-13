@@ -360,7 +360,7 @@ if (isset($_POST)) {
 						
 						<div class="form-group">
 						<label class="form-control-label float-left">Description</label>
-						<textarea class="form-control" rows="3" name="description" > </textarea>
+						<textarea class="form-control" rows="10" name="description" > </textarea>
 						<small class="form-text text-muted float-right">Small description about your business</small>
 						<div id="description_validate" class="form-control-feedback"></div>
 						</div>
