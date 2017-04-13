@@ -554,6 +554,8 @@ $text = $text. '
 	  </div>
 	</div>
    </br>
+   
+   <div name="BranchSectionDiv" id="BranchSectionDiv">
   ';
   
   
@@ -637,6 +639,8 @@ $text = $text. '
   }
 }
   $text = $text. '
+  </div>
+  
   </div>
 </div>
 
@@ -903,6 +907,14 @@ if (isset($_POST)) {
 
 <script>
 $(document).ready(function() {	
+
+$('#AddBranchSection').on('shown.bs.collapse', function () {
+  $("#BranchSectionDiv").hide();
+})
+
+$('#AddBranchSection').on('hide.bs.collapse', function () {
+  $("#BranchSectionDiv").show();
+})
 
 var request;
 $('#deleteConfirmation').click(function () {

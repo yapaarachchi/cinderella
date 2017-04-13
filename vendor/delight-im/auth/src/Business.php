@@ -473,11 +473,12 @@ class Business {
 	public function getBusinessStatusMessage($bid) {
 		$id = 0;
 		$status = '';
+		$business_name = '';
 		try {
 			if(is_numeric($bid) ){
 				$id = $bid;
 			}
-			$requestedColumns = 'approve';
+			$requestedColumns = 'approve, business_name';
 			
 			$result = $this->db->selectRow(
 				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id 
@@ -485,6 +486,7 @@ class Business {
 			
 			if (is_array($result) || is_object($result)){
 				$status = $result['approve'];
+				$business_name = $result['business_name'];
 			}
 		}
 		catch (Error $e) {
@@ -495,7 +497,7 @@ class Business {
 		}
 
 		if ($status == '0'){
-			return '<div class="alert alert-warning" role="alert"><strong> This Business is not approved yet</strong>. It will display to the users once it get approved</div> ';
+			return '<div class="alert alert-warning" role="alert"><strong> '.$business_name.' is not approved yet</strong>. It will display to the users once it get approved</div> ';
 		}
 		else{
 			return '';
