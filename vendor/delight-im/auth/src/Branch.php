@@ -84,5 +84,28 @@ class Branch {
 		}
 	}
 
+	public function deleteBranch($businessId, $branchId) {	
+		try {
+			if(is_numeric($businessId) == false){
+				return '1';
+			}
+			
+			if(is_numeric($branchId) == false){
+				return '1';
+			}
+			
+			$this->db->delete(
+				'branch',
+				[ 'id' => $branchId, 'business_id' => $businessId  ]
+			);
+			return "200";
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exceptions $e) {
+			return '1';
+		}		
+	}
 
 }

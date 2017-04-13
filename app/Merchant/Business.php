@@ -322,8 +322,7 @@ $text = $text. '
 
 <div class="card">
   <div class="card-header">
-   <div id="EditSection">
-   
+   <div id="EditSection">   
 	<div onclick="editonclick();" id="edit" class ="float-right" value="Edit"><u> Edit </u></div>
   </div>
   </div>
@@ -537,15 +536,7 @@ $text = $text. '
 						</select>
 						<div id="district_validate" class="form-control-feedback"></div>
 						</div>
-						
-						<div class="form-group">
-						<label class="form-control-label float-left">Branch Description</label>
-						<textarea class="form-control" rows="3" name="description" > </textarea>
-						<small class="form-text text-muted float-right">Small description about your business</small>
-						<div id="description_validate" class="form-control-feedback"></div>
-						</div>
-						</br>
-						
+												
 						<div align="center" class="form-group">
 							<div class="g-recaptcha" data-sitekey="6LfSRhUUAAAAAC9_QF8XXJb2pekVh9Kphs4fk0JO" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div><br/><br/>
 						</div>
@@ -570,6 +561,7 @@ $text = $text. '
   if (is_array($Branchses) || is_object($Branchses))
 {
   foreach($Branchses as $key => $value) {
+		$branch_id = $value['id'];
 		$branch_address1 = $value['branch_address1'];
 		$branch_address2 = $value['branch_address2'];
 		$branch_address3 = $value['branch_address3'];
@@ -585,12 +577,60 @@ $text = $text. '
 	  </br>
 		<div class="card">
 			<div class="card-header">
-				'.$district.'
+				<div id="EditSection">   
+					<div class ="float-left">'.$district.'</div>
+					<div class ="float-right">
+					<a onclick="editbranchonclick();" id="edit" class ="float-left" value="Edit" ><u> Edit </u></a> 
+					';
+					if($main_branch != 'YES'){
+					$text = $text. '							
+							&nbsp &nbsp
+							<a id="DeleteBranch" class ="float-right delete-branch" data-toggle="modal" data-target="#DeleteBranchModal" data-branchid="'.$branch_id.'"><u> Delete </u></a>
+					';
+					}
+		$text = $text. '
+					</div>
+					
+				</div>
+				
 			</div>
 			<div class="card-block">
-				<h4 class="card-title">Special title treatment</h4>
-				<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-				<a href="#" class="btn btn-primary">Go somewhere</a>
+				<div class="form-group row">
+					<div class="col-2">
+						<img class="img-fluid"  src="../../assets/icons/location.png" alt="Card image cap"> </img>
+					</div>
+					
+					<div class="col-10">
+						<p type="text" id="branch_address" name="branch_address" class="form-control-static" > '.$branch_address1.', '.$branch_address2.', '.$branch_address3.'</p>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-2">
+						<img class="img-fluid"  src="../../assets/icons/person.png" alt="Card image cap"> </img>
+					</div>
+					<div class="col-6">
+						<p type="text" id="contact_person" name="contact_person" class="form-control-static" > '.$contact_person.'</p>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-2">
+						<img class="img-fluid"  src="../../assets/icons/mail.png" alt="Card image cap"> </img>
+					</div>
+					<div class="col-6">
+						<p type="text" id="branch_email" name="branch_email" class="form-control-static" > '.$branch_email.'</p>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<div class="col-2">
+						<img class="img-fluid"  src="../../assets/icons/phone.png" alt="Card image cap"> </img>
+					</div>
+					<div class="col-6">
+						<p type="text" id="branch_mobile" name="branch_mobile" class="form-control-static" > '.$branch_mobile.' '.$branch_phone.'</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	';
@@ -599,10 +639,39 @@ $text = $text. '
   $text = $text. '
   </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteBranchModal" tabindex="-1" role="dialog" aria-labelledby="DeleteBranchModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  <form id="DeleteBranchForm">
+      <div class="modal-body" id="DeleteBranchModalBody">
+	  <input type="hidden" name="BusinessId" id="BusinessId" value="'.$business_id.'"/>
+	  <input type="hidden" name="BranchId" id="BranchId" value=""/>
+	  <input type="hidden" name="action" id="action" value="deletebranch"/>
+        Are you sure want to Delete this Branch?
+      </div>
+      <div class="modal-footer">
+	  <div id="BranchDeleteMessage" class="float-left">  </div>
+        <button id="CancelBranchDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="DoneBranchDelete" type="submit" class="btn btn-primary">Delete</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
 ';
 
 
 //profile image
+/*
 $text = $text .' </br>
 <div id="profilecard" class="card">
  <div class="card-header">
@@ -620,7 +689,7 @@ $text = $text .' </br>
   </div> 
 
 </div>';
-
+*/
 echo $text;
 }
 			
@@ -636,6 +705,30 @@ if (isset($_POST)) {
 				echo "CINDERELLA_OK";
 			}
 			}
+			catch (DatabaseError $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+			catch (Exception $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+		}
+		else if ($_POST['action'] === 'deletebranch') {
+			try {
+				$status ="";
+				$status = $Branch->deleteBranch($_POST['BusinessId'], $_POST['BranchId']);
+				if($status == '200'){
+					echo "CINDERELLA_OK";
+				}
+				else if($status == '1'){
+					ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				}
+			}
+			catch (DatabaseError $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
 			catch (Exception $e) {
 				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
 				return;
@@ -879,6 +972,65 @@ $('#category1').change(function () {
 });
 	
 });	
+$('body').on('click', 'a.delete-branch', function() {
+   var BranchId = $(this).data('branchid');
+   $("#DeleteBranchModalBody #BranchId").val( BranchId );
+});
+/*
+$('#DeleteBranch').click(function () {
+	var BranchId = $(this).data('branchid');
+     $("#DeleteBranchModalBody #BranchId").val( BranchId );
+});
+*/
+
+$("#DeleteBranchForm").submit(function(event){
+    event.preventDefault();
+
+    if (request) {
+        request.abort();
+    }
+    var $form = $(this);
+    var $inputs = $form.find("input, select, button, textarea");
+    var serializedData = $form.serialize();
+	$("#CancelBranchDelete").hide();
+	$("#DoneBranchDelete").hide();
+	$("#BranchDeleteMessage").html('<div style="color: blue"><strong>Please Wait!</strong> You request is being processing.<div>');
+	$(this).prop('disabled',true);
+    request = $.ajax({
+        url: "Business.php",
+        type: "post",
+        data: serializedData
+    });
+	
+    request.done(function (response, textStatus, jqXHR){
+        console.log("Logged in "+ response);
+		//$('#waitModal').modal('hide');
+		if(response.indexOf('CINDERELLA_OK') > -1)
+		{
+			window.location = "index.php";
+		}
+		else{
+			$("#BranchDeleteMessage").html(response);
+			$("#CancelBranchDelete").show();
+			$("#DoneBranchDelete").show();			
+		}		
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+		//$('#waitModal').modal('hide');
+		$("#BranchDeleteMessage").html(errorThrown);
+		$("#CancelBranchDelete").show();
+		$("#DoneBranchDelete").show();
+    });
+    request.always(function () {
+		//$(this).prop('disabled',false);
+    });
+
+});
 
 
 $('#EditBusinessInfo').validate({ // initialize the plugin
