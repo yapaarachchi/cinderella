@@ -19,8 +19,10 @@ final class ErrorCode {
 	const REQUIRED_DISTRICT = 'Distict is required';
 	const REQUIRED_RECAPTCHA = 'Are you Human ?';
 	const REQUIRED_CONTACT_PERSON = 'Contact Person for your business is required';
+	const REQUIRED_BRANCH_CONTACT_PERSON = 'Contact Person for your branch is required';
 	const REQUIRED_BUSINESS_NAME = 'Your Business Name is required';
 	const REQUIRED_MERCHANT_ADDRESS = 'Address of Your Business is required';
+	const REQUIRED_MERCHANT_BRANCH_ADDRESS = 'Please add Address/Street/City fields of Your Branch';
 	const REQUIRED_CATEGORY = 'Categories are required';
 	const REQUIRED_MOBILE = 'Mobile Number is required';
 	

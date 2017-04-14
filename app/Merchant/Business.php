@@ -191,7 +191,6 @@ $text = $text.
     </div>
   </div>
 </div>
-
 ';
 
 //delete confirm model and button
@@ -442,14 +441,16 @@ $text = $text. '
 
 	<div class="collapse" id="AddBranchSection">
 	  <div class="card card-block">
-		<form id="AddBranch" accept-charset="utf-8">
+	  <div id="AddBranchMessage" name="AddBranchMessage">
+	  </div>
+		<form id="AddBranch" name="AddBranch" accept-charset="utf-8">
 						
 						
 						
 			
 						<div class="form-check">
 						<label class="form-check-label">
-						<input type="checkbox" class="form-check-input" id="mainBranch">
+						<input type="checkbox" class="form-check-input" id="mainBranch" name="mainBranch">
 							Main Branch
 						</label>
 						<div id="mainBranch_validate" class="form-control-feedback"></div>
@@ -471,7 +472,7 @@ $text = $text. '
 						
 						<div class="form-group">
 						<label class="form-control-label float-xs-left">Branch Mobile *</label>
-						<input class="form-control" name="mobile" type="tel"/>
+						<input class="form-control" name="mobile" id="mobile" type="tel"/>
 						<small class="form-text text-muted float-right">Ex: 0712345678</small>
 						<div id="mobile_validate" class="form-control-feedback"></div>
 						</div>
@@ -537,18 +538,14 @@ $text = $text. '
 						<div id="district_validate" class="form-control-feedback"></div>
 						</div>
 												
-						<div align="center" class="form-group">
-							<div class="g-recaptcha" data-sitekey="6LfSRhUUAAAAAC9_QF8XXJb2pekVh9Kphs4fk0JO" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div><br/><br/>
-						</div>
-						
-						
 						<input type="hidden" name="action" value="AddBranch"/>
+						<input type="hidden"  name="business_id" id="business_id" value="'.$business_id.'"/>
 						<p class="text-muted text-center">
 							By clicking Add Branch, I agree to the Terms and Conditions of Cinderella
 						</p>
 						<div class="text-center">
-							<a href="" class="btn btn-secondary " role="button" aria-disabled="true" data-toggle="collapse" id="CollapseBranchSection" data-target="#AddBranchSection">Cancel</a>
-							<button type="submit" class="btn btn-primary" id="submitbutton">Add Branch</button>
+							<a href="" class="btn btn-secondary " role="button" aria-disabled="true" data-toggle="collapse" id="AddBranchCancelButton" name="AddBranchCancelButton" data-target="#AddBranchSection">Cancel</a>
+							<button type="submit" class="btn btn-primary" id="AddBranchButton" name="AddBranchButton">Add Branch</button>
 						</div>
 					</form>
 	  </div>
@@ -738,6 +735,86 @@ if (isset($_POST)) {
 				return;
 			}	
 		}
+		else if ($_POST['action'] === 'AddBranch') {
+			try {
+				if(isset($_POST['mainBranch']) and $_POST['mainBranch'] == 'on'){
+					$other['main_branch'] = 'YES';
+				}
+				else{
+					$other['main_branch'] = 'NO';
+				}
+				
+				if(isset($_POST['contactPerson']) and $_POST['contactPerson'] != ''){
+					$other['contact_person'] = $_POST['contactPerson'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_BRANCH_CONTACT_PERSON);
+					return;
+				}
+				if(isset($_POST['email']) and $_POST['email'] != ''){
+					$other['email'] = $_POST['email'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_EMAIL);
+					return;
+				}
+				if(isset($_POST['district']) and $_POST['district'] != ''){
+					$other['district'] = $_POST['district'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_DISTRICT);
+					return;
+				}
+				if(isset($_POST['address1']) and $_POST['address1'] != ''){
+					$other['address1'] = $_POST['address1'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_BRANCH_ADDRESS);
+					return;
+				}
+				if(isset($_POST['address2']) and $_POST['address2'] != ''){
+					$other['address2'] = $_POST['address2'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_BRANCH_ADDRESS);
+					return;
+				}
+				if(isset($_POST['address3']) and $_POST['address3'] != ''){
+					$other['address3'] = $_POST['address3'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_BRANCH_ADDRESS);
+					return;
+				}
+				if(isset($_POST['mobile']) and $_POST['mobile'] != null){
+					$other['branch_mobile'] = $_POST['mobile'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_MOBILE);
+					return;
+				}
+				if(isset($_POST['phone']) and $_POST['phone'] != null){
+					$other['branch_phone'] = $_POST['phone'];
+				}				
+				$status ="";
+				$status = $Branch->addBranch($_POST['business_id'], $other);
+				if($status == '200'){
+					echo "CINDERELLA_OK";
+				}
+				else if($status == '1'){
+					ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+					return;
+				}
+			}
+			catch (DatabaseError $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+			catch (Exception $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+		}
 		else if ($_POST['action'] === 'profile') {
 			try {
 				$business_id = $_POST['business_id'];
@@ -859,7 +936,7 @@ if (isset($_POST)) {
 				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
 			}
 			return;
-		}
+		}		
 		else if ($_POST['action'] === 'banner') {
 			try {
 				$business_id = $_POST['business_id'];
@@ -925,6 +1002,28 @@ $('#deleteConfirmation').click(function () {
 	$('#CollapseBranchSection').click(function () {	
 		$('#AddBranch').trigger("reset");
 		$("#mainBranch_validate").html('');
+		
+		$("#AddBranch").validate().resetForm();
+	
+		$('#AddBranch .form-group').removeClass('has-danger');
+		$('#AddBranch .form-group').removeClass('has-success');
+
+		$('#AddBranch .form-control').removeClass('form-control-danger');
+		$('#AddBranch .form-control').removeClass('form-control-success');
+	} );
+	
+	$('#AddBranchCancelButton').click(function () {	
+		$('#AddBranch').trigger("reset");
+		$("#mainBranch_validate").html('');
+		
+		$("#AddBranch").validate().resetForm();
+	
+		$('#AddBranch .form-group').removeClass('has-danger');
+		$('#AddBranch .form-group').removeClass('has-success');
+
+		$('#AddBranch .form-control').removeClass('form-control-danger');
+		$('#AddBranch .form-control').removeClass('form-control-success');	
+		
 	} );
 	
 	$('#mainBranch').click(function () {
@@ -994,7 +1093,134 @@ $('#DeleteBranch').click(function () {
      $("#DeleteBranchModalBody #BranchId").val( BranchId );
 });
 */
+$('#AddBranch').validate({ // initialize the plugin
+        rules: {
+            email: {
+                required: true,
+                email: true				
+            },
+           
+			contactPerson: {
+                required: true
+            },
+			address1:{
+				required: true	
+			},
+			address2:{
+				required: true	
+			},
+			address3:{
+				required: true	
+			},
+			district:{
+				required: true	
+			},
+			mobile: {
+                required: true,
+				digits: true,
+				minlength: 10,
+				maxlength: 10
+            },
+			phone: {
+				digits: true,
+				minlength: 10,
+				maxlength: 10
+            },
+        },
+		 messages: {
+                email: {
+                    required: "Please Enter Email!",
+                    email: "This is not a valid email!"
+                },
+				mobile:{
+					minlength: "Enter valid phone number",
+					maxlength: "Enter valid phone number",
+					digits: "Enter valid phone number"
+				},
+				phone:{
+					minlength: "Enter valid phone number",
+					maxlength: "Enter valid phone number",
+					digits: "Enter valid phone number"
+				}
+            },
+			errorPlacement: function(error, element) {
+				var name = $(element).attr("name");
+				error.appendTo($("#" + name + "_validate"));
+			},
+		highlight: function(element) {
+			jQuery(element).closest('.form-group').addClass('has-danger').removeClass('has-success');
+			jQuery(element).closest('.form-control').addClass('form-control-danger').removeClass('form-control-success');
+    },	
+	success: function(element) {
+		jQuery(element).closest('.form-group').addClass('has-success').removeClass('has-danger');
+			jQuery(element).closest('.form-control').addClass('form-control-success').removeClass('form-control-danger');
+    },
+	onkeyup: function(element) {$(element).valid()},
+	unhighlight: function(element) {
+		jQuery(element).closest('.form-group').addClass('has-success').removeClass('has-danger');
+			jQuery(element).closest('.form-control').addClass('form-control-success').removeClass('form-control-danger');
+    },
+	
+    });
 
+
+	
+$("#AddBranch").submit(function(event){
+		 event.preventDefault();
+	if (!$(this).valid()) {  //<<< I was missing this check
+				//grecaptcha.reset();
+                return false;
+            }
+			
+    if (request) {
+        request.abort();
+    }
+    var $form = $(this);
+    var $inputs = $form.find("input, select, button, textarea");
+    var serializedData = $form.serialize();
+	$("#AddBranchCancelButton").hide();
+	$("#AddBranchButton").hide();
+	$("html,body").animate({scrollTop:$('div#branches').offset().top}, 500);
+	$("#AddBranchMessage").html('<div style="color: blue"><strong>Please Wait!</strong> You request is being processing.<div>');	
+	//$('#waitmodel').modal('show');
+    request = $.ajax({
+        url: "Business.php",
+        type: "post",
+        data: serializedData
+    });
+	
+    request.done(function (response, textStatus, jqXHR){
+        console.log("Logged in "+ response);
+		//$('#waitmodel').modal('hide');
+		if(response.indexOf('CINDERELLA_OK') > -1)
+		{
+			$("#AddBranchMessage").html('');	
+			window.location = "index.php";
+		}
+		else{
+			$("#AddBranchCancelButton").show();
+			$("#AddBranchButton").show();
+			$("#AddBranchMessage").html(response);	
+			$("html,body").animate({scrollTop:$('div#branches').offset().top}, 500);			
+		}		
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+		//$('#waitmodel').modal('hide');
+		$("#AddBranchCancelButton").show();
+		$("#AddBranchButton").show();
+		$("#AddBranchMessage").html(errorThrown);
+		$("html,body").animate({scrollTop:$('div#branches').offset().top}, 500);
+    });
+    request.always(function () {
+		//$(this).prop('disabled',false);
+    });
+
+});
 $("#DeleteBranchForm").submit(function(event){
     event.preventDefault();
 

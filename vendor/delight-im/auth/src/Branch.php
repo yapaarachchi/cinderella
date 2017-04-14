@@ -39,9 +39,75 @@ class Branch {
 		}
 	}
 	
-	
-
-	
+	public function addBranch($BusinessId , $other) {
+		try{
+			$this->db->startTransaction();
+			if(array_key_exists('address1',$other)){
+				$address1 = $other['address1'];
+			}
+			else{
+				$address1 = null;
+			}
+			if(array_key_exists('address2',$other)){
+				$address2 = $other['address2'];
+			}
+			else{
+				$address2 = null;
+			}
+			if(array_key_exists('address3',$other)){
+				$address3 = $other['address3'];
+			}
+			else{
+				$address3 = null;
+			}
+			if(array_key_exists('branch_mobile',$other)){
+				$mobile = $other['branch_mobile'];
+			}
+			else{
+				$mobile = null;
+			}
+			if(array_key_exists('branch_phone',$other)){
+				$phone = $other['branch_phone'];
+			}
+			else{
+				$phone = null;
+			}
+			
+			if($other['main_branch'] == 'YES'){
+			$this->db->update(
+				'branch',
+					[ 'main_branch' => 'NO'],
+					[ 'business_id' => $BusinessId, 'main_branch' => 'YES' ]
+				);
+			}
+			$this->db->insert(
+				'branch',
+				[
+					'business_id' => $BusinessId,
+					'branch_address1' => $address1,
+					'branch_address2' => $address2,
+					'branch_address3' => $address3,
+					'contact_person' => $other['contact_person'],
+					'branch_mobile' => $mobile,
+					'branch_phone' => $phone,
+					'main_branch' => $other['main_branch'],
+					'branch_email' => $other['email'],
+					'district' => $other['district']					
+				]
+			);
+			$this->db->commit();
+			return '200';
+		}
+			catch (Error $e) {
+				$this->db->rollBack();
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			$this->db->rollBack();
+			return '1';
+		}
+		
+	}
 	public function getBranchByBusinessId($id) {
 		try {
 			$requestedColumns = 'id, branch_address1, branch_address2, branch_address3, district, contact_person, branch_email, branch_mobile, branch_phone, main_branch, description';
@@ -96,7 +162,7 @@ class Branch {
 			
 			$this->db->delete(
 				'branch',
-				[ 'id' => $branchId, 'business_id' => $businessId  ]
+				[ 'id' => $branchId, 'business_id' => $businessId ]
 			);
 			return "200";
 		}
