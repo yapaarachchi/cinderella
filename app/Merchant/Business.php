@@ -556,7 +556,7 @@ $text = $text. '
   ';
   
   
-  $Branchses = $Branch->getBranchByBusinessId($business_id);
+  $Branchses = $Branch->getBranchesByBusinessId($business_id);
   if (is_array($Branchses) || is_object($Branchses))
 {
   foreach($Branchses as $key => $value) {
@@ -579,7 +579,7 @@ $text = $text. '
 				<div id="EditSection">   
 					<div class ="float-left">'.$district.'</div>
 					<div class ="float-right">
-					<a onclick="editbranchonclick();" id="edit" class ="float-left" value="Edit" ><u> Edit </u></a> 
+					<a id="EditBranch" class ="float-left edit-branch" data-mainbranch="'.$main_branch.'" data-branchid="'.$branch_id.'" data-contactperson="'.$contact_person.'" data-address1="'.$branch_address1.'" data-address2="'.$branch_address2.'" data-address3="'.$branch_address3.'" data-email="'.$branch_email.'" data-mobile="'.$branch_mobile.'" data-phone="'.$branch_phone.'" data-district="'.$district.'"><u> Edit </u></a> 
 					';
 					if($main_branch != 'YES'){
 					$text = $text. '							
@@ -670,6 +670,128 @@ $text = $text. '
 </div>
 ';
 
+//edit branch
+$text = $text.
+
+'
+<!-- Modal -->
+<div class="modal fade" id="EditBranchModal" tabindex="-1" role="dialog" aria-labelledby="EditBranchModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="EditBranchLabel">Edit Branch</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  <form id="EditBranchForm" name="EditBranchForm">
+      <div class="modal-body" id="EditBranchModalBody">
+	  <input type="hidden" name="BranchId" id="BranchId" value=""/>
+	  <input type="hidden" name="action" id="action" value="EditBranch"/>
+	  
+						<div class="form-check">
+							<label class="form-check-label">
+							<input type="checkbox" class="form-check-input" id="editMainBranch" name="editMainBranch">
+								Main Branch
+							</label>
+							<div id="editMainBranch_validate" class="form-control-feedback"></div>
+						</div>
+						
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Contact Person *</label>
+						<input class="form-control" name="editContactPerson" id="editContactPerson"  type="text"/>
+						<div id="editContactPerson_validate" class="form-control-feedback"></div>
+						</div>
+						
+						<div class="form-group">
+							<label class="form-control-label float-left" >Branch E-Mail *</label>
+							<input class="form-control" name="editEmail" id="editEmail" placeholder="youremail@example.com" type="email" />
+							<div id="editEmail_validate" class="form-control-feedback"></div>
+						</div>
+						
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Branch Mobile *</label>
+						<input class="form-control" name="editMobile" id="editMobile" id="mobile" type="tel"/>
+						<small class="form-text text-muted float-right">Ex: 0712345678</small>
+						<div id="editMobile_validate" class="form-control-feedback"></div>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Branch Phone</label>
+						<input class="form-control" name="editPhone" id="editPhone" type="tel"/>
+						<small class="form-text text-muted float-right">Ex: 0112345678</small>
+						<div id="editPhone_validate" class="form-control-feedback"></div>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Address *</label>
+						<input class="form-control" name="editAddress1" id="editAddress1" type="text"/>
+						<div id="editAddress1_validate" class="form-control-feedback"></div>
+						<small class="form-text text-muted float-right">Ex: No: 49/6/A</small>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">Street *</label>
+						<input class="form-control" name="editAddress2" id="editAddress2" type="text"/>
+						<div id="editAddress2_validate" class="form-control-feedback"></div>
+						<small class="form-text text-muted float-right">Ex: Temple Road</small>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">City *</label>
+						<input class="form-control"  name="editAddress3" id="editAddress3" type="text"/>
+						<div id="editAddress3_validate" class="form-control-feedback"></div>
+						<small class="form-text text-muted float-right">Ex: Maharagama</small>
+						</div>
+						
+						<div class="form-group">
+						<label class="form-control-label float-xs-left">District *</label>
+						<select class="form-control" name="editDistrict" id="editDistrict">
+						<option></option>
+							<option>Colombo</option>
+							<option>Kandy</option>
+							<option>Galle</option>
+							<option>Ratnapura</option>
+							<option>Ampara</option>
+							<option>Anuradhapura</option>
+							<option>Badulla</option>
+							<option>Batticaloa</option>
+							<option>Gampaha</option>
+							<option>Hambantota</option>
+							<option>Jaffna</option>
+							<option>Kalutara</option>
+							<option>Kegalle</option>
+							<option>Kilinochchi</option>
+							<option>Kurunegala</option>
+							<option>Mannar</option>
+							<option>Matale</option>
+							<option>Matara</option>
+							<option>Moneragala</option>
+							<option>Mullativu</option>
+							<option>Nuwara Eliya</option>
+							<option>Polonnaruwa</option>
+							<option>Puttalam</option>
+							<option>Trincomalee</option>
+							<option>Vavuniya</option>
+						</select>
+						<div id="editDistrict_validate" class="form-control-feedback"></div>
+						</div>
+	  
+      </div>
+      <div class="modal-footer">
+	  <div id="Message" class="float-left">  </div>
+        <button id="CancelEditBranch" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="DoneEditBranch" type="submit" class="btn btn-primary">Save</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+
+
+';
 
 //profile image
 /*
@@ -1036,6 +1158,18 @@ $('#deleteConfirmation').click(function () {
 		}
 		
 	} );
+	
+	$('#editMainBranch').click(function () {
+		var alert = '<div class="alert alert-warning" role="alert"> This branch will become the main branch</div>';
+		if($("#editMainBranch").is(':checked')){
+			$("#editMainBranch_validate").html(alert);
+		}
+		else{
+			$("#editMainBranch_validate	").html('');
+		}
+		
+	} );
+	
 
 	
 $("#editFormButton").hide();
@@ -1087,6 +1221,113 @@ $('body').on('click', 'a.delete-branch', function() {
    var BranchId = $(this).data('branchid');
    $("#DeleteBranchModalBody #BranchId").val( BranchId );
 });
+
+$('body').on('click', 'a.edit-branch', function() {
+	
+		$('#EditBranchForm').trigger("reset");
+		$("#editMainBranch_validate").html('');
+		
+		$("#EditBranchForm").validate().resetForm();
+	
+		$('#EditBranchForm .form-group').removeClass('has-danger');
+		$('#EditBranchForm .form-group').removeClass('has-success');
+
+		$('#EditBranchForm .form-control').removeClass('form-control-danger');
+		$('#EditBranchForm .form-control').removeClass('form-control-success');
+		
+	var main_branch = "";
+	if($(this).data('mainbranch') == "YES"){
+		$('#editMainBranch').prop('checked', true);
+	}
+	else{
+		$('#editMainBranch').prop('checked', false);
+	}
+   $("#EditBranchModalBody #BranchId").val( $(this).data('branchid') );
+   $("#EditBranchModalBody #editContactPerson").val( $(this).data('contactperson') );
+   $("#EditBranchModalBody #editAddress1").val( $(this).data('address1') );
+   $("#EditBranchModalBody #editAddress2").val( $(this).data('address2') );
+   $("#EditBranchModalBody #editAddress3").val( $(this).data('address3') );
+   $("#EditBranchModalBody #editEmail").val( $(this).data('email') );
+   $("#EditBranchModalBody #editMobile").val( $(this).data('mobile') );
+   $("#EditBranchModalBody #editPhone").val( $(this).data('phone') );
+   $("#EditBranchModalBody #editDistrict").val( $(this).data('district') );
+   
+   $('#EditBranchModal').modal('show')
+});
+
+$('#EditBranchForm').validate({ // initialize the plugin
+        rules: {
+            editEmail: {
+                required: true,
+                email: true				
+            },
+           
+			editContactPerson: {
+                required: true
+            },
+			editAddress1:{
+				required: true	
+			},
+			editAddress2:{
+				required: true	
+			},
+			editAddress3:{
+				required: true	
+			},
+			editDistrict:{
+				required: true	
+			},
+			editMobile: {
+                required: true,
+				digits: true,
+				minlength: 10,
+				maxlength: 10
+            },
+			editPhone: {
+				digits: true,
+				minlength: 10,
+				maxlength: 10
+            },
+        },
+		 messages: {
+                editEmail: {
+                    required: "Please Enter Email!",
+                    email: "This is not a valid email!"
+                },
+				editMobile:{
+					minlength: "Enter valid phone number",
+					maxlength: "Enter valid phone number",
+					digits: "Enter valid phone number"
+				},
+				editPhone:{
+					minlength: "Enter valid phone number",
+					maxlength: "Enter valid phone number",
+					digits: "Enter valid phone number"
+				}
+            },
+			errorPlacement: function(error, element) {
+				var name = $(element).attr("name");
+				error.appendTo($("#" + name + "_validate"));
+			},
+		highlight: function(element) {
+			jQuery(element).closest('.form-group').addClass('has-danger').removeClass('has-success');
+			jQuery(element).closest('.form-control').addClass('form-control-danger').removeClass('form-control-success');
+    },	
+	success: function(element) {
+		jQuery(element).closest('.form-group').addClass('has-success').removeClass('has-danger');
+			jQuery(element).closest('.form-control').addClass('form-control-success').removeClass('form-control-danger');
+    },
+	onkeyup: function(element) {$(element).valid()},
+	unhighlight: function(element) {
+		jQuery(element).closest('.form-group').addClass('has-success').removeClass('has-danger');
+			jQuery(element).closest('.form-control').addClass('form-control-success').removeClass('form-control-danger');
+    },
+	
+    });
+
+
+	
+
 /*
 $('#DeleteBranch').click(function () {
 	var BranchId = $(this).data('branchid');
@@ -1832,6 +2073,10 @@ function NoChangeCategoryClick(){
 	$('#category1 option[value='+category+']').prop('selected', true).change();
 	$('#category2 option[value='+category2+']').prop('selected', true).change();
 	
+}
+
+function editbranchonclick(){
+	$('#EditBranchModal').modal('show');
 }
 
 </script>

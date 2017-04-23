@@ -108,7 +108,7 @@ class Branch {
 		}
 		
 	}
-	public function getBranchByBusinessId($id) {
+	public function getBranchesByBusinessId($id) {
 		try {
 			$requestedColumns = 'id, branch_address1, branch_address2, branch_address3, district, contact_person, branch_email, branch_mobile, branch_phone, main_branch, description';
 			
@@ -172,6 +172,222 @@ class Branch {
 		catch (Exceptions $e) {
 			return '1';
 		}		
+	}
+	
+	public function getBranchAddress1($id) {
+		try {
+			$requestedColumns = 'branch_address1';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['branch_address1'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public function getBranchAddress2($id) {
+		try {
+			$requestedColumns = 'branch_address2';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['branch_address2'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public function getBranchAddress3($id) {
+		try {
+			$requestedColumns = 'branch_address3';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['branch_address3'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public function getBranchDistrict($id) {
+		try {
+			$requestedColumns = 'district';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['district'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public function getContactPerson($id) {
+		try {
+			$requestedColumns = 'contact_person';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['contact_person'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public function getBranchEmail($id) {
+		try {
+			$requestedColumns = 'branch_email';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['branch_email'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public function getBranchMobile($id) {
+		try {
+			$requestedColumns = 'branch_mobile';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['branch_mobile'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public function getBranchPhone($id) {
+		try {
+			$requestedColumns = 'branch_phone';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['branch_phone'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public function getMainBranch($id) {
+		try {
+			$requestedColumns = 'main_branch';
+			
+			$branch = $this->db->selectRow(
+				'SELECT ' . $requestedColumns . ' FROM branch WHERE business_id = '.$id 
+			);
+			
+			if (is_array($branch) || is_object($branch)){
+				$fields = $branch['main_branch'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if ($fields != '') {
+			return $fields;
+		}
+		else {
+			return null;
+		}
 	}
 
 }

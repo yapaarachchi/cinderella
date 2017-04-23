@@ -141,7 +141,7 @@ $branch_address3= null;
 						elseif ($_POST['action'] === 'branches') {
 							
 							$business_id = $_POST['business_id'] ;
-							$Branches = $Branch->getBranchByBusinessId($business_id );
+							$Branches = $Branch->getBranchesByBusinessId($business_id );
 							if (is_array($Branches) || is_object($Branches))
 							{
 								foreach($Branches as $key => $value) {
