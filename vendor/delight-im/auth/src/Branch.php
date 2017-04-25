@@ -108,6 +108,63 @@ class Branch {
 		}
 		
 	}
+	
+	public function updateBranch($BusinessId, $BranchId , $fields) {	
+	
+		$this->db->startTransaction();
+		
+		if(is_numeric($BranchId) == false){
+			return '1';
+		}
+		$email = self::validateEmailAddress($fields['email']);
+		
+		
+		if(is_numeric($fields['branch_phone'])){
+			$phone = $fields['branch_phone'];
+		}
+		else{
+			$phone = null;
+		}
+		
+		if(is_numeric($fields['branch_mobile'])){
+			$mobile = $fields['branch_mobile'];
+		}
+		else{
+			$mobile = null;
+		}
+		
+		try {
+			
+			if($fields['main_branch'] == 'YES'){
+			$this->db->update(
+				'branch',
+					[ 'main_branch' => 'NO'],
+					[ 'business_id' => $BusinessId, 'main_branch' => 'YES' ]
+				);
+			}
+			
+			$this->db->update(
+				'branch',
+				[ 'main_branch' => $fields['main_branch'], 'contact_person' => $fields['contact_person']
+					,'branch_email' => $email, 'branch_phone' => $phone, 'branch_mobile' => $phone,
+					'district' => $fields['district'], 'branch_address1' => $fields['address1'], 'branch_address2' => $fields['address2'], 'branch_address3' => $fields['address3']	],
+				[ 'id' => $BranchId ]
+			);
+			$this->db->commit();
+			return '200';
+		}
+		catch (Error $e) {
+			$this->db->rollBack();
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			$this->db->rollBack();
+			return '1';
+		}
+
+	}
+		
+		
 	public function getBranchesByBusinessId($id) {
 		try {
 			$requestedColumns = 'id, branch_address1, branch_address2, branch_address3, district, contact_person, branch_email, branch_mobile, branch_phone, main_branch, description';
@@ -388,6 +445,20 @@ class Branch {
 		else {
 			return null;
 		}
+	}
+	
+	protected static function validateEmailAddress($email) {
+		if (empty($email)) {
+			throw new InvalidEmailException();
+		}
+
+		$email = trim($email);
+
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			throw new InvalidEmailException();
+		}
+
+		return $email;
 	}
 
 }

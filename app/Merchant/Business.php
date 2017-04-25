@@ -579,7 +579,7 @@ $text = $text. '
 				<div id="EditSection">   
 					<div class ="float-left">'.$district.'</div>
 					<div class ="float-right">
-					<a id="EditBranch" class ="float-left edit-branch" data-mainbranch="'.$main_branch.'" data-branchid="'.$branch_id.'" data-contactperson="'.$contact_person.'" data-address1="'.$branch_address1.'" data-address2="'.$branch_address2.'" data-address3="'.$branch_address3.'" data-email="'.$branch_email.'" data-mobile="'.$branch_mobile.'" data-phone="'.$branch_phone.'" data-district="'.$district.'"><u> Edit </u></a> 
+					<a id="EditBranch" class ="float-left edit-branch" data-businessid="'.$business_id.'" data-mainbranch="'.$main_branch.'" data-branchid="'.$branch_id.'" data-contactperson="'.$contact_person.'" data-address1="'.$branch_address1.'" data-address2="'.$branch_address2.'" data-address3="'.$branch_address3.'" data-email="'.$branch_email.'" data-mobile="'.$branch_mobile.'" data-phone="'.$branch_phone.'" data-district="'.$district.'"><u> Edit </u></a> 
 					';
 					if($main_branch != 'YES'){
 					$text = $text. '							
@@ -684,11 +684,16 @@ $text = $text.
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-	  <form id="EditBranchForm" name="EditBranchForm">
-      <div class="modal-body" id="EditBranchModalBody">
-	  <input type="hidden" name="BranchId" id="BranchId" value=""/>
-	  <input type="hidden" name="action" id="action" value="EditBranch"/>
 	  
+	  
+	  <form id="EditBranchForm" name="EditBranchForm">
+     <div class="modal-body" id="EditBranchModalBody">
+	 <div id="EditBranchWaitMessage" class="float-left">  </div>
+	 <br/>
+	  <input type="hidden" name="BranchId" id="BranchId" value=""/>
+	  <input type="hidden" name="BusinessId" id="BusinessId" value=""/>
+	  <input type="hidden" name="editMainBranchOld" id="editMainBranchOld" value=""/>
+	  <input type="hidden" name="action" id="action" value="EditBranch"/>
 						<div class="form-check">
 							<label class="form-check-label">
 							<input type="checkbox" class="form-check-input" id="editMainBranch" name="editMainBranch">
@@ -781,7 +786,6 @@ $text = $text.
 	  
       </div>
       <div class="modal-footer">
-	  <div id="Message" class="float-left">  </div>
         <button id="CancelEditBranch" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button id="DoneEditBranch" type="submit" class="btn btn-primary">Save</button>
       </div>
@@ -922,6 +926,89 @@ if (isset($_POST)) {
 				$status = $Branch->addBranch($_POST['business_id'], $other);
 				if($status == '200'){
 					echo "CINDERELLA_OK";
+				}
+				else if($status == '1'){
+					ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+					return;
+				}
+			}
+			catch (DatabaseError $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+			catch (Exception $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+		}
+		else if ($_POST['action'] === 'EditBranch') {
+			try {
+			if($_POST['editMainBranch'] == 'on' or (isset($_POST['editMainBranch']) == false and $_POST['editMainBranchOld'] == 'YES') or ($_POST['editMainBranch'] == 'on' and $_POST['editMainBranchOld'] == 'NO')){
+					$other['main_branch'] = 'YES';
+				}
+				else{
+					$other['main_branch'] = 'NO';
+				}
+				
+				if(isset($_POST['editContactPerson']) and $_POST['editContactPerson'] != ''){
+					$other['contact_person'] = $_POST['editContactPerson'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_BRANCH_CONTACT_PERSON);
+					return;
+				}
+				if(isset($_POST['editEmail']) and $_POST['editEmail'] != ''){
+					$other['email'] = $_POST['editEmail'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_EMAIL);
+					return;
+				}
+				if(isset($_POST['editDistrict']) and $_POST['editDistrict'] != ''){
+					$other['district'] = $_POST['editDistrict'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_DISTRICT);
+					return;
+				}
+				if(isset($_POST['editAddress1']) and $_POST['editAddress1'] != ''){
+					$other['address1'] = $_POST['editAddress1'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_BRANCH_ADDRESS);
+					return;
+				}
+				if(isset($_POST['editAddress2']) and $_POST['editAddress2'] != ''){
+					$other['address2'] = $_POST['editAddress2'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_BRANCH_ADDRESS);
+					return;
+				}
+				if(isset($_POST['editAddress3']) and $_POST['editAddress3'] != ''){
+					$other['address3'] = $_POST['editAddress3'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_BRANCH_ADDRESS);
+					return;
+				}
+				if(isset($_POST['editMobile']) and $_POST['editMobile'] != null){
+					$other['branch_mobile'] = $_POST['editMobile'];
+				}
+				else{
+					ErrorCode::SetError(ErrorCode::REQUIRED_MOBILE);
+					return;
+				}
+				if(isset($_POST['editPhone']) and $_POST['editPhone'] != null){
+					$other['branch_phone'] = $_POST['editPhone'];
+				}				
+				$status ="";
+				$edit_branch_id = $_POST['BranchId'];
+				$status = $Branch->updateBranch($_POST['BusinessId'], $edit_branch_id, $other);
+				
+				if($status == '200'){
+					echo "CINDERELLA_OK";
+					return;
 				}
 				else if($status == '1'){
 					ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
@@ -1238,11 +1325,16 @@ $('body').on('click', 'a.edit-branch', function() {
 	var main_branch = "";
 	if($(this).data('mainbranch') == "YES"){
 		$('#editMainBranch').prop('checked', true);
+		$('#editMainBranch').attr('disabled', true);
+		$("#EditBranchModalBody #editMainBranchOld").val( 'YES' );
 	}
 	else{
 		$('#editMainBranch').prop('checked', false);
+		$('#editMainBranch').attr('disabled', false);
+		$("#EditBranchModalBody #editMainBranchOld").val( 'NO' );
 	}
    $("#EditBranchModalBody #BranchId").val( $(this).data('branchid') );
+   $("#EditBranchModalBody #BusinessId").val( $(this).data('businessid') );   
    $("#EditBranchModalBody #editContactPerson").val( $(this).data('contactperson') );
    $("#EditBranchModalBody #editAddress1").val( $(this).data('address1') );
    $("#EditBranchModalBody #editAddress2").val( $(this).data('address2') );
@@ -1324,6 +1416,64 @@ $('#EditBranchForm').validate({ // initialize the plugin
     },
 	
     });
+
+$("#EditBranchForm").submit(function(event){
+		 event.preventDefault();
+	if (!$(this).valid()) {  //<<< I was missing this check
+				//grecaptcha.reset();
+                return false;
+            }
+			
+    if (request) {
+        request.abort();
+    }
+    var $form = $(this);
+    var $inputs = $form.find("input, select, button, textarea");
+    var serializedData = $form.serialize();
+	$("#CancelEditBranch").hide();
+	$("#DoneEditBranch").hide();
+	//$("html,body").animate({scrollTop:$('div#branches').offset().top}, 500);
+	$("#EditBranchWaitMessage").html('<div style="color: blue"><strong>Please Wait!</strong> You request is being processing.<div>');	
+	//$('#waitmodel').modal('show');
+	
+    request = $.ajax({
+        url: "Business.php",
+        type: "post",
+        data: serializedData
+    });
+	
+    request.done(function (response, textStatus, jqXHR){
+        console.log("Logged in "+ response);
+		//$('#waitmodel').modal('hide');
+		if(response.indexOf('CINDERELLA_OK') > -1)
+		{
+			$("#EditBranchWaitMessage").html('');	
+			window.location = "index.php";
+		}
+		else{
+			$("#CancelEditBranch").show();
+			$("#DoneEditBranch").show();
+			$("#EditBranchWaitMessage").html(response);	
+			//$("html,body").animate({scrollTop:$('div#branches').offset().top}, 500);			
+		}		
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+		//$('#waitmodel').modal('hide');
+		$("#CancelEditBranch").show();
+			$("#DoneEditBranch").show();
+			$("#EditBranchWaitMessage").html(errorThrown);	;
+		//$("html,body").animate({scrollTop:$('div#branches').offset().top}, 500);
+    });
+    request.always(function () {
+		//$(this).prop('disabled',false);
+    });
+
+});
 
 
 	
@@ -1462,6 +1612,9 @@ $("#AddBranch").submit(function(event){
     });
 
 });
+
+
+
 $("#DeleteBranchForm").submit(function(event){
     event.preventDefault();
 
@@ -1510,6 +1663,9 @@ $("#DeleteBranchForm").submit(function(event){
     });
 
 });
+
+
+
 
 
 $('#EditBusinessInfo').validate({ // initialize the plugin
