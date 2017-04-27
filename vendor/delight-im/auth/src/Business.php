@@ -243,6 +243,8 @@ class Business {
 	public function updateBusiness($businessId , $fields = null, $updatedfields = array(), $approve = null) {	
 	
 		$found = false;
+		$value;
+		
 		if(is_numeric($businessId) == false){
 			throw new Exception(); 
 		}
@@ -297,12 +299,23 @@ class Business {
 		try {
 			$Throttler = new \Delight\Auth\Throttler($this->db);
 			$Throttler->throttle('update_business');
-		
+		if($approve == null){
+			
+			$approve_value = $this->db->selectRow(
+				'SELECT approve FROM business WHERE id = '.$businessId 
+			);
+			
+			if (is_array($approve_value) || is_object($approve_value)){
+				$value = $approve_value['approve'];
+			}
+			
+			$approve = $value;
+		}
 			$this->db->update(
 				'business',
 				[ 'approve' => $approve, 'business_name' => $fields['businessName'], 'category1' => $fields['category1']
 					, 'category2' => $fields['category2'], 'business_email' => $email, 'business_phone' => $phone, 
-					'business_mobile' => $phone, 'contact_person' => $fields['contactPerson'], 'website' => $fields['web'] , 
+					'business_mobile' => $mobile, 'contact_person' => $fields['contactPerson'], 'website' => $fields['web'] , 
 					'description' => $fields['description'], 'updated_fields' => $updated_fields	],
 				[ 'id' => $businessId ]
 			);
@@ -366,6 +379,12 @@ class Business {
 				'branch',
 				[ 'business_id' => $businessId ]
 			);
+			
+			$this->db->delete(
+				'media',
+				[ 'business_id' => $businessId ]
+			); 
+			
 			$this->db->commit();
 			return "200";
 		}

@@ -151,7 +151,7 @@ class Branch {
 			$this->db->update(
 				'branch',
 				[ 'main_branch' => $fields['main_branch'], 'contact_person' => $fields['contact_person']
-					,'branch_email' => $email, 'branch_phone' => $phone, 'branch_mobile' => $phone,
+					,'branch_email' => $email, 'branch_phone' => $phone, 'branch_mobile' => $mobile,
 					'district' => $fields['district'], 'branch_address1' => $fields['address1'], 'branch_address2' => $fields['address2'], 'branch_address3' => $fields['address3']	],
 				[ 'id' => $BranchId ]
 			);

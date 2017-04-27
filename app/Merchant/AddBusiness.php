@@ -243,6 +243,31 @@ $text = $text.
   </div>
 </div>
 ';
+
+$text = $text. '
+
+<div class="modal fade" id="RequestDone" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Successful</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<strong>Your request has been successfully completed.</strong> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+';
+
+
 echo $text;
 }
 			
@@ -532,7 +557,8 @@ grecaptcha.reset();
 		$('#waitmodel').modal('hide');
 		if(response.indexOf('CINDERELLA_OK') > -1)
 		{
-			window.location = "index.php";
+			$('#RequestDone').modal('show');	
+			//window.location = "index.php";
 		}
 		else{
 			$("html,body").animate({scrollTop:$('div#AddBusinessBanner').offset().top}, 500);
@@ -566,7 +592,9 @@ grecaptcha.reset();
 
 });
 
-
+$('#RequestDone').on('hidden.bs.modal', function (e) {
+  window.location = "index.php";
+})
 
 
 	

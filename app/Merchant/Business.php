@@ -796,7 +796,28 @@ $text = $text.
 
 
 ';
+$text = $text. '
 
+<div class="modal fade" id="RequestDone" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Successful</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<strong>Your request has been successfully completed.</strong> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+';
 //profile image
 /*
 $text = $text .' </br>
@@ -943,7 +964,7 @@ if (isset($_POST)) {
 		}
 		else if ($_POST['action'] === 'EditBranch') {
 			try {
-			if($_POST['editMainBranch'] == 'on' or (isset($_POST['editMainBranch']) == false and $_POST['editMainBranchOld'] == 'YES') or ($_POST['editMainBranch'] == 'on' and $_POST['editMainBranchOld'] == 'NO')){
+			if( (isset($_POST['editMainBranch']) and $_POST['editMainBranch'] == 'on') or (isset($_POST['editMainBranch']) == false and $_POST['editMainBranchOld'] == 'YES') or ($_POST['editMainBranch'] == 'on' and $_POST['editMainBranchOld'] == 'NO')){
 					$other['main_branch'] = 'YES';
 				}
 				else{
@@ -992,14 +1013,14 @@ if (isset($_POST)) {
 					ErrorCode::SetError(ErrorCode::REQUIRED_MERCHANT_BRANCH_ADDRESS);
 					return;
 				}
-				if(isset($_POST['editMobile']) and $_POST['editMobile'] != null){
+				if(isset($_POST['editMobile'])){
 					$other['branch_mobile'] = $_POST['editMobile'];
 				}
 				else{
 					ErrorCode::SetError(ErrorCode::REQUIRED_MOBILE);
 					return;
 				}
-				if(isset($_POST['editPhone']) and $_POST['editPhone'] != null){
+				if(isset($_POST['editPhone'])){
 					$other['branch_phone'] = $_POST['editPhone'];
 				}				
 				$status ="";
@@ -1064,7 +1085,7 @@ if (isset($_POST)) {
 			
 			$UpdatedValues;
 			$updatedfields = array();
-			$approve = '1';
+			$approve = null;
 			if(isset($_POST['businessName']) == false or (isset($_POST['businessName']) and $_POST['businessName'] == '')){
 				ErrorCode::SetError(ErrorCode::REQUIRED_BUSINESS_NAME);
 			}
@@ -1447,8 +1468,10 @@ $("#EditBranchForm").submit(function(event){
 		//$('#waitmodel').modal('hide');
 		if(response.indexOf('CINDERELLA_OK') > -1)
 		{
-			$("#EditBranchWaitMessage").html('');	
-			window.location = "index.php";
+			$("#EditBranchWaitMessage").html('');
+			$('#EditBranchModal').modal('hide');
+			$('#RequestDone').modal('show');			
+			//window.location = "index.php";
 		}
 		else{
 			$("#CancelEditBranch").show();
@@ -1475,7 +1498,9 @@ $("#EditBranchForm").submit(function(event){
 
 });
 
-
+$('#RequestDone').on('hidden.bs.modal', function (e) {
+  window.location = "index.php";
+})
 	
 
 /*
@@ -1585,8 +1610,9 @@ $("#AddBranch").submit(function(event){
 		//$('#waitmodel').modal('hide');
 		if(response.indexOf('CINDERELLA_OK') > -1)
 		{
-			$("#AddBranchMessage").html('');	
-			window.location = "index.php";
+			$("#AddBranchMessage").html('');
+			$('#RequestDone').modal('show');			
+			//window.location = "index.php";
 		}
 		else{
 			$("#AddBranchCancelButton").show();
@@ -1639,7 +1665,9 @@ $("#DeleteBranchForm").submit(function(event){
 		//$('#waitModal').modal('hide');
 		if(response.indexOf('CINDERELLA_OK') > -1)
 		{
-			window.location = "index.php";
+			$('#DeleteBranchModal').modal('hide');	
+			$('#RequestDone').modal('show');	
+			//window.location = "index.php";
 		}
 		else{
 			$("#BranchDeleteMessage").html(response);
@@ -1760,7 +1788,8 @@ $("#EditBusinessInfo").submit(function(event){
 		//$('#waitModal').modal('hide');
 		if(response.indexOf('CINDERELLA_OK') > -1)
 		{
-			window.location = "index.php";
+			$('#RequestDone').modal('show');	
+			//window.location = "index.php";
 			//$("#EditBusinessInfoDiv").hide().fadeIn('fast'); 
 		}
 		else{
@@ -1818,7 +1847,9 @@ $("#DeleteBusinessForm").submit(function(event){
 		//$('#waitModal').modal('hide');
 		if(response.indexOf('CINDERELLA_OK') > -1)
 		{
-			window.location = "index.php";
+			$('#DeleteModal').modal('hide');
+			$('#RequestDone').modal('show');	
+			//window.location = "index.php";
 		}
 		else{
 			$("#Message").html(response);
