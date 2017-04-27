@@ -137,11 +137,12 @@ class Business {
 	
 	public function addBusiness($userId , $other) {		
 	
-		//$auth->throttle(self::THROTTLE_ACTION_REGISTER);
-
-		$email = $other['email'];
-
 		try {
+			$Throttler = new \Delight\Auth\Throttler($this->db);
+			$Throttler->throttle('add_business');
+			
+			$email = $other['email'];
+		
 			$this->db->startTransaction();
 			
 			if(array_key_exists('business_mobile',$other)){
@@ -238,6 +239,7 @@ class Business {
 		$this->db->commit();
 		return $business_id;
 	}
+	
 	public function updateBusiness($businessId , $fields = null, $updatedfields = array(), $approve = null) {	
 	
 		$found = false;
@@ -293,6 +295,9 @@ class Business {
 		}
 		
 		try {
+			$Throttler = new \Delight\Auth\Throttler($this->db);
+			$Throttler->throttle('update_business');
+		
 			$this->db->update(
 				'business',
 				[ 'approve' => $approve, 'business_name' => $fields['businessName'], 'category1' => $fields['category1']
@@ -348,6 +353,9 @@ class Business {
 	public function deleteBusiness($businessId) {	
 	
 		try {
+			$Throttler = new \Delight\Auth\Throttler($this->db);
+			$Throttler->throttle('delete_business');
+		
 			$this->db->startTransaction();
 			$this->db->delete(
 				'business',

@@ -41,6 +41,9 @@ class Branch {
 	
 	public function addBranch($BusinessId , $other) {
 		try{
+			$Throttler = new \Delight\Auth\Throttler($this->db);
+			$Throttler->throttle('add_branch');
+			
 			$this->db->startTransaction();
 			if(array_key_exists('address1',$other)){
 				$address1 = $other['address1'];
@@ -110,9 +113,7 @@ class Branch {
 	}
 	
 	public function updateBranch($BusinessId, $BranchId , $fields) {	
-	
-		$this->db->startTransaction();
-		
+
 		if(is_numeric($BranchId) == false){
 			return '1';
 		}
@@ -134,6 +135,10 @@ class Branch {
 		}
 		
 		try {
+			$Throttler = new \Delight\Auth\Throttler($this->db);
+			$Throttler->throttle('update_branch');
+			
+			$this->db->startTransaction();
 			
 			if($fields['main_branch'] == 'YES'){
 			$this->db->update(
@@ -163,7 +168,6 @@ class Branch {
 		}
 
 	}
-		
 		
 	public function getBranchesByBusinessId($id) {
 		try {
@@ -216,6 +220,8 @@ class Branch {
 			if(is_numeric($branchId) == false){
 				return '1';
 			}
+			$Throttler = new \Delight\Auth\Throttler($this->db);
+			$Throttler->throttle('delete_branch');
 			
 			$this->db->delete(
 				'branch',
