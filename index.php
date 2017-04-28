@@ -223,24 +223,20 @@ $isLoggedIn = $auth->isLoggedIn();
 		</div>
 	</div>
 	
-	<nav class="navbar sticky-top navbar-light" style="background-color:#E6E8EA; margin-top:20px">
+	<nav class="navbar sticky-top navbar-light hidden-md-down" style="background-color:#979799; margin-top:20px">
 
 		<div class="row">
 		
 		<div class="col-5">
 			
-				<a href="app/layout/AboutUs.php" style="color:#888A8D">About Us</a>
-				<span style="color:#888A8D">|</span>
-				<a href="app/layout/ContactUs.php" style="color:#888A8D">Contact Us</a>
-				<span style="color:#888A8D">|</span>
-				<a href="app/Search/" style="color:#888A8D">Search</a>
+				
 			
 		</div>
 		
 		<div class="col-5">
 		
-		<span style="color:#888A8D">© 2017 Cinderella  </span> 
-		<span style="color:#B0B1B2"  >(All Rights Reserved)</span> 
+		<span style="color:#E6E1F3">© 2017 Cinderella  </span> 
+		<span style="color:#CBCBD5"  >(All Rights Reserved)</span> 
 		</div>
 		
 		<div class="col-2 float-right">

@@ -64,38 +64,16 @@ But it can be accomplished. In fact, there are some companies out there with rem
 		</div>
 	</div>
 	</br>
-	<nav class="navbar sticky-top navbar-inverse bg-inverse">
-
-		<div class="row">
-		
-		<div class="col-5">
-			
-				<a href="AboutUs.php" >About Us</a>
-				<span class="text-muted">|</span>
-				<a href="../Search" >Search</a>
-			
-		</div>
-		
-		<div class="col-5">
-		
-		<span style="color:white">© 2017 Cinderella  </span> 
-		<span  class="text-muted">(All Rights Reserved)</span> 
-		</div>
-		
-		<div class="col-2 float-right">
-		<a href="https://www.facebook.com/Cinderellalk-379706339094765/" target="_blank" ><img src="../../assets/icons/facebook.png" style="width:30px; height:30px; margin: 0 auto" class="img-fluid d-block" alt="Image"></a>		
-		</div>
-		
-		</div>
-		
-	</nav>
+	
 	
 	<?php
 	if($isLoggedIn === false){
 		include('RegisterPannelSm.php');
 	}		
 	?>
-						
+		<?php
+	include('Footer.php');	
+	?>				
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="../../js/jquery-3.1.1.slim.min.js"></script>
     <script src="../../js/tether.min.js"></script>

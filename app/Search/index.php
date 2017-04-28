@@ -149,7 +149,7 @@ if (isset($_GET)) {
 						
 				<div class="row">
 				
-					<div class="col-lg-12" id="SearchArea">
+					<div class="col-12" id="SearchArea">
 					
 					</div>
 				</div>
@@ -188,31 +188,9 @@ if (isset($_GET)) {
 		</div>
 	</div>
 			
-	<div class="navbar sticky-top navbar-inverse bg-inverse " >
-
-		<div class="row">
-		
-		<div class="col-5">
-			
-				<a href="#" >About Us</a>
-				<span class="text-muted">|</span>
-				<a href="#" >Contact Us</a>
-			
-		</div>
-		
-		<div class="col-5">
-		
-		<span style="color:white">© 2017 Cinderella  </span> 
-		<span  class="text-muted">(All Rights Reserved)</span> 
-		</div>
-		
-		<div class="col-2 float-right">
-		<a href="#" ><img src="../../assets/icons/facebook.png" style="width:30px; height:30px; margin: 0 auto" class="img-fluid d-block" alt="Image"></a>		
-		</div>
-		
-		</div>
-		
-	</div>					
+	<?php
+	include('../layout/Footer.php');	
+	?>	
 
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="../../js/jquery-3.1.1.slim.min.js"></script>

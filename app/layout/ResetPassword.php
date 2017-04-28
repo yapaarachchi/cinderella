@@ -79,19 +79,9 @@ if (isset($_POST)) {
 	
   </head>
   <body>
-	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
-		<a class="navbar-brand" href="#"><b>Cinderella</b></a>
-		
-		<!-- Large Screens -->
-		<ul class="nav navbar-nav hidden-md-down">
-		  <li class="nav-item">
-			<a class="nav-link" href="#">About Us</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Contact Us</a>
-		  </li>
-		</ul>
-	</nav>
+	<?php
+	include('NavBar.php');	
+	?>
 
 	<div class="modal fade" id="waitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -221,7 +211,9 @@ if (isset($_POST)) {
 	</div>
 
 	</div>
-						
+		<?php
+	include('Footer.php');	
+	?>				
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="../../js/jquery-3.1.1.slim.min.js"></script>
     <script src="../../js/tether.min.js"></script>
