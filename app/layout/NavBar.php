@@ -66,7 +66,7 @@
 		?>
 			</ul>
 		</div>
-		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - 076 5537100</span>
+		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - <?php echo Config::$tp; ?></span>
 		<div class="navbar-toggler-right hidden-md-down"> <a class="btn btn-primary" href="../Search" role="button">Search</a>  </div>
 	</nav>
 

@@ -39,7 +39,7 @@ $isLoggedIn = $auth->isLoggedIn();
 	<title>Cinderella</title>
   </head>
   <body>
-	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
+	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md" >
 		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -101,7 +101,7 @@ $isLoggedIn = $auth->isLoggedIn();
 		?>
 			</ul>
 		</div>
-		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - 076 5537100</span>
+		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - <?php echo Config::$tp; ?></span>
 		
 		<div class="navbar-toggler-right hidden-md-down"> <a class="btn btn-primary" href="app/Search" role="button">Search</a>  </div>
 	</nav>

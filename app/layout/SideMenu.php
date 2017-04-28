@@ -8,12 +8,6 @@ $Category = new \Delight\Auth\Category($db);
 ?>
 
 <div class="list-group">
-<a href="app/Search/" style="font-size: 0.90rem; padding: 0.50rem;" class="list-group-item list-group-item-action" id="Search"><b>Search</b></a>
-				  
-</div>
-
-</br>
-<div class="list-group">
 <?php
 foreach($Category->getMainCategory() as $key => $value) {
 	?>
