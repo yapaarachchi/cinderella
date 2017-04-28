@@ -24,53 +24,7 @@ $isLoggedIn = $auth->isLoggedIn();
 	
 	<?php include('NavBar.php'); ?>
 	
-	<div class="modal fade" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			  </div>
-			  <div class="modal-body">
-				<div id="loginModalError" style="padding-bottom: 10px;">
-				</div>
-				<form id="login"  accept-charset="utf-8">
-				
-				<div class="form-group">
-					<label class="form-control-label" >Username</label>
-					<input class="form-control" id="loginUsername" name="loginUsername"  placeholder="youremail@example.com" type="email" aria-describedby="emailHelp" />
-					<div id="loginUsername_validate" class="form-control-feedback"></div>
-				</div>
-				
-				<div class="form-group">
-					<label class="form-control-label" >Password</label>
-					<input class="form-control" type="password"  id="loginPassword" name="loginPassword" placeholder="Password"/>
-					<div id="loginPassword_validate" class="form-control-feedback"></div>
-				</div>
-				
-				<input type="hidden" name="action" value="login"/>
-				
-				<div class="form-check">
-					<label class="form-check-label">
-					<input id="loginRememberme" name="loginRememberme" class="form-check-input" type="checkbox" value="1">
-					Remember me
-					</label>
-				</div>
-				
-			  </div>
-			  <div class="modal-footer">
-				<a href="app/layout/ForgotPassword.php">Forgot Password ?</a>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-				<button type="submit" class="btn btn-primary">Sign In</button>
-				</form>
-			  </div>
-			</div>
-		</div>
-	</div>
-
-
+	
 	<!-- Main Container -->
 	<div class="container-fluid">
 		<!-- Main Row -->
@@ -152,6 +106,14 @@ But it can be accomplished. In fact, there are some companies out there with rem
 	<script src="../../js/jquery.validate.min.js"></script>
 	<script src="../../js/additional-methods.min.js"></script>
 
-
+	<script src="../../js/cinderella.js"></script>
+<script>
+$(document).ready(function() {	
+loginModalValidate('loginGeneral');
+loginModalSubmit('loginGeneral', 'loginModalGeneralError');
+loginModalOnClose('LogInModalGeneral', 'loginGeneral', 'loginModalGeneralError');
+signOut('signOut');
+});
+</script>
 </body>
 </html>

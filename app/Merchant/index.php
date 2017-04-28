@@ -108,34 +108,7 @@ if(!$isLoggedIn){
 	
   </head>
   <body>
-	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
-		<a class="navbar-brand" href="../../">
-		<img src="../../assets/icons/home.svg" width="30" height="30" alt="">
-		<b>Cinderella</b>
-		</a>
-		
-		<!-- Large Screens -->
-		<ul class="nav navbar-nav hidden-md-down">
-		  <li class="nav-item">
-			<a class="nav-link" href="#">About Us</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Contact Us</a>
-		  </li>
-		</ul>
-		
-		<?php
-			if($isLoggedIn === true){				
-		?>
-<!-- add singn out here -->
-		<?php
-			}
-		?>
-		<div id="message-alert">
-							
-						</div>
-	</nav>
-
+	<?php include('../layout/NavBar.php'); ?>
 	
 	<div class="modal fade" id="waitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -246,7 +219,6 @@ if(!$isLoggedIn){
     <script src="../../js/jquery-3.1.1.slim.min.js"></script>
     <script src="../../js/tether.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
 	
 	<script src="../../js/jquery.cropit.js"></script>
 	
@@ -254,11 +226,15 @@ if(!$isLoggedIn){
 	<script src="../../js/additional-methods.min.js"></script>
 
 	<script src="../../js/notify.js"></script>
-	
+	<script src="../../js/cinderella.js"></script>
 	
 <script>
 
 $(document).ready(function() {	
+loginModalValidate('loginGeneral');
+loginModalSubmit('loginGeneral', 'loginModalGeneralError');
+loginModalOnClose('LogInModalGeneral', 'loginGeneral', 'loginModalGeneralError');
+signOut('signOut');
 
 var request;
 $('#Profile').click( function(e) {

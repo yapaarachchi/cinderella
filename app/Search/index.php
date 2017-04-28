@@ -50,7 +50,7 @@ if (isset($_GET)) {
 			if($isLoggedIn === true){				
 			?>
 			<li class="nav-item">
-			<a class="nav-link" href="#"><u>Sign Out</u></a>
+			<a class="nav-link" href="#" id="signOut"><u>Sign Out</u></a>
 		  </li>
 			<?php
 				}
@@ -221,8 +221,11 @@ if (isset($_GET)) {
 
 	<script src="../../js/notify.js"></script>
 	
+	<script src="../../js/cinderella.js"></script>
+	
 <script>
 
+signOut('signOut');
 
 $(document).ready(function() {	
 

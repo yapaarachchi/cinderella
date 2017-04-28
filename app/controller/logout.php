@@ -1,27 +1,30 @@
 <?php
-require "../LoginController.php";
+require "../Config.php";
+require '../../vendor/autoload.php';
 
-$login = new LoginControl;
 $db = Config::initDb();
-$auth = $login->initAuth($db);
-$isLoggedIn = $login->isLoggedIn($auth);
-if($isLoggedIn){
+$auth = new \Delight\Auth\Auth($db);
+$isLoggedIn = $auth->isLoggedIn();
+
+if($isLoggedIn != false){
 	header('Location: ../../index.php');
 }
 
-
-if (isset($_POST)) {
-		if (isset($_POST['action'])) {
-			if ($_POST['action'] === 'logout') {
-				try {
-					$auth->logout();
+				if (isset($_POST)) {
+					if (isset($_POST['action'])) {
+						if ($_POST['action'] === 'signout') {
+							try{
+								$auth->logout();
+							}
+							catch(Exception $e){
+								
+							}
+							echo "CINDERELLA_OK";
+							return;
+						}
+						else{
+							
+					}
 				}
-				catch (Exception  $e) {
-					echo 'Unexpected Error Occurred ! Try again.';
-					return;
-				}
-			}
-		}
 }
-
 ?>

@@ -101,7 +101,9 @@ $isLoggedIn = $auth->isLoggedIn();
 		?>
 			</ul>
 		</div>
-		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - 071 5104647</span>
+		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - 076 5537100</span>
+		
+		<div class="navbar-toggler-right hidden-md-down"> <a class="btn btn-primary" href="app/Search" role="button">Search</a>  </div>
 	</nav>
 
 	
@@ -429,11 +431,6 @@ $("#login").submit(function(event){
 		
     });
 
-    // Callback handler that will be called on failure
-    request.fail(function (jqXHR, textStatus, errorThrown){
-		$('#loginModal').modal('show');
-		$("#loginModalError").html(errorThrown);
-    });
 
     // Callback handler that will be called regardless
     // if the request failed or succeeded

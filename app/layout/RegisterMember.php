@@ -5,6 +5,7 @@ require '../../vendor/autoload.php';
 
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
+$isLoggedIn = $auth->isLoggedIn();
 if($auth->isLoggedIn()){
 	header('Location: ../../index.php');
 }
@@ -122,35 +123,7 @@ if (isset($_POST)) {
 	
   </head>
   <body>
-	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
-		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<a class="navbar-brand" href="#"><b>Cinderella</b></a>
-		
-		<!-- Large Screens -->
-		<ul class="nav navbar-nav hidden-md-down">
-		  <li class="nav-item">
-			<a class="nav-link" href="#">About Us</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Contact Us</a>
-		  </li>
-		</ul>
-		
-		<!-- Toggle - Small Screen -->
-		<div class="collapse navbar-toggleable-md" id="navbarNavDropdown">
-			<ul class="nav navbar-nav hidden-lg-up">
-			  <li class="nav-item">
-				<a class="nav-link" href="#">About Us<span class="sr-only">(current)</span></a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="#">Contact Us</a>
-			  </li>
-			</ul>
-		</div>
-	</nav>
-
+	<?php include('NavBar.php'); ?>
 	<div class="modal fade" id="waitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -367,11 +340,15 @@ if (isset($_POST)) {
 	<script src="../../js/jquery.validate.min.js"></script>
 	<script src="../../js/additional-methods.min.js"></script>
 	
-	
+	<script src="../../js/cinderella.js"></script>
 	
  <script>
 
 $(document).ready(function() {	
+loginModalValidate('loginGeneral');
+loginModalSubmit('loginGeneral', 'loginModalGeneralError');
+loginModalOnClose('LogInModalGeneral', 'loginGeneral', 'loginModalGeneralError');
+signOut('signOut');
 
 $('#registerAsMember').validate({ // initialize the plugin
         rules: {

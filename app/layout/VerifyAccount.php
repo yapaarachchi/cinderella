@@ -12,8 +12,8 @@ require '../../vendor/autoload.php';
 
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
-
-if($auth->isLoggedIn()){
+$isLoggedIn = $auth->isLoggedIn();
+if($isLoggedIn){
 	header('Location: ../../index.php');
 }
 
@@ -134,66 +134,7 @@ if (isset($_POST)) {
 	
   </head>
   <body>
-	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
-		<a class="navbar-brand" href="#"><b>Cinderella</b></a>
-		
-		<!-- Large Screens -->
-		<ul class="nav navbar-nav hidden-md-down">
-		  <li class="nav-item">
-			<a class="nav-link" href="#">About Us</a>
-		  </li>
-		  <li class="nav-item">
-			<a class="nav-link" href="#">Contact Us</a>
-		  </li>
-		</ul>
-	</nav>
-
-
-	<div class="modal fade" id="LogInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			  </div>
-			  <div class="modal-body">
-				<div id="loginModalError" style="padding-bottom: 10px;">
-				</div>
-				<form id="login"  accept-charset="utf-8">
-				
-				<div class="form-group">
-					<label class="form-control-label" >Username</label>
-					<input class="form-control" id="loginUsername" name="loginUsername"  placeholder="youremail@example.com" type="email" aria-describedby="emailHelp" />
-					<div id="loginUsername_validate" class="form-control-feedback"></div>
-				</div>
-				
-				<div class="form-group">
-					<label class="form-control-label" >Password</label>
-					<input class="form-control" type="password"  id="loginPassword" name="loginPassword" placeholder="Password"/>
-					<div id="loginPassword_validate" class="form-control-feedback"></div>
-				</div>
-				
-				<input type="hidden" name="action" value="login"/>
-				
-				<div class="form-check">
-					<label class="form-check-label">
-					<input id="loginRememberme" name="loginRememberme" class="form-check-input" type="checkbox" value="1">
-					Remember me
-					</label>
-				</div>
-				
-			  </div>
-			  <div class="modal-footer">
-				<a href="ForgotPassword.php">Forgot Password ?</a>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-				<button type="submit" class="btn btn-primary">Sign In</button>
-				</form>
-			  </div>
-			</div>
-		</div>
-	</div>
+	<?php include('NavBar.php'); ?>
 
 
 	<div class="modal fade" id="waitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -297,134 +238,17 @@ if (isset($_POST)) {
 
 	<script src="../../js/jquery.validate.min.js"></script>
 	<script src="../../js/additional-methods.min.js"></script>
+	
+	<script src="../../js/cinderella.js"></script>
+	
 <script>
   
 $(document).ready(function() {	
 
-$('#LogInModal').on('hidden.bs.modal', function (e) {
-  $("#loginModalError").html('');
-})
-
- $('#login').validate({ // initialize the plugin
-        rules: {
-            loginUsername: {
-                required: true,
-                email: true,
-				remote: {
-					url: "../controller/Validate.php",
-					type: "post",
-					data: {
-						  action: function() {
-							return $( "#action" ).val();
-						  }
-						}
-				}
-            },	
-			loginPassword: {
-                required: true				
-            }		
-        },
-		 messages: {
-                loginUsername: {
-                    required: "Please Enter Email!",
-                    email: "This is not a valid email!",
-                    remote: "Email does not exists or This is not a valid email address"
-                },
-				 loginPassword: {
-                    required: "Please Enter Password!"
-                }
-            },
-			errorPlacement: function(error, element) {
-				var name = $(element).attr("name");
-				error.appendTo($("#" + name + "_validate"));
-			},
-		highlight: function(element) {
-			jQuery(element).closest('.form-group').addClass('has-danger').removeClass('has-success');
-			jQuery(element).closest('.form-control').addClass('form-control-danger').removeClass('form-control-success');
-    },	
-	success: function(element) {
-		jQuery(element).closest('.form-group').addClass('has-success').removeClass('has-danger');
-			jQuery(element).closest('.form-control').addClass('form-control-success').removeClass('form-control-danger');
-    },
-	onkeyup: function(element) {$(element).valid()},
-	unhighlight: function(element) {
-		jQuery(element).closest('.form-group').addClass('has-success').removeClass('has-danger');
-			jQuery(element).closest('.form-control').addClass('form-control-success').removeClass('form-control-danger');
-    },
-	
-    });
-
- 
-	 // Variable to hold request
-var request;
-
-$("#login").submit(function(event){
-
-	if (!$(this).valid()) {  
-        return false;
-    }
-			
-    // Prevent default posting of form - put here to work in case of errors
-    event.preventDefault();
-
-    // Abort any pending request
-    if (request) {
-        request.abort();
-    }
-    // setup some local variables
-    var $form = $(this)	;
-
-    // Let's select and cache all the fields
-    var $inputs = $form.find("input, select, button, textarea");
-
-    // Serialize the data in the form
-    var serializedData = $form.serialize();
-
-    // Let's disable the inputs for the duration of the Ajax request.
-    // Note: we disable elements AFTER the form data has been serialized.
-    // Disabled form elements will not be serialized.
-    $inputs.prop("disabled", true);
-
-    // Fire off the request to /form.php
-    request = $.ajax({
-        url: "../controller/Login.php",
-        type: "post",
-        data: serializedData
-    });
-
-    // Callback handler that will be called on success
-    request.done(function (response, textStatus, jqXHR){
-        // Log a message to the console
-        console.log("Logged in "+ response);
-		
-		if(response.indexOf('CINDERELLA_OK') > -1)
-		{
-			window.location = "../../index.php";
-		}
-		else{
-			$('#loginModal').modal('show');
-			$("#loginModalError").html(response);
-		}
-		
-		
-    });
-
-    // Callback handler that will be called on failure
-    request.fail(function (jqXHR, textStatus, errorThrown){
-		$('#loginModal').modal('show');
-		$("#loginModalError").html(errorThrown);
-    });
-
-    // Callback handler that will be called regardless
-    // if the request failed or succeeded
-    request.always(function () {
-        // Reenable the inputs
-        $inputs.prop("disabled", false);
-    });
-
-});
-
-
+loginModalValidate('loginGeneral');
+loginModalSubmit('loginGeneral', 'loginModalGeneralError');
+loginModalOnClose('LogInModalGeneral', 'loginGeneral', 'loginModalGeneralError');
+signOut('signOut');
 
   $('#resendForm').validate({ // initialize the plugin
   
