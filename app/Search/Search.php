@@ -5,28 +5,28 @@ require '../../vendor/autoload.php';
 $db = Config::initDb();
 $business = new \Delight\Auth\Business($db);
 $Media = new \Delight\Auth\Media($db);
-$search_text = null;
-$district = null;
-$category1 = null;
-$category2 = null;
+$search_text = '';
+$district = '';
+$category1 = '';
+$category2 = '';
 $text;
 if (isset($_POST)) {
 	if (isset($_POST['action'])) {
 		
 		if($_POST['action'] === 'search'){
-			if (isset($_POST['searchText']) and $_POST['searchText'] !== ''){
+			if (isset($_POST['searchText']) and $_POST['searchText'] != ''){
 				$search_text = $_POST['searchText'];
 			}
 			
-			if (isset($_POST['category1']) and $_POST['category1'] !== ''){
+			if (isset($_POST['category1']) and $_POST['category1'] != ''){
 				$category1 = $_POST['category1'];
 			}
 			
-			if (isset($_POST['category2']) and $_POST['category2'] !== ''){
+			if (isset($_POST['category2']) and $_POST['category2'] != ''){
 				$category2 = $_POST['category2'];
 			}
 			
-			if (isset($_POST['district']) and $_POST['district'] !== ''){
+			if (isset($_POST['district']) and $_POST['district'] != ''){
 				$district = $_POST['district'];
 			}
 			
@@ -68,7 +68,7 @@ if (isset($_POST)) {
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="../Merchant/Page/index.php?business='.$value['business_id'].'" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="../Page/index.php?business='.$value['business_id'].'" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>

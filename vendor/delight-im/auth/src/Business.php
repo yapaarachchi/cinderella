@@ -111,17 +111,25 @@ class Business {
 		}
 	}
 	
-	public function IsBusinessByIdExist($bid) {
+	public function IsBusinessExistById($bid, $approve = false) {
 		$id = 0;
+		
 		try {
 			if(is_numeric($bid) ){
 				$id = $bid;
 			}
 			$requestedColumns = 'id';
-			
-			$count = $this->db->select(
+			if($approve == true){
+				$count = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id.' AND approve = "1"' 
+				);
+			}
+			else{
+				$count = $this->db->select(
 				'SELECT ' . $requestedColumns . ' FROM business WHERE id = '.$id 
-			);
+				);
+			}
+			
 		}
 		catch (Error $e) {
 			throw new DatabaseError();
@@ -400,11 +408,11 @@ class Business {
 			
 			$where = "";
 			
-			if($category1 !== null ){
+			if($category1 != "" ){
 				$where = " category1 = ".$category1;			
 			}
 			
-			if($category2 != null ){
+			if($category2 != "" ){
 				if($where != ""){
 					$where = $where." AND category2 = ".$category2	;	
 				}
@@ -414,7 +422,7 @@ class Business {
 						
 			}
 			
-			if($district !== null ){
+			if($district !== "" ){
 				if($where != ""){
 					$where = $where." AND district = '".$district."'";	
 				}
@@ -424,22 +432,30 @@ class Business {
 							
 			}
 			
-			if($text !== null){
+			if($text != ""){
 				if($where != ""){
 					$where = $where." AND (business_name like '%".$text."%' OR category1 like '%".$text."%' OR category2 like '%".$text."%' OR business_description like '%".$text."%' OR branch_address1 like '%".$text."%' OR branch_address2 like '%".$text."%' OR branch_address3 like '%".$text."%' OR district like '%".$text."%')";	
 				}
 				else{
-					$where = " business_name like '%".$text."%' OR category1 like '%".$text."%' OR category2 like '%".$text."%' OR business_description like '%".$text."%' OR branch_address1 like '%".$text."%' OR branch_address2 like '%".$text."%' OR branch_address3 like '%".$text."%' OR district like '%".$text."%'";	
+					$where = " (business_name like '%".$text."%' OR category1 like '%".$text."%' OR category2 like '%".$text."%' OR business_description like '%".$text."%' OR branch_address1 like '%".$text."%' OR branch_address2 like '%".$text."%' OR branch_address3 like '%".$text."%' OR district like '%".$text."%')";	
 				}			
 			}
 			
-			if($where == null or $where == ""){
+			if($where == ""){
 				$where = "1=1";
 			}
 			
-			$result = $this->db->select(
+			if($district != ""){
+				$result = $this->db->select(
 				'SELECT ' . $requestedColumns . ' FROM business_branch WHERE '.$where.' AND approve = "1" ORDER BY business_id DESC;'
-			);
+				);
+			}
+			else{
+				$result = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM business_branch WHERE '.$where.' AND main_branch = "YES" AND approve = "1" ORDER BY business_id DESC;'
+				);
+			}
+			
 			
 		}
 		catch (Error $e) {

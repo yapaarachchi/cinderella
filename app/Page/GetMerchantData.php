@@ -1,7 +1,7 @@
 <?php
-require "../../Config.php";
-require "../../ErrorCode.php";
-require '../../../vendor/autoload.php';
+require "../Config.php";
+require "../ErrorCode.php";
+require '../../vendor/autoload.php';
 
 
 $db = Config::initDb();
@@ -63,28 +63,28 @@ $branch_address3= null;
 							
 							
 							<div class="card" style="min-height: 300px; width: 100%;">
-							  <img class="card-img-top  hidden-md-up" src="../../../assets/ads/8.jpg " style="height: 150px; width: 100%;" alt="Card image cap">
+							  <img class="card-img-top  hidden-md-up" src="../../assets/ads/8.jpg " style="height: 150px; width: 100%;" alt="Card image cap">
 							  <div class="card-block">
 								<h4 class="card-title">
 									'.$business_name.'
 								</h4>
 								</br>
 								<h6 class="card-subtitle mb-2 text-muted">
-									<address><img  src="../../../assets/icons/location.png" alt="Card image cap"> </img>
+									<address><img  src="../../assets/icons/location.png" alt="Card image cap"> </img>
 									'.$branch_address1.','.$branch_address2.','.$branch_address3.'
 									</address>
 								</h6>
 								<p class="card-text text-muted">
-									<img  src="../../../assets/icons/mail.png" alt="Card image cap"> </img>
+									<img  src="../../assets/icons/mail.png" alt="Card image cap"> </img>
 									'.$email.'
 								</p>
 								<p class="card-text text-muted">
-									<img  src="../../../assets/icons/phone.png" alt="Card image cap"> </img>
+									<img  src="../../assets/icons/phone.png" alt="Card image cap"> </img>
 									'.$mobile.' '.$mobile.'
 								</p>
 								<a href="http://'.$web.'" target="_blank" class="card-link"><img  src="../../../assets/icons/web.png" alt="Card image cap"> </img>'.$web.'</a>
 								<p class="card-text text-muted">
-									<img  src="../../../assets/icons/person.png" alt="Card image cap"> </img>
+									<img  src="../../assets/icons/person.png" alt="Card image cap"> </img>
 									'.$contact_person.'
 								</p>
 							  </div>
@@ -158,28 +158,28 @@ $branch_address3= null;
 											
 											<div class="col-xs-12 text-muted">
 											<address>
-											<img  src="../../../assets/icons/location.png" alt="Card image cap">
+											<img  src="../../assets/icons/location.png" alt="Card image cap">
 											'.$value['branch_address1'].', '.$value['branch_address2'].','.$value['branch_address3'].'</address>
 											</div>
 											</div>
 											
 											<div class="row">
 											<div class="col-xs-12 text-muted">
-											<img  src="../../../assets/icons/mail.png" alt="Card image cap">
+											<img  src="../../assets/icons/mail.png" alt="Card image cap">
 											'.$value['branch_email'].'
 											</div>
 											</div>
 											
 											<div class="row">
 											<div class="col-xs-12 text-muted">
-											<img  src="../../../assets/icons/person.png" alt="Card image cap">
+											<img  src="../../assets/icons/person.png" alt="Card image cap">
 											'.$value['contact_person'].'
 											</div>
 											</div>
 											
 											<div class="row">
 											<div class="col-xs-12 text-muted">
-											<img  src="../../../assets/icons/phone.png" alt="Card image cap">
+											<img  src="../../assets/icons/phone.png" alt="Card image cap">
 											'.$value['branch_mobile'].' '.$value['branch_phone'].'
 											</div>
 											</div>

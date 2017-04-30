@@ -34,7 +34,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -69,7 +69,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -104,7 +104,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -139,7 +139,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -174,7 +174,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -209,7 +209,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -243,7 +243,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -277,7 +277,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -311,7 +311,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -345,7 +345,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -379,7 +379,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>
@@ -413,7 +413,7 @@
 					  </div>
 					  
 							<div class="card-footer text-muted text-center">
-								<a href="app/Merchant/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+								<a href="app/Page/index.php?business=19" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
 							</div>
 							
 					</div>

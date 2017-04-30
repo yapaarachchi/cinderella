@@ -45,35 +45,6 @@ class Media {
 		
 	}
 
-
-	public function getProfileImageDataByBusiness($bid) {
-		$id = 0;
-		try {
-			if(is_numeric($bid) ){
-				$id = $bid;
-			}
-			$requestedColumns = 'filename, location, mime_type';
-			
-			$media = $this->db->select(
-				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "PROFILE" AND type = "IMAGE" AND business_id = '.$id 
-			);
-		}
-		catch (Error $e) {
-			throw new DatabaseError();
-		}
-		catch (Exception $e) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-
-		if (empty($id)) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-		else {
-			return $media;
-		}
-	}
 	public function getProfileImage($bid, $approve) {
 		$id = 0;
 		$i=0;
@@ -119,35 +90,7 @@ class Media {
 			
 		}
 	}
-	
-	public function getBannerImagesByBusiness($bid) {
-		$id = 0;
-		try {
-			if(is_numeric($bid) ){
-				$id = $bid;
-			}
-			$requestedColumns = 'filename, location, mime_type';
-			
-			$media = $this->db->select(
-				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "BANNER" AND type = "IMAGE" AND business_id = '.$id 
-			);
-		}
-		catch (Error $e) {
-			throw new DatabaseError();
-		}
-		catch (Exception $e) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
 
-		if (empty($id)) {
-			return 'profile.png';
-		}
-		else {
-			return $media;
-		}
-	}
-	
 	public function getBannerImage($bid,$index,$approve, $refresh = null) {
 		$id = 0;
 		$i=0;
@@ -197,35 +140,6 @@ class Media {
 				
 			}
 			
-		}
-	}
-
-	public function getGalleryImagesByBusiness($bid) {
-		$id = 0;
-		try {
-			if(is_numeric($bid) ){
-				$id = $bid;
-			}
-			$requestedColumns = 'filename, location, mime_type';
-			
-			$media = $this->db->select(
-				'SELECT ' . $requestedColumns . ' FROM media WHERE category = "GALLERY" AND type = "IMAGE" AND business_id = '.$id 
-			);
-		}
-		catch (Error $e) {
-			throw new DatabaseError();
-		}
-		catch (Exception $e) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-
-		if (empty($id)) {
-			$value['value'] = 'NULL';
-			return $value;
-		}
-		else {
-			return $media;
 		}
 	}
 
@@ -359,7 +273,6 @@ class Media {
 		}	
 		
 	}
-
 
 	public function getMediaStatusMessage($bid,$category,$type, $filename = null) {
 		$id = 0;
