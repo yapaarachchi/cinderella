@@ -318,5 +318,74 @@ class Media {
 		
 	}
 
+	public function getBannerImagesCount($bid, $approve = false) {
+		$id = 0;
+		$count=0;
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			
+			if($approve === true){
+				$media = $this->db->selectRow(
+				'SELECT count(id) FROM media WHERE approve = "1" AND category = "BANNER" AND type = "IMAGE" AND business_id = '.$id 
+				);
+			}
+			else{
+				$media = $this->db->selectRow(
+				'SELECT count(id) FROM media WHERE approve = "0" AND category = "BANNER" AND type = "IMAGE" AND business_id = '.$id 
+				);
+			}
+			
+			if (is_array($media) || is_object($media))
+			{
+				$count = $media['count(id)'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return 0;
+		}
+
+		return $count;
+	}
+
+	public function getDefaultBannerImage() {
+		return 'banner.png';
+	}
+
+	public function getBannerImages($bid, $approve, $refresh = null) {
+		$id = 0;
+		$i=0;
+		$media_image = '';
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+			$requestedColumns = 'filename';
+			
+			if($approve === true){
+				$media = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM media WHERE approve = "1" AND category = "BANNER" AND type = "IMAGE" AND business_id = '.$id 
+			);
+			}
+			else{
+				$media = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM media WHERE approve = "0" AND category = "BANNER" AND type = "IMAGE" AND business_id = '.$id 
+			);
+			}
+			
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return 'banner.png';
+		}
+
+		return $media;
+	}
 
 }

@@ -9,6 +9,7 @@ $Business = new \Delight\Auth\Business($db);
 $Branch = new \Delight\Auth\Branch($db);
 $Category = new \Delight\Auth\Category($db);
 $auth = new \Delight\Auth\Auth($db);
+$Media = new \Delight\Auth\Media($db);
 $isLoggedIn = $auth->isLoggedIn();
 $business_id;
 $business_details;
@@ -22,7 +23,7 @@ $contact_person;
 $web;
 $description;
 $user_id;
-
+$text = '';
 $branch_address1= null;
 $branch_address2= null;
 $branch_address3= null;
@@ -59,11 +60,13 @@ $branch_address3= null;
 								}
 							}
 							
+							$MediaProfile = $Media->getProfileImage($business_id, true);
+							
 							echo '
 							
 							
 							<div class="card" style="min-height: 300px; width: 100%;">
-							  <img class="card-img-top  hidden-md-up" src="../../assets/ads/8.jpg " style="height: 150px; width: 100%;" alt="Card image cap">
+							  <img class="card-img-top  hidden-md-up" src="../merchant/images/profile/'.$MediaProfile.'" style="height: 100%; width: 100%;" alt="Card image cap">
 							  <div class="card-block">
 								<h4 class="card-title">
 									'.$business_name.'
@@ -82,7 +85,7 @@ $branch_address3= null;
 									<img  src="../../assets/icons/phone.png" alt="Card image cap"> </img>
 									'.$mobile.' '.$mobile.'
 								</p>
-								<a href="http://'.$web.'" target="_blank" class="card-link"><img  src="../../../assets/icons/web.png" alt="Card image cap"> </img>'.$web.'</a>
+								<a href="http://'.$web.'" target="_blank" class="card-link"><img  src="../../assets/icons/web.png" alt="Card image cap"> </img>'.$web.'</a>
 								<p class="card-text text-muted">
 									<img  src="../../assets/icons/person.png" alt="Card image cap"> </img>
 									'.$contact_person.'
@@ -187,6 +190,84 @@ $branch_address3= null;
 										</br>										
 									';
 								}
+							}
+							return;
+						}
+						elseif ($_POST['action'] === 'banner') {
+							
+							$business_id = $_POST['business_id'] ;
+							$MediaCount = $Media->getBannerImagesCount($business_id, true);
+							if($MediaCount == 0){
+								echo '
+									<div id="MerchantPageBanner" class="carousel slide" data-ride="carousel">
+									  <ol class="carousel-indicators">
+										<li data-target="#MerchantPageBanner" data-slide-to="0" class="active"></li>
+									  </ol>
+									  <div class="carousel-inner" role="listbox">
+										<div class="carousel-item active">
+										  <img src="../Merchant/images/banner/'.$Media->getDefaultBannerImage().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
+										</div>
+									  </div>
+									</div>
+								
+								';
+							}
+							else{
+								$MediaBanners = $Media->getBannerImages($business_id, true);
+								
+								$text = '<div id="MerchantPageBanner" class="carousel slide" data-ride="carousel" data-interval="2000">';
+								$text = $text . '<ol class="carousel-indicators">';
+								if (is_array($MediaBanners) || is_object($MediaBanners))
+								{
+									$i = 0;
+									foreach($MediaBanners as $key => $value) {
+										if($i == 0){
+											$text = $text . '<li data-target="#MerchantPageBanner" data-slide-to="0" class="active"></li>';
+										}
+										else{
+											$text = $text . '<li data-target="#MerchantPageBanner" data-slide-to="'.$i.'"></li>';
+										}
+										
+										$i = $i + 1;
+									}
+								}
+								$text = $text . '</ol>';
+								
+								$text = $text . '<div class="carousel-inner" role="listbox">';
+								if (is_array($MediaBanners) || is_object($MediaBanners))
+								{
+									$i = 0;
+									foreach($MediaBanners as $key => $value) {										
+										if($i == 0){
+											$text = $text . '
+											<div class="carousel-item active">
+											  <img src="../Merchant/images/banner/'.$value['filename'].'?ver='.time().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
+											</div>
+											';
+										}
+										else{
+											$text = $text . '
+											<div class="carousel-item">
+											  <img src="../Merchant/images/banner/'.$value['filename'].'?ver='.time().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
+											</div>
+											';
+										}
+										
+										$i = $i + 1;
+									}
+								}
+								$text = $text . '
+									<a class="carousel-control-prev" href="#MerchantPageBanner" role="button" data-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="carousel-control-next" href="#MerchantPageBanner" role="button" data-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</a>
+								';
+								$text = $text . '</div>';
+								echo $text;
 							}
 							return;
 						}
