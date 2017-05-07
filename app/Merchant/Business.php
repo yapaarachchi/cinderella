@@ -58,6 +58,7 @@ if (isset($_GET)) {
 $text =
 '
 <div id="ApproveMessage"> '.$Business->getBusinessStatusMessage($business_id).'</div>
+<a target="_blank" href="../Page/index.php?business='.$business_id.'" class="btn btn-primary" >View Business Page</a>
 <a href="#" class="btn btn-danger" id="deleteConfirmation" data-toggle="modal" data-target="#DeleteModal">Delete '.$business_name.'</a>
 </br></br>
 <div class="card">

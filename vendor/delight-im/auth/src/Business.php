@@ -41,7 +41,7 @@ class Business {
 	
 	
 	//Business related data handling
-	public function getBusinessByUserId($buser_id) {
+	public function getBusinessByUserId($buser_id, $approve = false) {
 		$id = 0;
 		try {
 			if(is_numeric($buser_id) ){
@@ -49,9 +49,17 @@ class Business {
 			}
 			$requestedColumns = 'id, email, category1, category2, contact_person, business_mobile, business_phone, business_name, business_email, website, more_info, description';
 			
-			$business = $this->db->select(
-				'SELECT ' . $requestedColumns . ' FROM business WHERE user_id = '.$user_id 
+			if($approve === true){
+				$business = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM business WHERE user_id = '.$user_id.' AND approve = "1"'
 			);
+			}
+			else{
+				$business = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM business WHERE user_id = '.$user_id
+			);
+			}
+			
 		}
 		catch (Error $e) {
 			throw new DatabaseError();
@@ -412,7 +420,7 @@ class Business {
 				$where = " category1 = ".$category1;			
 			}
 			
-			if($category2 != "" ){
+			if($category2 != "" and $category1 != "" ){
 				if($where != ""){
 					$where = $where." AND category2 = ".$category2	;	
 				}
@@ -545,5 +553,45 @@ class Business {
 		else{
 			return '';
 		}
-	}			
+	}
+
+	public function getBusinessesCount($id, $approve = false, $business_id = 0) {
+		$count = 0;
+		$user_id;
+		$where = '';
+		if(is_numeric($id) ){
+				$user_id = $id;
+			}
+		try {	
+		if($business_id != 0){			
+			$where = ' AND id != '.$business_id;
+		}		
+			if($approve === false){
+				$business = $this->db->selectRow(
+				'SELECT count(id) FROM business WHERE user_id ='.$user_id.$where
+				);
+			}
+			else{
+				$business = $this->db->selectRow(
+				'SELECT count(id) FROM business WHERE user_id ='.$user_id.' AND approve = "1"'.$where
+				);
+			}
+			
+			
+			if (is_array($business) || is_object($business))
+			{
+				$count = $business['count(id)'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if (empty($id)) {
+			return 0;
+		}
+		else {
+			return $count;
+		}
+	}	
 }

@@ -67,7 +67,7 @@
 			</ul>
 		</div>
 		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - <?php echo Config::$tp; ?></span>
-		<div class="navbar-toggler-right hidden-md-down"> <a class="btn btn-primary" href="../Search" role="button">Search</a>  </div>
+		<div class="navbar-toggler-right hidden-md-down"> <a class="btn btn-primary-unicorn btn-md btn-block" href="../Search" role="button">Search</a>  </div>
 	</nav>
 
 	<div class="modal fade" id="LogInModalGeneral" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -5,9 +5,8 @@
 	 <div class="container-fluid">
 		 <div class="row">
 		<div class="col-12">
-			<a id="searcht-button" class="btn btn-primary-unicorn btn-md btn-block" href="app/Search/">Search</a>
+			<a id="searcht-button" class="btn btn-primary-unicorn btn-md btn-block" href="../Search/">Search</a>
 		</div>
 		</div>	 
 	 </div>
-	 
 </nav>

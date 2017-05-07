@@ -22,6 +22,7 @@ if(!$isLoggedIn){
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../css/cinderella.css">
+	<title>Cinderella</title>
 	<style>
 		.active-links {
 			position:absolute;
@@ -214,7 +215,9 @@ if(!$isLoggedIn){
 		
 		</div>
 	</div>
-					
+	<?php
+	include('../layout/Footer.php');	
+	?>					
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="../../js/jquery-3.1.1.slim.min.js"></script>
     <script src="../../js/tether.min.js"></script>

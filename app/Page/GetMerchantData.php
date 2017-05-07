@@ -30,7 +30,125 @@ $branch_address3= null;
 
 				if (isset($_POST)) {
 					if (isset($_POST['action'])) {
-						if ($_POST['action'] === 'info') {
+						if ($_POST['action'] === 'header') {
+							
+							$business_id = $_POST['business_id'] ;
+							$Businesses = $Business->getBusinessById($business_id );
+							if (is_array($Businesses) || is_object($Businesses))
+							{
+								foreach($Businesses as $key => $value) {
+									$user_id = $value['user_id'];
+									$business_name = $value['business_name'];
+									$category1 = $value['category1'];
+									$category2 = $value['category2'];
+									$email = $value['business_email'];
+									$phone = $value['business_phone'];
+									$mobile = $value['business_mobile'];
+									$contact_person = $value['contact_person'];
+									$web = $value['website'];
+									$description = $value['description'];
+								}
+							}
+							
+							$Branches = $Branch->getMainBranchByBusinessId($business_id );
+							if (is_array($Branches) || is_object($Branches))
+							{
+								foreach($Branches as $key => $value) {
+									$branch_address1 = $value['branch_address1'];
+									$branch_address2 = $value['branch_address2'];
+									$branch_address3 = $value['branch_address3'];
+								}
+							}
+							$MediaProfile = $Media->getProfileImage($business_id, true);
+							$MediaCount = $Media->getBannerImagesCount($business_id, true);
+							
+							$text = '
+							<div class="card text-center">
+							  <div class="card-header">
+								<h2 class="card-title">
+									'.$business_name.'
+								</h2>
+							  </div>
+							 </div>
+								';
+								
+								if($MediaCount == 0){
+								$text = $text. '
+									<div id="MerchantPageBanner" class="carousel slide" data-ride="carousel">
+									  <ol class="carousel-indicators">
+										<li data-target="#MerchantPageBanner" data-slide-to="0" class="active"></li>
+									  </ol>
+									  <div class="carousel-inner" role="listbox">
+										<div class="carousel-item active">
+										  <img src="../Merchant/images/banner/'.$Media->getDefaultBannerImage().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
+										</div>
+									  </div>
+									</div>
+								
+								';
+							}
+							else{
+								$MediaBanners = $Media->getBannerImages($business_id, true);
+								
+								$text = $text . '<div id="MerchantPageBanner" class="carousel slide" data-ride="carousel" data-interval="2000">';
+								$text = $text . '<ol class="carousel-indicators">';
+								if (is_array($MediaBanners) || is_object($MediaBanners))
+								{
+									$i = 0;
+									foreach($MediaBanners as $key => $value) {
+										if($i == 0){
+											$text = $text . '<li data-target="#MerchantPageBanner" data-slide-to="0" class="active"></li>';
+										}
+										else{
+											$text = $text . '<li data-target="#MerchantPageBanner" data-slide-to="'.$i.'"></li>';
+										}
+										
+										$i = $i + 1;
+									}
+								}
+								$text = $text . '</ol>';
+								
+								$text = $text . '<div class="carousel-inner" role="listbox">';
+								if (is_array($MediaBanners) || is_object($MediaBanners))
+								{
+									$i = 0;
+									foreach($MediaBanners as $key => $value) {										
+										if($i == 0){
+											$text = $text . '
+											<div class="carousel-item active">
+											  <img src="../Merchant/images/banner/'.$value['filename'].'?ver='.time().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
+											   
+											</div>
+											';
+										}
+										else{
+											$text = $text . '
+											<div class="carousel-item">
+											  <img src="../Merchant/images/banner/'.$value['filename'].'?ver='.time().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
+											  
+											</div>
+											';
+										}
+										
+										$i = $i + 1;
+									}
+								}
+								$text = $text . '
+									<a class="carousel-control-prev" href="#MerchantPageBanner" role="button" data-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="carousel-control-next" href="#MerchantPageBanner" role="button" data-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</a>
+								';
+								$text = $text . '</div>';
+							}
+							
+							echo $text;
+						}
+						else if ($_POST['action'] === 'info') {
 							
 							$business_id = $_POST['business_id'] ;
 							$Businesses = $Business->getBusinessById($business_id );
@@ -62,16 +180,9 @@ $branch_address3= null;
 							
 							$MediaProfile = $Media->getProfileImage($business_id, true);
 							
-							echo '
-							
-							
-							<div class="card" style="min-height: 300px; width: 100%;">
-							  <img class="card-img-top  hidden-md-up" src="../merchant/images/profile/'.$MediaProfile.'" style="height: 100%; width: 100%;" alt="Card image cap">
-							  <div class="card-block">
-								<h4 class="card-title">
-									'.$business_name.'
-								</h4>
-								</br>
+							echo '							
+							  <div class="card-block" >
+								
 								<h6 class="card-subtitle mb-2 text-muted">
 									<address><img  src="../../assets/icons/location.png" alt="Card image cap"> </img>
 									'.$branch_address1.','.$branch_address2.','.$branch_address3.'
@@ -91,33 +202,9 @@ $branch_address3= null;
 									'.$contact_person.'
 								</p>
 							  </div>
-							</div>
 							';
 							return;
-						}
-						elseif ($_POST['action'] === 'other') {
-							
-							$business_id = $_POST['business_id'] ;
-							$Businesses = $Business->getBusinessById($business_id );
-							if (is_array($Businesses) || is_object($Businesses))
-							{
-								foreach($Businesses as $key => $value) {
-									$user_id = $value['user_id'];
-								}
-							}
-							
-							$Other_Branches = $Business->getBusinessByUserId($user_id);
-							if (is_array($Other_Branches) || is_object($Other_Branches))
-							{
-								foreach($Other_Branches as $key => $value) {
-									if($value['id'] != $business_id){
-										echo '<a href="index.php?business='.$value['id'].'" class="card-link">'.$value['business_name'].'</a> </br>';
-									}
-								}
-							}
-						
-							return;
-						}
+						}						
 						elseif ($_POST['action'] === 'description') {
 							
 							$business_id = $_POST['business_id'] ;
@@ -127,15 +214,13 @@ $branch_address3= null;
 								foreach($Businesses as $key => $value) {
 									
 									echo '
-									<div class="card-header  text-muted">
-										<span>'.$Category->getCategoryName($value['category1']).' > '.$Category->getSubCategoryName($value['category1'], $value['category2']).'</span>
-									</div>
+									<div class="card">
 									<div class="card-block">
 										<h6 class="card-subtitle mb-2 text-muted">
 											'.$value['description'].'
 										</h6>								
 									</div>
-									
+									</div>
 									';
 								}
 							}
@@ -145,11 +230,232 @@ $branch_address3= null;
 							
 							$business_id = $_POST['business_id'] ;
 							$Branches = $Branch->getBranchesByBusinessId($business_id );
+							$BranchesCount = $Branch->getBrancheCountByBusinessId($business_id);
+							$i = 0;
+							if (is_array($Branches) || is_object($Branches))
+							{
+								$text = $text.'<div class="card-deck" >';
+								foreach($Branches as $key => $value) {
+									
+									
+									
+									$text = $text. '
+									
+										<div class="card">
+											<div class="card-header">
+												'.$value['district'].'
+											</div>
+  
+										  <div class="card-block">
+											<div class="row">
+											
+											
+											<div class="col-xs-12 text-muted">
+											<address>
+											<img  src="../../assets/icons/location.png" alt="Card image cap">
+											'.$value['branch_address1'].', '.$value['branch_address2'].','.$value['branch_address3'].'</address>
+											</div>
+											</div>
+											
+											<div class="row">
+											<div class="col-xs-12 text-muted">
+											<img  src="../../assets/icons/mail.png" alt="Card image cap">
+											'.$value['branch_email'].'
+											</div>
+											</div>
+											
+											<div class="row">
+											<div class="col-xs-12 text-muted">
+											<img  src="../../assets/icons/person.png" alt="Card image cap">
+											'.$value['contact_person'].'
+											</div>
+											</div>
+											
+											<div class="row">
+											<div class="col-xs-12 text-muted">
+											<img  src="../../assets/icons/phone.png" alt="Card image cap">
+											'.$value['branch_mobile'].' '.$value['branch_phone'].'
+											</div>
+											</div>
+									</div></div>								
+									';
+									
+								}
+								$text = $text.'</div>';
+							}
+							echo $text;
+							return;
+						}
+						elseif ($_POST['action'] === 'OtherBusinesses') {
+							$business_id = $_POST['business_id'] ;
+							$OtherBusinesses = $Business->getBusinessById($business_id );
+							if (is_array($OtherBusinesses) || is_object($OtherBusinesses))
+							{
+								foreach($OtherBusinesses as $key => $value) {
+									$user_id = $value['user_id'];
+								}
+							}
+							$b_count1 = $Business->getBusinessesCount($user_id, true, $business_id);	
+							
+							
+							if($b_count1 > 0){	
+								$text = $text.'<div class="card-deck">';							
+								$Other_Businesses = $Business->getBusinessByUserId($user_id, true);
+								if (is_array($Other_Businesses) || is_object($Other_Businesses))
+								{
+									foreach($Other_Businesses as $key => $value) {
+										if($value['id'] != $business_id){
+											$Branches = $Branch->getMainBranchByBusinessId($value['id']);
+											if (is_array($Branches) || is_object($Branches))
+											{
+												foreach($Branches as $key1 => $value1) {
+													$branch_address1 = $value1['branch_address1'];
+													$branch_address2 = $value1['branch_address2'];
+													$branch_address3 = $value1['branch_address3'];
+												}
+											}
+											$text = $text.'
+											<div class="card">
+												  <img class="card-img-top img-fluid" src="../Merchant/images/profile/'.$Media->getProfileImage($value['id'], true).'" alt="Card image cap">
+												  <div class="card-block">
+													<h4 class="card-title">'.$value['business_name'].'</h4>
+													<div class="row">
+													
+													
+													<div class="col-xs-12 text-muted">
+													<address>
+													<img  src="../../assets/icons/location.png" alt="Card image cap">
+													'.$branch_address1.', '.$branch_address2.','.$branch_address3.'</address>
+													</div>
+													</div>
+													<div class="row">
+													<div class="col-xs-12 text-muted">
+													<img  src="../../assets/icons/phone.png" alt="Card image cap">
+													'.$value['business_mobile'].'
+													</div>
+													</div>
+													
+													<div class="row">
+													<div class="col-xs-12 text-muted">
+													<img  src="../../assets/icons/mail.png" alt="Card image cap">
+													'.$value['business_email'].'
+													</div>
+													</div>
+													
+												  </div>
+												  
+														<div class="card-footer text-muted text-center">
+															<a href="../Page/index.php?business='.$value['id'].'" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+														</div>
+														
+												</div>
+											
+											';		
+										}
+									}
+								}
+								$text = $text.'</div>';	
+							}
+							
+							echo $text;
+							return;
+						}
+						elseif ($_POST['action'] === 'SmallDevices') {
+							$business_id = $_POST['business_id'] ;
+							$Businesses = $Business->getBusinessById($business_id );
+							if (is_array($Businesses) || is_object($Businesses))
+							{
+								foreach($Businesses as $key => $value) {
+									$user_id = $value['user_id'];
+									$business_name = $value['business_name'];
+									$category1 = $value['category1'];
+									$category2 = $value['category2'];
+									$email = $value['business_email'];
+									$phone = $value['business_phone'];
+									$mobile = $value['business_mobile'];
+									$contact_person = $value['contact_person'];
+									$web = $value['website'];
+									$description = $value['description'];
+								}
+							}
+							
+							$Branches = $Branch->getMainBranchByBusinessId($business_id );
 							if (is_array($Branches) || is_object($Branches))
 							{
 								foreach($Branches as $key => $value) {
+									$branch_address1 = $value['branch_address1'];
+									$branch_address2 = $value['branch_address2'];
+									$branch_address3 = $value['branch_address3'];
+								}
+							}
+							
+							$MediaProfile = $Media->getProfileImage($business_id, true);
+							
+							$text = $text. '<div class="card" style="height: 100%; width: 100%;">
+							  <img class="card-img-top  hidden-md-up" src="../merchant/images/profile/'.$MediaProfile.'" style="height: 100%; width: 100%;" alt="Card image cap">
+							  <div class="card-block">
+								
+								<h6 class="card-subtitle mb-2 text-muted">
+									<address><img  src="../../assets/icons/location.png" alt="Card image cap"> </img>
+									'.$branch_address1.','.$branch_address2.','.$branch_address3.'
+									</address>
+								</h6>
+								<p class="card-text text-muted">
+									<img  src="../../assets/icons/mail.png" alt="Card image cap"> </img>
+									'.$email.'
+								</p>
+								<p class="card-text text-muted">
+									<img  src="../../assets/icons/phone.png" alt="Card image cap"> </img>
+									'.$mobile.' '.$mobile.'
+								</p>
+								<a href="http://'.$web.'" target="_blank" class="card-link"><img  src="../../assets/icons/web.png" alt="Card image cap"> </img>'.$web.'</a>
+							  <p class="card-text text-muted">
+									<img  src="../../assets/icons/person.png" alt="Card image cap"> </img>
+									'.$contact_person.'
+								</p>
+							  </div>
+							</div>';
+							
+							$text = $text. '
+							</br>
+							<div id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="card">
+    <div class="card-header" role="tab" id="headingOne">
+      <h5 class="mb-0">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Details
+        </a>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="card-block">
+        '.$description.'
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" role="tab" id="headingTwo">
+      <h5 class="mb-0">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Branches
+        </a>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="card-block">
+        ';
+		
+		
+							$AllBranches = $Branch->getBranchesByBusinessId($business_id );
+							if (is_array($AllBranches) || is_object($AllBranches))
+							{
+								foreach($AllBranches as $key => $value) {
 									
-									echo '
+									
+									
+									$text = $text. '
+									
 										<div class="card">
 											<div class="card-header">
 												'.$value['district'].'
@@ -187,90 +493,78 @@ $branch_address3= null;
 											</div>
 											</div>
 									</div></div>
-										</br>										
+									</br>									
 									';
+									
 								}
 							}
-							return;
-						}
-						elseif ($_POST['action'] === 'banner') {
+	$text = $text.'
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" role="tab" id="headingThree">
+      <h5 class="mb-0">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Videos
+        </a>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="card-block">
+       <iframe height="300px" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+  ';
+						$OtherBusinesses = $Business->getBusinessById($business_id );
+							if (is_array($OtherBusinesses) || is_object($OtherBusinesses))
+							{
+								foreach($OtherBusinesses as $key => $value) {
+									$user_id = $value['user_id'];
+								}
+							}
+	$b_count = $Business->getBusinessesCount($user_id, true, $business_id);				
+  if($b_count > 0){
+  $text = $text.'
+  <div class="card">
+    <div class="card-header" role="tab" id="headingFour">
+      <h5 class="mb-0">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Other Businesses
+        </a>
+      </h5>
+    </div>
+    <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+      <div class="card-block">
+       ';
 							
-							$business_id = $_POST['business_id'] ;
-							$MediaCount = $Media->getBannerImagesCount($business_id, true);
-							if($MediaCount == 0){
-								echo '
-									<div id="MerchantPageBanner" class="carousel slide" data-ride="carousel">
-									  <ol class="carousel-indicators">
-										<li data-target="#MerchantPageBanner" data-slide-to="0" class="active"></li>
-									  </ol>
-									  <div class="carousel-inner" role="listbox">
-										<div class="carousel-item active">
-										  <img src="../Merchant/images/banner/'.$Media->getDefaultBannerImage().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
-										</div>
-									  </div>
-									</div>
-								
-								';
-							}
-							else{
-								$MediaBanners = $Media->getBannerImages($business_id, true);
-								
-								$text = '<div id="MerchantPageBanner" class="carousel slide" data-ride="carousel" data-interval="2000">';
-								$text = $text . '<ol class="carousel-indicators">';
-								if (is_array($MediaBanners) || is_object($MediaBanners))
-								{
-									$i = 0;
-									foreach($MediaBanners as $key => $value) {
-										if($i == 0){
-											$text = $text . '<li data-target="#MerchantPageBanner" data-slide-to="0" class="active"></li>';
-										}
-										else{
-											$text = $text . '<li data-target="#MerchantPageBanner" data-slide-to="'.$i.'"></li>';
-										}
-										
-										$i = $i + 1;
+							
+							$Other_Businesses = $Business->getBusinessByUserId($user_id, true);
+							if (is_array($Other_Businesses) || is_object($Other_Businesses))
+							{
+								foreach($Other_Businesses as $key => $value) {
+									if($value['id'] != $business_id){
+										$text = $text.'<a href="index.php?business='.$value['id'].'" class="card-link">'.$value['business_name'].'</a> </br>';
 									}
 								}
-								$text = $text . '</ol>';
-								
-								$text = $text . '<div class="carousel-inner" role="listbox">';
-								if (is_array($MediaBanners) || is_object($MediaBanners))
-								{
-									$i = 0;
-									foreach($MediaBanners as $key => $value) {										
-										if($i == 0){
-											$text = $text . '
-											<div class="carousel-item active">
-											  <img src="../Merchant/images/banner/'.$value['filename'].'?ver='.time().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
-											</div>
-											';
-										}
-										else{
-											$text = $text . '
-											<div class="carousel-item">
-											  <img src="../Merchant/images/banner/'.$value['filename'].'?ver='.time().'" alt="First slide" class="img-fluid rounded mx-auto d-block" style="height: 100%; width: 100%;">
-											</div>
-											';
-										}
-										
-										$i = $i + 1;
-									}
-								}
-								$text = $text . '
-									<a class="carousel-control-prev" href="#MerchantPageBanner" role="button" data-slide="prev">
-										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-										<span class="sr-only">Previous</span>
-									</a>
-									<a class="carousel-control-next" href="#MerchantPageBanner" role="button" data-slide="next">
-										<span class="carousel-control-next-icon" aria-hidden="true"></span>
-										<span class="sr-only">Next</span>
-									</a>
-								';
-								$text = $text . '</div>';
-								echo $text;
 							}
-							return;
+	   
+	   $text = $text.'   
+      </div>
+    </div>
+	';
+  }
+	
+	 $text = $text.' 
+  </div>
+  
+</div>
+							
+							';
+							echo $text;
 						}
+						
 				}
 }
 ?>

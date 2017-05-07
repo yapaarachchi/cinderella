@@ -190,6 +190,31 @@ class Branch {
 		}
 	}
 	
+	public function getBrancheCountByBusinessId($id) {
+		$count = 0;
+		try {			
+			
+			$branch = $this->db->selectRow(
+				'SELECT count(id) FROM branch WHERE business_id ='.$id
+				);
+			
+			if (is_array($branch) || is_object($branch))
+			{
+				$count = $branch['count(id)'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if (empty($id)) {
+			return 0;
+		}
+		else {
+			return $count;
+		}
+	}
+	
 	public function getMainBranchByBusinessId($id) {
 		try {
 			$requestedColumns = 'id, branch_address1, branch_address2, branch_address3, district, contact_person, branch_email, branch_mobile, branch_phone, main_branch, description';

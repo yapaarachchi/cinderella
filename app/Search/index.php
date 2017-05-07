@@ -32,7 +32,7 @@ if (isset($_GET)) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../css/cinderella.css">
-	
+	<title>Cinderella -  Search</title>
   </head>
   <body>
 	<nav class="navbar fixed-top navbar-inverse bg-inverse navbar-toggleable-md">
@@ -145,8 +145,7 @@ if (isset($_GET)) {
 			-->
 			
 			<!-- Middle Pannel -->
-			<div class="col-lg-8">
-						
+			<div class="col-lg-8">	
 				<div class="row">
 				
 					<div class="col-12" id="SearchArea">

@@ -103,7 +103,7 @@ $isLoggedIn = $auth->isLoggedIn();
 		</div>
 		<span class = " hidden-md-down" style="color:white; margin-left: 30px">Advertise With us: Call - <?php echo Config::$tp; ?></span>
 		
-		<div class="navbar-toggler-right hidden-md-down"> <a class="btn btn-primary" href="app/Search" role="button">Search</a>  </div>
+		<div class="navbar-toggler-right hidden-md-down"> <a class="btn btn-primary-unicorn btn-md btn-block" href="app/Search" role="button">Search</a>  </div>
 	</nav>
 
 	
@@ -247,11 +247,15 @@ $isLoggedIn = $auth->isLoggedIn();
 		
 	</nav>
 	
-	<?php
-	if($isLoggedIn === false){
-		include('app/layout/RegisterPannelSm.php');
-	}		
-	?>
+	<nav class="navbar navbar-dark bg-inverse fixed-bottom bg-faded hidden-lg-up hidden-lg-up" >
+	 <div class="container-fluid">
+		 <div class="row">
+		<div class="col-12">
+			<a id="searcht-button" class="btn btn-primary-unicorn btn-md btn-block" href="app/Search/">Search</a>
+		</div>
+		</div>	 
+	 </div>
+	</nav>
 						
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="js/jquery-3.1.1.slim.min.js"></script>

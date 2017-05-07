@@ -8,12 +8,27 @@ $auth = new \Delight\Auth\Auth($db);
 $Business = new \Delight\Auth\Business($db);
 $isLoggedIn = $auth->isLoggedIn();
 $business_id = null;
+$user_id;
 if (isset($_GET)) {
 					if (isset($_GET['business'])) {
 						$business_id = $_GET['business'];
 						if($Business->IsBusinessExistById($business_id, true) === false){
 							header('Location: ../../');
 						}
+							$OtherBusinesses = $Business->getBusinessById($business_id );
+							if (is_array($OtherBusinesses) || is_object($OtherBusinesses))
+							{
+								foreach($OtherBusinesses as $key => $value) {
+									$user_id = $value['user_id'];
+								}
+							}
+							$OtherBusinesses = $Business->getBusinessById($business_id );
+							if (is_array($OtherBusinesses) || is_object($OtherBusinesses))
+							{
+								foreach($OtherBusinesses as $key => $value) {
+									$user_id = $value['user_id'];
+								}
+							}
 						
 					}
 					else{
@@ -42,95 +57,92 @@ if (isset($_GET)) {
 	<div class="container-fluid">
 		<!-- Main Row -->
 		<div class="row">
-		
-			<!-- Margin Left Pannel -->
-			<div class="col-lg-1 hidden-md-down">
-			</div>
+			
+			<!-- Mobile View -->
+			<div class="col-12 hidden-md-up">
+				<div id="SmallDevices" class="col-12" style="margin-bottom: 50px">
+				</div>	
+			</div>	
 			
 			
-			
+			<!-- left Pannel -->
+			<div class="col-2 hidden-md-down">
+					
+			</div>				
 			
 			<!-- Middle Pannel -->
-			<div class="col-lg-10">
+			<div class="col-lg-8 col-md-12 hidden-sm-down">
 				<div class="row">
-				
-				<div id="HeaderInformation" class="col-lg-3 col-md-4">
-					<!-- Business name and info -->
+					<div id="MainHeaderLarge" class="col-12">
+					</div>	
 				</div>
-				
-				<div id="MerchantBanner" class="col-lg-9 col-md-8  hidden-sm-down">
+				<div class="row" style="margin-top:10px">
+					<div class="col-12" >
+						<ul class="nav nav-tabs" role="tablist">
+						  <li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#ContactTab" role="tab">Contact</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#DetailTab" role="tab">Detail</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#BranchesTab" role="tab">Branches</a>
+						  </li>
+						  <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#VideosTab" role="tab">Videos</a>
+						  </li>
+						  <?php 							
+							if($Business->getBusinessesCount($user_id, true, $business_id) > 0){
+							?>
+						  <li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#OtherBusinessesTab" role="tab">Other Businesses</a>
+						  </li>
+						  <?php 
+							}
+							?>
+						</ul>
+					</div>
+
+					<div class="tab-content">
+					  <div class="tab-pane active" id="ContactTab" role="tabpanel" >
+						<div id="Information" style="margin-top: 10px;">
+						</div>	
+					  </div>
+					  <div class="tab-pane" id="DetailTab" role="tabpanel">
+						<div id="Description" style="margin-top: 10px;">
+						</div>	
+					  </div>
+					  <div class="tab-pane" id="BranchesTab" role="tabpanel" >
+						<div id="Branches" style="margin-top: 10px;">
+						</div>	
+					  </div>
+					  <div class="tab-pane" id="VideosTab" role="tabpanel" style="margin-top: 10px;">
+						<iframe height="300px" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
+					  </div>
+					  <?php 	
+					if($Business->getBusinessesCount($user_id, true, $business_id) > 0){
+					?>
+					<div class="tab-pane" id="OtherBusinessesTab" role="tabpanel" >
+						<div id="OtherBusinesses" style="margin-top: 10px;">
+						</div>	
+					</div>
+					<?php 
+					}
+					?>
+					</div>
 					
 				</div>
-				
-				</div><!-- end row -->
-				
-				
-				<div class="row" style="margin-top:5px">
-				
-				
-					<div class="col-lg-3 col-md-4 hidden-sm-down">
-						<div class="card">								
-								<div class="card-block">
-									<h6 class="card-subtitle mb-2 text-muted">
-									Branches
-									</h6>	
-								<div id="Branches" >	
-								</div>
-								</div>
-							</div>
-					</div>
-					<div class="col-lg-9 col-md-8">
-					
-						<div id="Description"  class="card">
-						 <!-- 
-							<div class="card-header">
-								<a data-toggle="collapse" href="#Description" aria-expanded="false" aria-controls="Description">
-									Collapse
-								</a>
-							</div>
-							-->
-						  <div class="card-block">
-								
-						  </div>
-						</div>
-						</br>
-						
-						<div class="row">
-							
-								<iframe class="col-lg-6 col-md-6" height="300px" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
-							
-								<iframe class="col-lg-6 col-md-6" height="300px" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
-							
-						</div>
-					
-					</div>
-					
-					<div id="OtherBusinesses" class="col-lg-3 col-md-4 hidden-sm-up">
-						<div class="card">
-						  <div class="card-block">
-							<h6 class="card-subtitle mb-2 text-muted">
-								Other Businesses Of this Merchant
-							</h6>
-							</br>
-							<div id="OtherMobile"> <!-- other businesses -->  </div>
-						  </div>
-						</div>
-					</div>
-				
-				</div><!-- end row -->
-				
-				
-				
-				
-				
-				
-			</div>
-			
-			<!-- Margin Right Pannel -->
-			<div class="col-lg-1 hidden-md-down">
-			</div>
 		
-		</div>
+			</div>	
+			
+			<!-- right Pannel -->
+			<div class="col-2 hidden-md-down">
+					
+			</div>				
+		</div>		
+		
+		
+			
 	</div>
 	</br>
 	<?php
@@ -164,12 +176,13 @@ signOut('signOut');
 
 
 var businessId = <?php echo $business_id ;?>;
-getLayout("GetMerchantData.php","#HeaderInformation", "info");
-getLayout("GetMerchantData.php","#MerchantBanner", "banner");
+getLayout("GetMerchantData.php","#MainHeaderLarge", "header");
+getLayout("GetMerchantData.php","#Information", "info");
 getLayout("GetMerchantData.php","#Description", "description");
-getLayout("GetMerchantData.php","#Other", "other");
-getLayout("GetMerchantData.php","#OtherMobile", "other");
 getLayout("GetMerchantData.php","#Branches", "branches");
+getLayout("GetMerchantData.php","#OtherBusinesses", "OtherBusinesses");
+
+getLayout("GetMerchantData.php","#SmallDevices", "SmallDevices");
 
 function getLayout(pageName, divName, action){
 
