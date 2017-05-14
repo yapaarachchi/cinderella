@@ -6,7 +6,7 @@ Media
 type
 -----
 IMAGE
-EXT-VIDEO
+VIDEO
 
 category
 --------
@@ -148,7 +148,7 @@ class Media {
 		$Throttler = new \Delight\Auth\Throttler($this->db);
 		$Throttler->throttle('update_media');
 
-		if($this->CheckMimeType($mime_type) === false){
+		if($this->CheckMimeType($type, $mime_type) === false){
 			return '1';
 		}
 		
@@ -157,6 +157,11 @@ class Media {
 		}
 		else if($category == 'PROFILE'){
 			$location = 'images/profile/'.$filename;
+		}
+
+		if ($type == 'VIDEO' and $filename != '') {
+			$arr = explode('watch?v=', $filename);
+			$filename = $arr[1];
 		}	
 		
 		$i = 0;
@@ -194,11 +199,13 @@ class Media {
 					);
 									
 				}
-				
-				if(file_put_contents($location, $data) === false){
-					$this->db->rollBack();
-					return '400';
+				if ($type == 'IMAGE') {
+					if(file_put_contents($location, $data) === false){
+						$this->db->rollBack();
+						return '400';
+					}
 				}
+				
 						
 		}
 		catch (Error $e) {
@@ -219,9 +226,12 @@ class Media {
 		
 	}
 	
-	private function CheckMimeType($mime_type){
+	private function CheckMimeType($type, $mime_type){
 		
-		if($mime_type == 'png' or $mime_type == 'gif' or $mime_type == 'jpg' or $mime_type == 'jpeg'){
+		if($type = 'IMAGE' and ($mime_type == 'png' or $mime_type == 'gif' or $mime_type == 'jpg' or $mime_type == 'jpeg')){
+			return true;
+		}
+		elseif($type = 'VIDEO'){
 			return true;
 		}
 		else{
@@ -387,5 +397,136 @@ class Media {
 
 		return $media;
 	}
+
+public function UpdateVideo( $business_id, $id, $filename) {		
+	
+		$Throttler = new \Delight\Auth\Throttler($this->db);
+		$Throttler->throttle('update_video');
+
+		if ($filename != '') {
+			$arr = explode('watch?v=', $filename);
+			$filename = $arr[1];
+		}
+		else{
+			$filename = null;
+		}
+		
+		$i = 0;
+		
+		try {
+			$this->db->startTransaction();
+			
+				if($id == null){
+					$this->db->insert(
+						'media',
+						[
+							'business_id' => $business_id,
+							'category' => 'GALLERY',
+							'type' => 'VIDEO',
+							'filename' => $filename
+						]
+					);				
+				}
+				else{
+					$this->db->update(
+						'media',
+						[ 'filename' => $filename, 'review' => '0', 'approve' => '0' ],
+						[ 'id' => $id]
+					);
+									
+				}
+				
+						
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+			$this->db->rollBack();
+		}
+		catch (TooManyRequestsException $e) {
+			$this->db->rollBack();
+			throw new TooManyRequestsException();
+		}
+		catch (Exception $e) {
+			$this->db->rollBack();
+			return $e;
+		}
+		
+		$this->db->commit();
+		return '200';
+		
+	}
+
+	public function getVideos($bid, $approve = false) {
+		$id = 0;
+		$media_video = '';
+		try {
+			if(is_numeric($bid) ){
+				$id = $bid;
+			}
+
+			$requestedColumns = 'filename, id';
+
+			if ($approve === true) {
+				$media = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM media WHERE business_id = '.$id.' AND category = "GALLERY" AND type = "VIDEO" AND approve = "1"'  
+			);
+			} else {
+				$media = $this->db->select(
+				'SELECT ' . $requestedColumns . ' FROM media WHERE business_id = '.$id.' AND  category = "GALLERY" AND type = "VIDEO"'
+			);
+			}
+			
+			if (is_array($media) || is_object($media))
+			{
+				$media_video = $media;
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+		catch (Exception $e) {
+			return false;
+		}
+
+		if ($media == null) {
+			return false;
+		}
+		else {
+			return $media_video;
+		}
+	}
+
+	public function getVideoCount($business_id, $approve = false) {
+		$count = 0;
+		try{		
+			if($approve === false){
+				$media = $this->db->selectRow(
+				'SELECT count(id) FROM media WHERE type = "VIDEO" AND category = "GALLERY" AND business_id = '.$business_id
+				);
+			}
+			else{
+				$media = $this->db->selectRow(
+				'SELECT count(id) FROM media WHERE type = "VIDEO" AND category = "GALLERY" AND business_id = '.$business_id.' AND approve = "1" '
+				);
+			}
+			
+			
+			if (is_array($media) || is_object($media))
+			{
+				$count = $media['count(id)'];
+			}
+		}
+		catch (Error $e) {
+			throw new DatabaseError();
+		}
+
+		if (empty($business_id)) {
+			return 0;
+		}
+		else {
+			return $count;
+		}
+	}
+
 
 }

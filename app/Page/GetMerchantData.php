@@ -360,6 +360,21 @@ $branch_address3= null;
 							echo $text;
 							return;
 						}
+						elseif ($_POST['action'] === 'Videos') {
+							
+							$business_id = $_POST['business_id'] ;
+							$Videos = $Media->getVideos($business_id, true);
+							if (is_array($Videos) || is_object($Videos))
+							{
+								foreach($Videos as $key => $value) {
+									
+									echo '
+									<iframe width="500" height="300" style="margin: 10px;" src="http://www.youtube.com/embed/'.$value['filename'].'" frameborder="0" allowfullscreen></iframe>
+									';
+								}
+							}
+							return;
+						}
 						elseif ($_POST['action'] === 'SmallDevices') {
 							$business_id = $_POST['business_id'] ;
 							$Businesses = $Business->getBusinessById($business_id );
@@ -501,7 +516,9 @@ $branch_address3= null;
 	$text = $text.'
       </div>
     </div>
-  </div>
+  </div>';
+	if($Media->getVideoCount($business_id, true) > 0){
+	$text = $text.'
   <div class="card">
     <div class="card-header" role="tab" id="headingThree">
       <h5 class="mb-0">
@@ -511,12 +528,26 @@ $branch_address3= null;
       </h5>
     </div>
     <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-      <div class="card-block">
-       <iframe height="300px" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
-      </div>
+      <div class="card-block">';
+			
+							$Videos = $Media->getVideos($business_id, true);
+							if (is_array($Videos) || is_object($Videos))
+							{
+								foreach($Videos as $key => $value) {
+									
+									$text = $text.'
+									<iframe height="300" src="http://www.youtube.com/embed/'.$value['filename'].'" frameborder="0" allowfullscreen></iframe>
+									';
+								}
+							}
+
+			
+		$text = $text.'
+		 </div>			
     </div>
   </div>
   ';
+	}
 						$OtherBusinesses = $Business->getBusinessById($business_id );
 							if (is_array($OtherBusinesses) || is_object($OtherBusinesses))
 							{

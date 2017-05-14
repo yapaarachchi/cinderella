@@ -6,6 +6,7 @@ require '../../vendor/autoload.php';
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
 $Business = new \Delight\Auth\Business($db);
+$Media = new \Delight\Auth\Media($db);
 $isLoggedIn = $auth->isLoggedIn();
 $business_id = null;
 $user_id;
@@ -76,7 +77,7 @@ if (isset($_GET)) {
 					<div id="MainHeaderLarge" class="col-12">
 					</div>	
 				</div>
-				<div class="row" style="margin-top:10px">
+				<div class="row" style="margin-top:10px; margin-bottom:30px">
 					<div class="col-12" >
 						<ul class="nav nav-tabs" role="tablist">
 						  <li class="nav-item">
@@ -88,10 +89,14 @@ if (isset($_GET)) {
 						  <li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#BranchesTab" role="tab">Branches</a>
 						  </li>
+							<?php 
+								if($Media->getVideoCount($business_id, true) > 0){
+							?>
 						  <li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#VideosTab" role="tab">Videos</a>
 						  </li>
-						  <?php 							
+						  <?php 
+								}							
 							if($Business->getBusinessesCount($user_id, true, $business_id) > 0){
 							?>
 						  <li class="nav-item">
@@ -116,9 +121,16 @@ if (isset($_GET)) {
 						<div id="Branches" style="margin-top: 10px;">
 						</div>	
 					  </div>
+						 <?php 	
+					if($Media->getVideoCount($business_id, true) > 0){
+					?>
 					  <div class="tab-pane" id="VideosTab" role="tabpanel" style="margin-top: 10px;">
-						<iframe height="300px" src="http://www.youtube.com/embed/W7qWa52k-nE" frameborder="0" allowfullscreen></iframe>
+						<div id="Videos" style="margin-top: 10px;">
+						</div>
 					  </div>
+							<?php 
+					}
+					?>
 					  <?php 	
 					if($Business->getBusinessesCount($user_id, true, $business_id) > 0){
 					?>
@@ -181,6 +193,7 @@ getLayout("GetMerchantData.php","#Information", "info");
 getLayout("GetMerchantData.php","#Description", "description");
 getLayout("GetMerchantData.php","#Branches", "branches");
 getLayout("GetMerchantData.php","#OtherBusinesses", "OtherBusinesses");
+getLayout("GetMerchantData.php","#Videos", "Videos");
 
 getLayout("GetMerchantData.php","#SmallDevices", "SmallDevices");
 

@@ -70,13 +70,13 @@ $text =
 	 <div class="col-8">
 		 <div class="row">
 			 <div class="col-4">
-				<a id="UpdateImage1" data-toggle="modal" data-target="#UpdateBannerModal" data-id="1" > <u>Update Image 1</u></a>
+				<a style="cursor: pointer" id="UpdateImage1" data-toggle="modal" data-target="#UpdateBannerModal" data-id="1" > <u>Update Image 1</u></a>
 			 </div>
 			 <div class="col-4">
-				<a id="UpdateImage2" data-toggle="modal" data-target="#UpdateBannerModal" data-id="2"> <u>Update Image 2</u></a>
+				<a style="cursor: pointer" id="UpdateImage2" data-toggle="modal" data-target="#UpdateBannerModal" data-id="2"> <u>Update Image 2</u></a>
 			 </div>
 			 <div class="col-4">
-				<a id="UpdateImage3" data-toggle="modal" data-target="#UpdateBannerModal" data-id="3"> <u>Update Image 3</u></a>
+				<a style="cursor: pointer" id="UpdateImage3" data-toggle="modal" data-target="#UpdateBannerModal" data-id="3"> <u>Update Image 3</u></a>
 			 </div>
 		</div>
 	 </div>
@@ -140,7 +140,7 @@ $text =
         <div id="UpdateBannerModalMessage"> </div>
 		
 		  <div class="image-editor-banner">
-			<div class="select-image-banner-btn btn btn-outline-primary"> Select New Image </div>
+			<div style="cursor: pointer" class="select-image-banner-btn btn btn-outline-primary"> Select New Image </div>
 			<input type="file" style=" visibility: hidden;" class="cropit-image-input-banner"/>
 			<div id="BannerImageInfo" class="text-muted"> </div>
 			<div class="cropit-preview-banner" style="width: 800px; height: 300px;"></div>
@@ -232,7 +232,7 @@ $text = $text .' </br>
 <div id="profilecard" class="card">
  <div class="card-header">
  <div class ="float-left">Profile Image (300px * 200px)</div>
- <div class ="float-right" ><a data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update</u></a></div>
+ <div class ="float-right" ><a style="cursor: pointer" data-toggle="modal" data-target="#UpdateProfileModal"> <u>Update</u></a></div>
   </div>
   <div class="card-block " >
     <img id="ProfileImage" src="images/profile/'.$Media->getProfileImage($business_id, false).'" class="img-fluid img-thumbnail float-right" alt="Responsive image">
@@ -259,7 +259,7 @@ $text = $text .' </br>
         <div id="UpdateProfileModalMessage"> </div>
 		
 		  <div class="image-editor-profile">
-			<div class="select-image-profile-btn btn btn-outline-primary"> Select New Image </div>
+			<div style="cursor: pointer" class="select-image-profile-btn btn btn-outline-primary"> Select New Image </div>
 			<input type="file" style=" visibility: hidden;" class="cropit-image-input-profile" />
 			<div id="ProfileImageInfo" class="text-muted"> </div>
 			<div class="cropit-preview-profile" style="width: 300px; height: 200px;"></div>
@@ -308,6 +308,9 @@ $text = $text. '
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#branches" role="tab">Branches</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#videos" role="tab">Videos</a>
+  </li>
 </ul>
 
 <!-- Tab panes -->
@@ -323,7 +326,7 @@ $text = $text. '
 <div class="card">
   <div class="card-header">
    <div id="EditSection">   
-	<div onclick="editonclick();" id="edit" class ="float-right" value="Edit"><u> Edit </u></div>
+	<div style="cursor: pointer" onclick="editonclick();" id="edit" class ="float-right" value="Edit"><u> Edit </u></div>
   </div>
   </div>
 <form id="EditBusinessInfo">
@@ -639,10 +642,149 @@ $text = $text. '
   $text = $text. '
   </div>
   
+  </div>';
+
+   $text = $text. '
+  <div class="tab-pane" id="videos" role="tabpanel">
+  <div id="profilecard" class="card">
+ <div class="card-header">
+ <div class ="float-left">Videos - 2 (youtube)</div>
+ <div class ="float-right"><a href="#"  data-toggle="modal" data-target="#EditVideoHelpModal"><u>How to copy youtube link?</a></a></div>
+  </div>
+  <div class="card-block " >
+	  <div id="VideoDiv" class="row" >';
+
+
+	  $i_ = 0;
+	  $j_ = 0;
+	  $videos = $Media->getVideos($business_id);
+	  if ($videos !== false) {
+		  if (is_array($videos) || is_object($videos))
+		{
+		foreach($videos as $key => $value) {
+			$j_ = $i_ + 1;
+			if ($value['filename'] != '') {
+				$text = $text. '
+				<div class="card">
+					<div class="card-header">
+						<div class ="float-left">Video '.$j_.'</div>
+						<div class ="float-right" ><a class="edit-video-link" style="cursor: pointer" data-toggle="modal" data-target="#EditVideoModal" data-id="'.$value['id'].'" data-link="https://www.youtube.com/watch?v='.$value['filename'].'"  > <u>Update</u></a></div>
+					</div>
+					<div class="card-block">
+						<iframe width="300" height="200" class="col-12" src="http://www.youtube.com/embed/'.$value['filename'].'" frameborder="0" allowfullscreen></iframe>
+					</div>
+				</div>';
+				
+				
+			} else {
+				$text = $text.'
+				<div class="card">
+					<div class="card-header">
+						<div class ="float-left">Video'.$j_.'</div>
+						<div class ="float-right" ><a class="edit-video-link" style="cursor: pointer" data-toggle="modal" data-id="'.$value['id'].'" data-link="" data-target="#EditVideoModal"> <u>Add</u></a></div>
+					</div>
+					<div class="card-block">
+						<div class="alert alert-warning" role="alert">
+							<strong>No Video Link!</strong>
+						</div>
+					</div>
+				</div>
+		  	';
+			}
+			$i_ = $i_ + 1;			
+		}
+	  }
+	  }
+	  if ($i_ < 2) {
+		  for ($i=$i_; $i < 2; $i++) { 
+			  $j_ = $i + 1;
+			 $text = $text.'
+				<div class="card">
+					<div class="card-header">
+						<div class ="float-left">Video'.$j_.'</div>
+						<div class ="float-right" ><a class="edit-video-link" style="cursor: pointer" data-toggle="modal" data-id="" data-link="" data-target="#EditVideoModal"> <u>Add</u></a></div>
+					</div>
+					<div class="card-block">
+						<div class="alert alert-warning" role="alert">
+							<strong>No Video Link!</strong>
+						</div>
+					</div>
+				</div>
+		  	';
+		  }
+	  }
+  	
+
+
+		$text = $text. '
+	  </div> 
+  </div> 
+  <div id="VideoMessage" >
+  </div> 
+
+</div>
+  </div>
+</div>';
+$text = $text. '
+<!-- Modal -->
+<div class="modal fade" id="EditVideoModal" tabindex="-1" role="dialog" aria-labelledby="EditVideoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Video Link</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  <form id="EditVideoForm">
+      <div class="modal-body" id="EditVideoModalBody">
+	  <input type="hidden" name="BusinessId" id="BusinessId" value="'.$business_id.'"/>
+	  <input type="hidden" name="action" id="action" value="EditVideo"/>
+	  <input type="hidden" name="id" id="id"/>
+	  Please make sure to add youtube link properly to avoid any issues in terms of loading the video. 
+	  <div>
+	  <image style="width: 100px; height: 60px" src="../../assets/icons/youtube.png"/> 
+	  <input placeholder="https://www.youtube.com/watch?v=96yLr3Vt9JA" style="width: 100%; " type="text" name="link" id="link"/> 
+	  </div>
+      
+      </div>
+      <div class="modal-footer">
+	  <div id="EditVideoMessage" class="float-left">  </div>
+        <button id="CancelEditVideo" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="DoneEditVideo" type="submit" class="btn btn-primary">Update</button>
+      </div>
+	  </form>
+    </div>
   </div>
 </div>
+';
 
+$text = $text. '
+<!-- Modal -->
+<div class="modal fade" id="EditVideoHelpModal" tabindex="-1" role="dialog" aria-labelledby="EditVideoHelpModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">How to copy youtube link</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="EditVideoHelpModalBody">
+	  <image style="width: 100%; height: 100%" src="../../assets/other/youtubelink.png"/> 
+      
+      </div>
+      <div class="modal-footer">
+	  <div id="EditVideoMessage" class="float-left">  </div>
+        <button class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+';
 
+ $text = $text. '
 <!-- Modal -->
 <div class="modal fade" id="DeleteBranchModal" tabindex="-1" role="dialog" aria-labelledby="DeleteBranchModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -1208,6 +1350,29 @@ if (isset($_POST)) {
 				return;
 			}	
 		}
+		else if ($_POST['action'] == 'EditVideo') {
+			try {
+				$business_id = $_POST['BusinessId'];
+				$link = $_POST['link'];	
+				$id = $_POST['id'];	
+				if ($id == '') {
+					$id = null;
+				}			
+				
+				$status = $Media->UpdateVideo($business_id, $id, $link);
+				if($status == '200'){
+					echo "CINDERELLA_OK^";
+				}
+				return;
+			}
+			catch (TooManyRequestsException $e) {
+				ErrorCode::SetError(ErrorCode::TOO_MANY_REQUESTS);
+			}
+			catch (Exception $e) {
+				ErrorCode::SetError(ErrorCode::ERROR_GENERAL);
+				return;
+			}	
+		}
 		}
 }
 
@@ -1215,6 +1380,11 @@ if (isset($_POST)) {
 
 <script>
 $(document).ready(function() {	
+
+$('body').on('click', 'a.edit-video-link', function() {
+	 $("#EditVideoModalBody #link").val( $(this).data('link') );
+	 $("#EditVideoModalBody #id").val( $(this).data('id') );
+});
 
 $('#AddBranchSection').on('shown.bs.collapse', function () {
   $("#BranchSectionDiv").hide();
@@ -1225,6 +1395,64 @@ $('#AddBranchSection').on('hide.bs.collapse', function () {
 })
 
 var request;
+$('#EditVideoModal').on('show.bs.modal', function (e) {
+  $("#EditVideoMessage").html('');
+})
+
+$("#EditVideoForm").submit(function(event){
+    event.preventDefault();
+
+    if (request) {
+        request.abort();
+    }
+    var $form = $(this);
+    var $inputs = $form.find("input, select, button, textarea");
+    var serializedData = $form.serialize();
+	$("#CancelEditVideo").hide();
+	$("#DoneEditVideo").hide();
+	$("#EditVideoMessage").html('<div style="color: blue"><strong>Please Wait!</strong> You request is being processing.<div>');
+	//$('#DeleteModal').modal('hide');
+	$(this).prop('disabled',true);
+    request = $.ajax({
+        url: "Business.php",
+        type: "post",
+        data: serializedData
+    });
+	
+    request.done(function (response, textStatus, jqXHR){
+        console.log("Logged in "+ response);
+		//$('#waitModal').modal('hide');
+		if(response.indexOf('CINDERELLA_OK') > -1)
+		{
+			$('#EditVideoModal').modal('hide');
+			$('#RequestDone').modal('show');	
+			//window.location = "index.php";
+		}
+		else{
+			$("#EditVideoMessage").html(response);
+			$("#CancelEditVideo").show();
+			$("#DoneEditVideo").show();
+		}
+		
+		
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+		//$('#waitModal').modal('hide');
+		$("#EditVideoMessage").html(errorThrown);
+		$("#CancelEditVideo").show();
+		$("#DoneEditVideo").show();
+    });
+    request.always(function () {
+		//$(this).prop('disabled',false);
+    });
+
+});
+
 $('#deleteConfirmation').click(function () {
 	$("#DeleteModalBody #BusinessName").val( "<?php echo $business_name; ?>" );
 	$("#DeleteModalBody #BusinessId").val( "<?php echo $business_id; ?>" );
