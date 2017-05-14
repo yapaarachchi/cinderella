@@ -292,7 +292,10 @@ function search($form){
 
 };
 
-
+$('body').on('click', 'a.more-detail', function() {
+   var businessid = $(this).data('businessid');
+	 NavigateToPage(businessid, '../Page/index.php');		
+});
 	
 } );
 

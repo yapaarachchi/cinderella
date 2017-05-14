@@ -140,3 +140,26 @@ function signOut(alink){
 	
 	});
 }
+
+function NavigateToPage(businessid, url){
+	var request;
+
+	if (request) {
+        request.abort();
+    }
+	
+		request = $.ajax({
+        url: "../controller/Navigate.php",
+        type: "post",
+        data: { action: "NAVIGATE_MERCHANT_PAGE", business_id: businessid}
+    });
+	
+		request.done(function (response, textStatus, jqXHR){
+        console.log("NAVIGATE_MERCHANT_PAGE"+ response);
+		
+		if(response.indexOf('CINDERELLA_OK') > -1)
+		{
+			window.location = url+'?business='+ businessid;
+		}		
+    });
+}

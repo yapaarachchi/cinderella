@@ -67,8 +67,8 @@ if (isset($_POST)) {
 						
 					  </div>
 					  
-							<div class="card-footer text-muted text-center">
-								<a href="../Page/index.php?business='.$value['business_id'].'" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+							<div class="card-footer text-center">
+								<a id="MoreDetails" style="cursor: pointer" class="btn btn-outline-primary btn-sm btn-block more-detail" data-businessid="'.$value['business_id'].'">More Details</a>
 							</div>
 							
 					</div>
