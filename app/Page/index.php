@@ -158,9 +158,7 @@ if (isset($_GET)) {
 	</div>
 	</br>
 	<?php
-	if($isLoggedIn === false){
 		include('../layout/RegisterPannelSm.php');
-	}		
 	?>
 	<?php
 	include('../layout/Footer.php');	
@@ -222,6 +220,16 @@ function getLayout(pageName, divName, action){
     });
 
 };
+
+$('body').on('click', 'div.more-detail', function() {
+   var businessid = $(this).data('businessid');
+	 NavigateToPage(businessid, '../controller/Navigate.php', '../Page/index.php');		
+});
+
+$('body').on('click', 'a.more-detail', function() {
+   var businessid = $(this).data('businessid');
+	 NavigateToPage(businessid, '../controller/Navigate.php', '../Page/index.php');		
+});
 
 });
     

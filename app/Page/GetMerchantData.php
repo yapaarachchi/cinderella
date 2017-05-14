@@ -345,7 +345,7 @@ $branch_address3= null;
 												  </div>
 												  
 														<div class="card-footer text-muted text-center">
-															<a href="../Page/index.php?business='.$value['id'].'" class="btn btn-outline-primary btn-sm btn-block">More Details</a>
+															<div id="MoreDetails" style="cursor: pointer" class="btn btn-outline-primary btn-sm btn-block more-detail" data-businessid="'.$value['id'].'">More Details</div>
 														</div>
 														
 												</div>
@@ -407,9 +407,9 @@ $branch_address3= null;
 							$MediaProfile = $Media->getProfileImage($business_id, true);
 							
 							$text = $text. '<div class="card" style="height: 100%; width: 100%;">
+							<h3 class="card-header">'.$business_name.'</h3>
 							  <img class="card-img-top  hidden-md-up" src="../merchant/images/profile/'.$MediaProfile.'" style="height: 100%; width: 100%;" alt="Card image cap">
 							  <div class="card-block">
-								
 								<h6 class="card-subtitle mb-2 text-muted">
 									<address><img  src="../../assets/icons/location.png" alt="Card image cap"> </img>
 									'.$branch_address1.','.$branch_address2.','.$branch_address3.'
@@ -575,8 +575,8 @@ $branch_address3= null;
 							if (is_array($Other_Businesses) || is_object($Other_Businesses))
 							{
 								foreach($Other_Businesses as $key => $value) {
-									if($value['id'] != $business_id){
-										$text = $text.'<a href="index.php?business='.$value['id'].'" class="card-link">'.$value['business_name'].'</a> </br>';
+									if($value['id'] != $business_id){							
+										$text = $text.'<a style="cursor: pointer"  class="card-link more-detail" data-businessid="'.$value['id'].'"><u>'.$value['business_name'].'</u> </a> </br>';
 									}
 								}
 							}
