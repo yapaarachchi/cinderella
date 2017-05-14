@@ -264,6 +264,7 @@ $isLoggedIn = $auth->isLoggedIn();
 	
 	<script src="js/jquery.validate.min.js"></script>
 	<script src="js/additional-methods.min.js"></script>
+	<script src="js/cinderella.js"></script>
 
 	
 <script>
@@ -279,7 +280,10 @@ getLayout("app/layout/SideMenu.php","#SideMenu");
 //getLayout("app/layout/Promotions.php","#Promotions");
 //getLayout("app/layout/SideMenu.php","#SideMenu");
 
-
+$('body').on('click', 'div.more-detail', function() {
+   var businessid = $(this).data('businessid');
+	 NavigateToPage(businessid, 'app/controller/Navigate.php', 'app/Page/index.php');		
+});
 
 
 function getLayout(pageName, divName){

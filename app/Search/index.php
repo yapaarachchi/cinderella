@@ -292,9 +292,9 @@ function search($form){
 
 };
 
-$('body').on('click', 'a.more-detail', function() {
+$('body').on('click', 'div.more-detail', function() {
    var businessid = $(this).data('businessid');
-	 NavigateToPage(businessid, '../Page/index.php');		
+	 NavigateToPage(businessid, '../controller/Navigate.php','../Page/index.php');		
 });
 	
 } );

@@ -141,7 +141,7 @@ function signOut(alink){
 	});
 }
 
-function NavigateToPage(businessid, url){
+function NavigateToPage(businessid, navigateurl, url){
 	var request;
 
 	if (request) {
@@ -149,7 +149,7 @@ function NavigateToPage(businessid, url){
     }
 	
 		request = $.ajax({
-        url: "../controller/Navigate.php",
+        url: navigateurl,
         type: "post",
         data: { action: "NAVIGATE_MERCHANT_PAGE", business_id: businessid}
     });
