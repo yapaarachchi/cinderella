@@ -8,6 +8,11 @@ $auth = new \Delight\Auth\Auth($db);
 $Business = new \Delight\Auth\Business($db);
 $Branch = new \Delight\Auth\Branch($db);
 
+$isLoggedIn = $auth->isLoggedIn();
+if(!$isLoggedIn or $auth->getUserRole($auth->getEmail()) != '3'){
+	header('Location: ../../index.php');
+}
+
 $business_id;
 $business_details;
 $business_name;

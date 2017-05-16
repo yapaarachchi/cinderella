@@ -10,6 +10,11 @@ $Branch = new \Delight\Auth\Branch($db);
 $Media = new \Delight\Auth\Media($db);
 $Category = new \Delight\Auth\Category($db);
 
+$isLoggedIn = $auth->isLoggedIn();
+if(!$isLoggedIn or $auth->getUserRole($auth->getEmail()) != '3'){
+	header('Location: ../../index.php');
+}
+
 $business_id;
 $business_details;
 $business_name;

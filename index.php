@@ -79,6 +79,15 @@ $isLoggedIn = $auth->isLoggedIn();
 			  
 			  <?php
 			}
+			else if($auth->getUserRole($auth->getEmail()) == '1')
+			{
+			?>
+			  <li class="nav-item">
+				<a class="nav-link active" href="app/Admin/"><u>Admin Page</u></a>
+			  </li>
+			  
+			  <?php
+			}
 			  ?>
 			  <li class="nav-item">
 				<a class="nav-link" href="#" id="signOut"><u>Sign Out</u></a>

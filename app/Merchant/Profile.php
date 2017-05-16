@@ -9,6 +9,11 @@ $Business = new \Delight\Auth\Business($db);
 $Branch = new \Delight\Auth\Branch($db);
 $Media = new \Delight\Auth\Media($db);
 
+$isLoggedIn = $auth->isLoggedIn();
+if(!$isLoggedIn or $auth->getUserRole($auth->getEmail()) != '3'){
+	header('Location: ../../index.php');
+}
+
 echo '
 
 <!-- Nav tabs -->

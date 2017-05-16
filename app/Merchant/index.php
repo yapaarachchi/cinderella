@@ -6,7 +6,7 @@ require '../../vendor/autoload.php';
 $db = Config::initDb();
 $auth = new \Delight\Auth\Auth($db);
 $isLoggedIn = $auth->isLoggedIn();
-if(!$isLoggedIn){
+if(!$isLoggedIn or $auth->getUserRole($auth->getEmail()) != '3'){
 	header('Location: ../../index.php');
 }
 
